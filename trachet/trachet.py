@@ -109,7 +109,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
         def clear(self):
             self.__mode = _TRACE_MODE_NONE
-            self.__tty.xon()
+            #self.__tty.xon()
 
         def is_suspend(self):
             return self.__mode != _TRACE_MODE_NONE
@@ -122,7 +122,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
         def set_stop(self):
             self.__mode = _TRACE_MODE_STOP
-            self.__tty.xoff()
+            #self.__tty.xoff()
 
         def tick(self):
             if self.__mode == _TRACE_MODE_NONE:

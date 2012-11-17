@@ -12,7 +12,7 @@ setup(name                  = 'trachet',
       classifiers           = ['Development Status :: 4 - Beta',
                                'Topic :: Terminals',
                                'Environment :: Console',
-                               'Intended Audience :: Developer',
+                               'Intended Audience :: Developers',
                                'License :: OSI Approved :: GNU General Public License (GPL)',
                                'Programming Language :: Python'
                                ],
