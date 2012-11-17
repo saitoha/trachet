@@ -83,6 +83,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
     termenc = encoding
 
     import tff
+    import codecs
 
     _TRACE_MODE_NONE        = 0
     _TRACE_MODE_NORMAL_STEP = 1
@@ -148,7 +149,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
             if isinstance(output_file, str):
                 output_file = open(output_file, "w")
             self.__output = TraceHandler(output_file)
-            self.__log = output_file
+            self.__log = codecs.getwriter(termenc)(output_file)
             self.__actions = actions
 
         def handle_csi(self, context, parameter, intermediate, final):
@@ -187,7 +188,10 @@ along with this program. If not, see http://www.gnu.org/licenses/.
             return True 
 
         def handle_char(self, context, final):
-            context.write(final)
+            if final < 0x100:
+                context.write(final)
+            else:
+                context.writestring(unichr(final))
             self.__output.handle_char(context, final)
             self.__log.write(u"\n\x1b[41m%c\x1b[m\n" % final)
             return True 
