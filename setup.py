@@ -5,7 +5,7 @@ from trachet import __version__, __license__, __author__
 
 setup(name                  = 'trachet',
       version               = __version__,
-      description           = 'Provides step-by-step debugging and formatted sequence tracing service, to terminal applications.',
+      description           = 'Provides step-by-step debugging and formatted sequence tracing service, with terminal applications.',
       long_description      = open("README.rst").read(),
       py_modules            = ['trachet'],
       eager_resources       = [],

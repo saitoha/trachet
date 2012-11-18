@@ -1,5 +1,5 @@
-sixelterm
-=========
+trachet
+=======
 
 Install
 -------
@@ -28,10 +28,12 @@ Usage
     -o OUTPUT, --output=OUTPUT  Specify output device or file
     --version                   show version
 
+
 * Sequense Tracing
 
-  If you specified TTY device to -o option,
+  If you specified TTY device by -o option,
   you can look I/O sequence tracing on realtime.
+
 
 * Step by Step debugging
 
@@ -46,6 +48,7 @@ Usage
 
  - <F8>
    Step to next escape sequence (not control char).
+
 
 Example
 -------
