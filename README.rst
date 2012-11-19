@@ -26,6 +26,7 @@ Usage
 
     -h, --help                  show this help message and exit
     -o OUTPUT, --output=OUTPUT  Specify output device or file
+    -b, --break                 "break" the program at the startup time
     --version                   show version
 
 
@@ -37,24 +38,29 @@ Usage
 
 * Step by Step debugging
 
- - <F5> 
-   Stop step-by-step debugging.
-
- - <F6>
-   Start step-by-step debugging.
+ - <F6> 
+   Toggle trace state ON/OFF.
 
  - <F7>
-   Step.
+   Toggle break state ON/OFF.
 
  - <F8>
-   Step to next escape sequence (not control char).
+   Step to next char or control sequence.
+
+ - <F9>
+   Step to next ESC or CSI sequence.
 
 
 Example
 -------
 
     $ trachet -o/dev/pts/4 bash
-    
+ 
+Dependency
+----------
+
+ - TFF - Terminal Filter Framework
+   https://github.com/saitoha/tff
 
 Reference
 ---------
