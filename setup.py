@@ -24,7 +24,7 @@ setup(name                  = 'trachet',
       packages              = find_packages(exclude=[]),
       zip_safe              = True,
       include_package_data  = False,
-      install_requires      = ['tff ==0.0.7'],
+      install_requires      = ['tff ==0.0.9'],
       entry_points          = """
                               [console_scripts]
                               trachet = trachet:main
