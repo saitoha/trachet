@@ -1,6 +1,15 @@
 trachet
 =======
 
+What is This?
+-------------
+
+    trachet = tracer(sniffer service) + ratchet(step-by-step debugging service)
+
+    This Program runs as a terminal filter process, between Terminals and Applications.
+    It provides step-by-step debugging and formatted sequence tracing service.
+    You can look terminal I/O sequence on realtime, and it enables you to do step-by-step execution.
+
 Install
 -------
 
@@ -54,7 +63,99 @@ Usage
 Example
 -------
 
-    $ trachet -o/dev/pts/4 bash
+- Run default shell and send formatted I/O sequence to a terminal device(/dev/pts/4)::
+
+    $ trachet -o/dev/pts/4
+
+
+- Run vim and send formatted I/O sequence to a terminal device(/dev/pts/4)::
+
+    $ trachet -o/dev/pts/4 vim 
+
+
+- Run emacs and send formatted I/O sequence to a terminal device(/dev/pts/4), and "break" emacs on startup time::
+
+    $ trachet -b -o/dev/pts/4 "emacs -nw" 
+
+
+
+Tutorial
+--------
+
+    Comming soon...
+
+
+How It Works
+------------
+
+- PTY and Terminal/Application::
+
+       +-------------------------------------------+                           
+       |                 Terminal                  |                           
+       +--------+----------------------------------+                           
+                |                                   
+       +--------|----------------------------------+
+       | +------+-------+        +---------------+ |
+       | |    Master    +--------+     Slave     | |
+       | +--------------+        +-------+-------+ |
+       +---------------------------------|---------+
+                                         |          
+       +---------------------------------+---------+ 
+       |               Application                 |
+       +-------------------------------------------+
+
+
+
+- With Trachet... ::
+
+     +----------------------------------------------------------+   +------------------------+
+     |                                                          |   |                        |
+     |                Debug Targetted Terminal                  |   |  Other Device or File  |
+     |                                                          |   |                        |
+     +----------------------------------------------------------+   +------------------------+
+                          |     ^                                                ^
+                          |     |   [ PTY 1 ]                                    |
+                    +-----|-----|-------------------------------+                |
+                    |     v     |                               |                |
+                    | +---------+----+       +----------------+ |                |
+                    | |    Master    |-------|      Slave     | |                |
+                    | +--------------+       +--+-------------+ |                |
+                    |                           |       ^       |                |
+                    +---------------------------|-------|-------+                |
+                                            < input >   |                        |
+                               + ---------------+       |                    < trace >
+                               |                    < output >                   |
+                               | [ Trachet Process ]    |                        |
+     +-------------------------|------------------------|---------------+        |
+     |                         |         TFF            |               |        |
+     |             +-----------|------------------------|------------+  |        |
+     | < control > |  +--------+--------+    +----------+---------+  |  |        |
+     |      +----->|  | InputHandler    |    |    OutputHandler   |  |  |        |
+     |      |      |  +--+-----+----+---+    +---+------+---------+  |  |        |
+     |      |      +-----|-----|----|------------|------|------------+  |        |
+     |      |            |     |    |            |      |               |        |
+     |      |            v     |    |            |      |               |        |
+     | +----+---------------+  |  +-+------------+-+    |               |        |
+     | |  ActionController  |  |  |     Tracer     |-----------------------------+
+     | +--------------------+  |  +----------------+    |               |
+     +-------------------------|------------------------|---------------+
+                               |                        |
+                               |   +--------------------+
+                               |   |                           
+                               |   | [ PTY 2 ]                 
+                    +----------v---|----------------------------+
+                    |              |                            |
+                    | +------------+-+        +---------------+ |
+                    | |    Master    +--------+     Slave     | |
+                    | +--------------+        +----+----------+ |
+                    |                              |      ^     |
+                    +------------------------------|------|-----+
+                                                   v      |
+     +----------------------------------------------------+-------------+
+     |                                                                  |
+     |                         Target Application                       |
+     |                                                                  |
+     +------------------------------------------------------------------+
  
 Dependency
 ----------
