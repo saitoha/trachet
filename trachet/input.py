@@ -70,7 +70,7 @@ class InputHandler(tff.DefaultHandler):
 
     def handle_control_string(self, context, prefix, value):
         self.__tracer.set_input()
-        self.__tracer.handle_esc(context, intermediate, final)
+        self.__tracer.handle_control_string(context, prefix, value)
         return False 
 
     def handle_char(self, context, final):
