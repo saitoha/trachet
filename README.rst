@@ -1,6 +1,8 @@
 trachet
 =======
 
+.. image:: images/biohazard.png
+
 What is This?
 -------------
 
@@ -9,6 +11,7 @@ What is This?
     This Program runs as a terminal filter process, between Terminals and Applications.
     It provides step-by-step debugging and formatted sequence tracing service.
     You can look terminal I/O sequence on realtime, and it enables you to do step-by-step execution.
+
 
 Install
 -------
