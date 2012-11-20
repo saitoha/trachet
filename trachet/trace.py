@@ -84,7 +84,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = csi.format(parameter, intermediate, final)
-        self.__log.write(u"%s  \x1b[35m%s\x1b[m\n" % (prompt, formatted))
+        self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         self.__log.flush()
         return False # not handled
 
@@ -96,7 +96,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = esc.format(intermediate, final)
-        self.__log.write(u"%s  \x1b[35m%s\x1b[m\n" % (prompt, formatted))
+        self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         self.__log.flush()
         return False # not handled
 
@@ -108,7 +108,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = cstr.format(prefix, value)
-        self.__log.write(u"%s  \x1b[34m%s\x1b[m\n" % (prompt, formatted))
+        self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         self.__log.flush()
         return False # not handled
 

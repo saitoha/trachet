@@ -101,7 +101,7 @@ def format(parameter, intermediate, final):
         context.append("\x1b[36m" + i)
     if f:
         context.append("\x1b[33m" + f)
-    result = "\x1b[31;44m CSI %s \x1b[0;36m\x1b[30`%s" % (" ".join(context), mnemonic)
+    result = "\x1b[0;1;31;40m CSI %s \x1b[0;1;36m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
     return result
 
 

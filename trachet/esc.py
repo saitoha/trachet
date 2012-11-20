@@ -79,7 +79,7 @@ def format(intermediate, final):
         context.append("\x1b[36m" + i)
     if f:
         context.append("\x1b[33m" + f)
-    result = "\x1b[31;44m ESC %s \x1b[0;35m\x1b[30`%s" % (" ".join(context), mnemonic)
+    result = "\x1b[0;1;31;44m ESC %s \x1b[0;1;35m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
     return result
 
 

@@ -33,7 +33,7 @@ def format(prefix, value):
         mnemonic = _STRING_MAP[p]
     else:
         mnemonic = '[ESC ' + chr(prefix) + ']'
-    result = "\x1b[37;44mESC %s \x1b[0;35m%s \x1b[37;44mST\x1b[0;36m    %s" % (p, v, mnemonic)
+    result = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s" % (p, v, mnemonic)
     return result 
 
 
