@@ -32,8 +32,8 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_csi(self, context, parameter, intermediate, final):
         def action():
-            context.write(0x1b)
-            context.write(0x5b)
+            context.write(0x1b) # ESC
+            context.write(0x5b) # [
             for c in parameter:
                 context.write(c)
             for c in intermediate:
@@ -47,7 +47,7 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_esc(self, context, intermediate, final):
         def action():
-            context.write(0x1b)
+            context.write(0x1b) # ESC
             for c in intermediate:
                 context.write(c)
             context.write(final)
@@ -59,10 +59,12 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_control_string(self, context, prefix, value):
         def action():
-            context.write(0x1b)
+            context.write(0x1b) # ESC
             context.write(prefix)
             for c in value:
                 context.write(c)
+            context.write(0x1b) # ESC
+            context.write(0x5c) # \
             self.__tracer.set_output()
             self.__tracer.handle_control_string(context, prefix, value)
             return constant.SEQ_TYPE_STR 
