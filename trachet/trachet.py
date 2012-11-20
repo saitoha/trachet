@@ -100,7 +100,6 @@ def main():
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     tty.fitsize()
 
-
     controller = controller.ActionController(tty) 
     tracer = trace.TraceHandler(options.output, termenc)
 

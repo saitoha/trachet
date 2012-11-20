@@ -18,9 +18,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-__author__  = "Hayaki Saito (user@zuse.jp)"
-__version__ = "0.0.6"
-__license__ = "GPL v3"
+_STRING_MAP = {
+    'P': 'DCS',
+    ']': 'OSC',
+    '^': 'PM',
+    '_': 'APC',
+    'X': 'SOS',
+}
 
-from trachet import *
+def format(prefix, value):
+    v = u''.join([unichr(c) for c in value])
+    p = chr(prefix)
+    if p in _STRING_MAP:
+        mnemonic = _STRING_MAP[p]
+    else:
+        mnemonic = '[ESC ' + chr(prefix) + ']'
+    result = "\x1b[37;44mESC %s \x1b[0;35m%s \x1b[37;44mST\x1b[0;36m    %s" % (p, v, mnemonic)
+    return result 
+
 

@@ -18,9 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-__author__  = "Hayaki Saito (user@zuse.jp)"
-__version__ = "0.0.6"
-__license__ = "GPL v3"
 
-from trachet import *
+_CHAR_MAP = ['NUL', 'SOH', 'STX', 'ETX',
+             'EOT', 'ENQ', 'ACK', 'BEL',
+             'BS',  'HT',  'NL',  'VT',
+             'NP',  'CR',  'SO',  'SI', 
+             'DLE', 'DC1', 'DC2', 'DC3',
+             'DC4', 'NAK', 'SYN', 'ETB',
+             'CAN', 'EM',  'SUB', 'ESC',
+             'FS',  'GS',  'RS',  'US', 'SP']
+
+def format(c):
+   return _CHAR_MAP[c]
 
