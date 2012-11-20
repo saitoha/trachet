@@ -1,7 +1,7 @@
 trachet
 =======
 
-.. image:: images/biohazard.png
+.. image::http://zuse.jp/misc/trachet1.png 
 
 What is This?
 -------------
