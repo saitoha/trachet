@@ -18,19 +18,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-_STRING_MAP = {
-    'P': 'DCS',
-    ']': 'OSC',
-    '^': 'PM',
-    '_': 'APC',
-    'X': 'SOS',
-}
+import seqdb
 
-def format(prefix, value):
+_DB = seqdb.get()
+
+def format(prefix, value, is_input):
     v = u''.join([unichr(c) for c in value])
     p = chr(prefix)
-    if p in _STRING_MAP:
-        mnemonic = _STRING_MAP[p]
+
+    if is_input:
+        direction = '<'
+    else:
+        direction = '>'
+
+    key = "%s ESC %s<ST>" % (direction, p)
+    if key in _DB:
+        mnemonic = _DB[key]
     else:
         mnemonic = '[ESC ' + chr(prefix) + ']'
     result = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s" % (p, v, mnemonic)

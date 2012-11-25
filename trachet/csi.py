@@ -18,82 +18,46 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+import seqdb
 
-_CSI_MAP={
-    '//@': 'ICH',
-    '//A': 'CUU',
-    '//B': 'CUD',
-    '//C': 'CUF',
-    '//D': 'CUB',
-    '//E': 'CNL',
-    '//F': 'CPL',
-    '//G': 'CHA',
-    '//H': 'CUP',
-    '//I': 'CHT',
-    '//J': 'ED',
-    '//K': 'EL',
-    '//L': 'IL',
-    '//M': 'DL',
-    '<//M': 'SGR (1006) Mouse Reporting / Button Up',
-    '//P': 'DCH',
-    '//R': 'DSR 6 (cursor position) Response',
-    '//S': 'SU',
-    '//X': 'ECH',
-    '//Z': 'CBT',
-    '//`': 'HPA',
-    '//a': 'HPR',
-    '//b': 'REP',
-    '//c': 'DA1',
-    '>//c': 'DA2',
-    '?//c': 'DA1 Response',
-    '//d': 'VPA',
-    '//e': 'VPR',
-    '//f': 'HVP',
-    '//g': 'TBC',
-    '//h': 'SM',
-    '?//h': 'DECSET',
-    '//i': 'MC',
-    '?//i': 'MC / DEC Specific',
-    '//l': 'RM',
-    '?//l': 'DECRST',
-    '//m': 'SGR',
-    '<//m': 'SGR (1006) Mouse Reporting',
-    '>//m': 'Special Keyboard Modifier Settings (xterm)',
-    '//n': 'DSR',
-    '?//n': 'DSR / DEC Specific',
-    '>//n': 'Disable Special Keyboard Modifier Settings (xterm)',
-    '//r': 'DECSTBM',
-    '//t': 'DECSLPP or Window Manipulation (dtterm)'
-}
+_DB = seqdb.get()
 
-def format(parameter, intermediate, final):
+def get_mnemonic(direction, prefix, p, i, f):
+
+    if len(p) == 0 or len(p) == len(prefix):
+        length = 0
+    else:
+        key = '%s CSI %s%s%s' % (direction, p, i, f)
+        if key in _DB:
+            return _DB[key] 
+        length = len(p.split(";"))
+
+    key = '%s CSI %s[%d]%s%s' % (direction, prefix, length, i, f)
+    if key in _DB:
+        return _DB[key] 
+
+    key = '%s CSI %s%s%s' % (direction, prefix, i, f)
+    if key in _DB:
+        return _DB[key] 
+    return '<Unknown>'
+ 
+def format(parameter, intermediate, final, is_input):
     p = ''.join([chr(c) for c in parameter])
     i = ''.join([chr(c) for c in intermediate]).replace(" ", "<SP>")
     f = chr(final)
+
+    if is_input:
+        direction = '<'
+    else:
+        direction = '>'
+
     if p and p[0] > ";":
         prefix = p[0]
     else:
         prefix = ''
-    key = '/'.join((prefix, i, f))
-    if i == '':
-        if key in _CSI_MAP:
-            mnemonic = _CSI_MAP[key] 
-        elif f == 'T':
-            if p == '':
-                mnemonic = 'SD'
-            elif p[0] == ">":
-                mnemonic = 'Title Mode Setting (xterm)'
-            elif p.split(";") > 1:
-                mnemonic = 'Initiate Highlight Mouse Tracking (xterm)' 
-            else:
-                mnemonic = 'SD'
-        else:
-            #raise Exception("CSI " + f)
-            mnemonic = '<Unknown>'
-    else:
-        #raise Exception("CSI " + i + " " + f)
-        mnemonic = '<Unknown>'
-    
+
+    mnemonic = get_mnemonic(direction, prefix, p, i, f)
+   
     context = []
     if p:
         context.append("\x1b[35m" + p)
@@ -101,6 +65,7 @@ def format(parameter, intermediate, final):
         context.append("\x1b[36m" + i)
     if f:
         context.append("\x1b[33m" + f)
+
     result = "\x1b[0;1;31;40m CSI %s \x1b[0;1;36m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
     return result
 

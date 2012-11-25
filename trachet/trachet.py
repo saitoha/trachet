@@ -66,8 +66,10 @@ def main():
         return
 
     # retrive starting command
-    if len(args) > 0:
+    if len(args) == 1:
         command = args[0]
+    elif len(args) > 1:
+        command = " ".join(args)
     elif not os.getenv('SHELL') is None:
         command = os.getenv('SHELL')
     else:

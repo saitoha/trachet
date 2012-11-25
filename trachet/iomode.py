@@ -45,3 +45,4 @@ class IOMode():
             return _PROMPT_INPUT
         return _PROMPT_OUTPUT
 
+
