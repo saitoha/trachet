@@ -46,11 +46,14 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     _io_mode = None
 
-    def __init__(self, output_file, termenc):
+    def __init__(self, output_file, termenc, use_header):
         self.__super = super(TraceHandler, self)
         if isinstance(output_file, str):
             output_file = open(output_file, "w")
         self.__log = codecs.getwriter(termenc)(output_file)
+        self.__log.write("\x1bcHello!")
+        if use_header:
+            self.__log.write("\x1b[1;2r") 
         self.__bufferring = False 
         self._io_mode = IOMode()
 

@@ -22,20 +22,51 @@ import seqdb
 
 _DB = seqdb.get()
 
-def format(prefix, value, is_input):
-    v = u''.join([unichr(c) for c in value])
-    p = chr(prefix)
+def get_mnemonic(p, v, is_input):
 
     if is_input:
         direction = '<'
     else:
         direction = '>'
 
+    key = "%s ESC %s%s<ST>" % (direction, p, v)
+    if key in _DB:
+        return _DB[key]
+
+    params = v.split(";") 
+    length = len(params)
+
+    if length > 0:
+        key = "%s ESC %s%s<ST>" % (direction, p, params[0])
+        if key in _DB:
+            return _DB[key]
+
+    if length > 1:
+        key = "%s ESC %s%s;%s<ST>" % (direction, p, params[0], params[1])
+        if key in _DB:
+            return _DB[key]
+
+    if length > 2:
+        key = "%s ESC %s%s;%s;%s<ST>" % (direction, params[0], params[1], params[2])
+        if key in _DB:
+            return _DB[key]
+
+    if length > 3:
+        key = "%s ESC %s%s;%s;%s;%s<ST>" % (direction, params[0], params[1], params[2], params[3])
+        if key in _DB:
+            return _DB[key]
+
     key = "%s ESC %s<ST>" % (direction, p)
     if key in _DB:
-        mnemonic = _DB[key]
-    else:
-        mnemonic = '[ESC ' + chr(prefix) + ']'
+        return _DB[key]
+
+    return '[ESC ' + chr(prefix) + ']'
+
+def format(prefix, value, is_input):
+    v = u''.join([unichr(c) for c in value])
+    p = chr(prefix)
+
+    mnemonic = get_mnemonic(p, v, is_input)
     result = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s" % (p, v, mnemonic)
     return result 
 

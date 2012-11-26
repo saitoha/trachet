@@ -51,6 +51,10 @@ def main():
                       default='/dev/null',
                       help='OutputFile')
 
+    parser.add_option('-f', '--use-fixed-header', dest='header',
+                      action="store_true", default=False,
+                      help='"break" the program at the startup time')
+
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
                       help='"break" the program at the startup time')
@@ -103,7 +107,9 @@ def main():
     tty.fitsize()
 
     controller = controller.ActionController(tty) 
-    tracer = trace.TraceHandler(options.output, termenc)
+    tracer = trace.TraceHandler(options.output,
+                                termenc,
+                                use_header=options.header)
 
     if options.breakstart:
         controller.set_break()

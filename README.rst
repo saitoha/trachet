@@ -4,7 +4,7 @@ trachet
 What is This?
 -------------
 
-    trachet = tracer(sniffer service) + ratchet(step-by-step debugging service)
+    trachet = tracer + ratchet(step-by-step debugging service)
 
     This Program runs as a terminal filter process, between Terminals and Applications.
     It provides step-by-step debugging and formatted sequence tracing service.
