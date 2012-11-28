@@ -71,7 +71,6 @@ _SEQDB = {
     '< CSI ?62;9;c'      : 'DA1 Response: VT200 family (could be gnome-terminal)',
     '< CSI ?64;1;2;6;9;15;21;22c':
     'DA1 Response: VT400 family (could be xterm pl>=280)',
-    'DA1 Response: VT500 family (could be RLogin)',
     '< CSI ?65;1;2;3,4;6;8;9;18;21;22;29;42;44c':
     'DA1 Response: VT500 family (could be RLogin)',
     '< CSI >c'           : 'DA2 Response',
