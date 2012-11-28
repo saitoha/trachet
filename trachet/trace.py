@@ -122,11 +122,13 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__bufferring = True
             prompt = self._io_mode.get_prompt()
             self.__log.write(u"%s  " % prompt)
-        if c <= 0x20:
-            mnemonic = char.format(c)
-            self.__log.write("\x1b[32m<%s>\x1b[0m" % mnemonic)
+        mnemonic, handled = char.format(c, self._io_mode.is_input())
+        if handled:
+            self.__bufferring = False
+            self.__log.write(mnemonic)
+            self.__log.write('\n')
         else:
-            self.__log.write(unichr(c))
+            self.__log.write(mnemonic)
         self.__log.flush()
         return False # not handled
 
