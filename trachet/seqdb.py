@@ -30,6 +30,8 @@ Reference:
 '''
 
 _SEQDB = {
+    '< <NUL>'            : 'NUL / Ctrl-@,Ctrl-SP,Ctrl-2',
+    '> <NUL>'            : 'NUL / null character',
     '< <BEL>'            : 'BEL / Ctrl-G',
     '> <BEL>'            : 'BEL / bell',
     '> ESC P<ST>'        : 'DCS / device control string',
@@ -71,6 +73,8 @@ _SEQDB = {
     '< CSI ?62;9;c'      : 'DA1 Response: VT200 family (could be gnome-terminal)',
     '< CSI ?64;1;2;6;9;15;21;22c':
     'DA1 Response: VT400 family (could be xterm pl>=280)',
+    '< CSI >64;1;4;7;9;22;29c':
+    'DA2 Response: VT400 family (could be tanasinn)',
     '< CSI ?65;1;2;3,4;6;8;9;18;21;22;29;42;44c':
     'DA1 Response: VT500 family (could be RLogin)',
     '< CSI >c'           : 'DA2 Response',
@@ -87,7 +91,7 @@ _SEQDB = {
     '< CSI >0;274;0c'    : 'DA2 Response: VT100 (could be xterm patch#274)',
     '< CSI >0;275;0c'    : 'DA2 Response: VT100 (could be xterm patch#275)',
     '< CSI >0;276;0c'    : 'DA2 Response: VT100 (could be xterm patch#276)',
-    '< CSI >0;277;0c'    : 'DA2 Response: VT100 (could be xterm patch#277)',
+    '< CSI >0;277;0c'    : 'DA2 Response: VT100 (could be xterm patch#277 or tanasinn)',
     '< CSI >0;278;0c'    : 'DA2 Response: VT100 (could be xterm patch#278)',
     '< CSI >0;279;0c'    : 'DA2 Response: VT100 (could be xterm patch#279)',
     '< CSI >1;[*]c'      : 'DA2 Response: VT220',
@@ -140,10 +144,12 @@ _SEQDB = {
     '< CSI 21~'          : 'F10 key (xterm)',
     '< CSI 23~'          : 'F11 key (xterm)',
     '< CSI 24~'          : 'F12 key (xterm)',
+    '< CSI 200~'         : 'Start sequense of bracketed paste',
+    '< CSI 201~'         : 'Terminate bracketed paste',
     '> ESC D'            : 'IND / moves the cursor down one line in the same column',
     '> ESC E'            : 'NEL / moves the cursor to the first position on the next line',
     '> ESC H'            : 'HTS / sets a horizontal tab stop at the column where the cursor is. ',
-    '> ESC M'            : 'HTS / moves the cursor up one line in the same column',
+    '> ESC M'            : 'RI / moves the cursor up one line in the same column',
     '> ESC N'            : 'SS2 / temporarily maps the G2 character set into GL or GR, for the next graphic character',
     '> ESC O'            : 'SS3 / temporarily maps the G3 character set into GL or GR, for the next graphic character',
     '> ESC \\'           : 'ST / String terminator. Ends a DCS, SOS, OSC, PM and APC sequence',
