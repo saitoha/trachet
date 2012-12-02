@@ -34,10 +34,10 @@ def get_mnemonic(direction, prefix, p, i, f):
             return _DB[key] 
         length = len(params)
 
-    if length > 0:
-        key = '%s CSI %s;[*]%s%s' % (direction, params[0], i, f)
-        if key in _DB:
-            return _DB[key] 
+#    if length > 0:
+#        key = '%s CSI %s;[*]%s%s' % (direction, params[0], i, f)
+#        if key in _DB:
+#            return _DB[key] 
 
     key = '%s CSI %s[%d]%s%s' % (direction, prefix, length, i, f)
     if key in _DB:

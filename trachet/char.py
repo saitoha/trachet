@@ -58,6 +58,16 @@ _CHAR_MAP = {0x00: '<NUL>',
              0x7F: '<DEL>'}
 
 def format(c, is_input):
+    """
+      >>> _create_mock_db() 
+      >>> str(format(ord("a"), False)).replace("\x1b", "\\x1b")
+      "(u'\\\\x1b[32ma', False)"
+      >>> str(format(ord("\x1b"), False)).replace("\x1b", "\\x1b")
+      "(u'\\\\x1b[32m<ESC>', False)"
+      >>> str(format(ord("\x07"), False)).replace("\x1b", "\\x1b")
+      "(u'\\\\x1b[31m<BEL>\\\\x1b[1;32m\\\\r\\\\x1b[30CBEL / bell', True)"
+    """
+
     if _CHAR_MAP.has_key(c):
         printable_char = _CHAR_MAP[c]
     else:
@@ -73,4 +83,17 @@ def format(c, is_input):
     if _DB.has_key(key):
         return u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s" % (printable_char, _DB[key]), True
     return u"\x1b[32m%s" % printable_char, False
+
+def _create_mock_db():
+    global _DB
+    _DB = {
+        '< <NUL>'            : 'NUL / Ctrl-@,Ctrl-SP,Ctrl-2',
+        '< <BEL>'            : 'BEL / Ctrl-G',
+        '> <NUL>'            : 'NUL / null character',
+        '> <BEL>'            : 'BEL / bell',
+    }
+
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
 

@@ -132,4 +132,10 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         self.__log.flush()
         return False # not handled
 
+def _test():
+    pass
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
 

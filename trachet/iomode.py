@@ -25,7 +25,18 @@ _PROMPT_INPUT     = "\x1b[0;7m<<<"
 _PROMPT_OUTPUT    = "\x1b[0m>>>"
 
 class IOMode():
-
+    """
+    >>> mode = IOMode()
+    >>> mode.is_input()
+    True
+    >>> mode.get_prompt() == _PROMPT_INPUT
+    True
+    >>> mode.set_output()
+    >>> mode.is_output()
+    True
+    >>> mode.get_prompt() == _PROMPT_OUTPUT
+    True
+    """
     _direction = _DIRECTION_INPUT 
 
     def is_input(self):
@@ -44,5 +55,12 @@ class IOMode():
         if self.is_input():
             return _PROMPT_INPUT
         return _PROMPT_OUTPUT
+
+def _test():
+    import doctest
+    doctest.testmod()
+
+if __name__ == "__main__":
+    _test()
 
 

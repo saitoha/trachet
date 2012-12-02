@@ -60,14 +60,40 @@ def get_mnemonic(p, v, is_input):
     if key in _DB:
         return _DB[key]
 
-    return '[ESC ' + chr(prefix) + ']'
+    return '[ESC ' + p + ']'
 
 def format(prefix, value, is_input):
-    v = u''.join([unichr(c) for c in value])
+    """
+      >>> _create_mock_db() 
+      >>> format(ord("]"), map(ord, "abcde"), False).replace("\x1b", "\\x1b")
+      u'\\x1b[0;1;37;44mESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command'
+
+      >>> format(ord("Q"), map(ord, "cdefg"), False)
+      u'\\x1b[0;1;37;44mESC Q \\x1b[0;1;35mcdefg \\x1b[37;44mST\\x1b[0;1;36m  [ESC Q]'
+    """
+
+    try:
+        v = u''.join(map(unichr, value))
+    except OverflowError, e:
+        v = str(value)
     p = chr(prefix)
 
     mnemonic = get_mnemonic(p, v, is_input)
     result = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s" % (p, v, mnemonic)
     return result 
 
+def _create_mock_db():
+    global _DB
+    _DB = {
+        '> ESC ]<ST>'        : 'OSC / operating system command',
+        '> ESC ]0<ST>'       : 'OSC 0 / set icon name and window title',
+        '> ESC ]1<ST>'       : 'OSC 1 / set icon name',
+        '> ESC ]2<ST>'       : 'OSC 2 / set window title',
+        '> ESC ]4<ST>'       : 'OSC 4 / get or set color palette',
+        '> ESC ]9<ST>'       : 'OSC 9 / Growl integration (iTerm2)',
+    }
+ 
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
 
