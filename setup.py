@@ -13,14 +13,14 @@ import trachet.char as char
 import trachet.esc as esc
 import trachet.csi as csi
 import trachet.cstr as cstr
-import trachet.input as input
-import trachet.output as output
-import trachet.trace as trace
-import trachet.controller as controller
+#import trachet.input as input
+#import trachet.output as output
+#import trachet.trace as trace
+#import trachet.controller as controller
 
 import doctest
 dirty = False
-for m in [seqdb, iomode, cstr, char, esc, csi, cstr, input, output, trace, controller]:
+for m in [seqdb, iomode, cstr, char, esc, csi, cstr]:
     failure_count, test_count = doctest.testmod(m)
     if failure_count > 0:
         dirty = True
