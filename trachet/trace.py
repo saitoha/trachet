@@ -158,6 +158,15 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         self.__log.flush()
         return False # not handled
 
+    def handle_invalid(self, context, seq):
+        if self.is_disabled():
+            return False
+        if self.__bufferring:
+            self.__log.write('\n')
+            self.__bufferring = False
+        prompt = self._io_mode.get_prompt()
+        self.__log.write("%s  \x1b[33;41m%s\x1b[m\n" % (prompt, str([hex(c) for c in seq])))
+
 def _test():
     pass
 

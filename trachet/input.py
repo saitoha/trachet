@@ -88,6 +88,11 @@ class InputHandler(tff.DefaultHandler):
         self.__tracer.handle_char(context, final)
         return False 
 
+    def handle_invalid(self, context, seq):
+        self.__tracer.set_output()
+        self.__tracer.handle_invalid(context, seq)
+        return False 
+
     def handle_draw(self, context):
         self.__actions.tick()
 
