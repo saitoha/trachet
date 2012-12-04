@@ -24,6 +24,8 @@ import tff
 # formatter
 import esc
 import csi
+import ss2
+import ss3
 import char
 import cstr
 from iomode import IOMode
@@ -79,6 +81,18 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     ''' Override Interface tff.EventObserver '''
 
+    def handle_esc(self, context, intermediate, final):
+        if self.is_disabled():
+            return False
+        if self.__bufferring:
+            self.__log.write('\n')
+            self.__bufferring = False
+        prompt = self._io_mode.get_prompt()
+        formatted = esc.format(intermediate, final, self._io_mode.is_input())
+        self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self.__log.flush()
+        return False # not handled
+
     def handle_csi(self, context, parameter, intermediate, final):
         if self.is_disabled():
             return False
@@ -91,14 +105,26 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         self.__log.flush()
         return False # not handled
 
-    def handle_esc(self, context, intermediate, final):
+    def handle_ss2(self, context, final):
         if self.is_disabled():
             return False
         if self.__bufferring:
             self.__log.write('\n')
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
-        formatted = esc.format(intermediate, final, self._io_mode.is_input())
+        formatted = ss2.format(final, self._io_mode.is_input())
+        self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self.__log.flush()
+        return False # not handled
+
+    def handle_ss3(self, context, final):
+        if self.is_disabled():
+            return False
+        if self.__bufferring:
+            self.__log.write('\n')
+            self.__bufferring = False
+        prompt = self._io_mode.get_prompt()
+        formatted = ss3.format(final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         self.__log.flush()
         return False # not handled

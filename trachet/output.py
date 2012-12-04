@@ -26,60 +26,86 @@ class OutputHandler(tff.DefaultHandler):
 
     def __init__(self, actions, tracer):
         self.__super = super(tff.DefaultHandler, self)
-        self.__tracer = tracer 
+        self.__tracer = tracer
         self.__super.__init__()
         self.__actions = actions
 
     def handle_csi(self, context, parameter, intermediate, final):
         def action():
-            context.write(0x1b) # ESC
-            context.write(0x5b) # [
+            context.put(0x1b) # ESC
+            context.put(0x5b) # [
             for c in parameter:
-                context.write(c)
+                context.put(c)
             for c in intermediate:
-                context.write(c)
-            context.write(final)
+                context.put(c)
+            context.put(final)
             self.__tracer.set_output()
             self.__tracer.handle_csi(context, parameter, intermediate, final)
-            return constant.SEQ_TYPE_CSI 
+            return constant.SEQ_TYPE_CSI
         self.__actions.append(action)
         return True # handled
 
     def handle_esc(self, context, intermediate, final):
         def action():
-            context.write(0x1b) # ESC
+            context.put(0x1b) # ESC
             for c in intermediate:
-                context.write(c)
-            context.write(final)
+                context.put(c)
+            context.put(final)
             self.__tracer.set_output()
             self.__tracer.handle_esc(context, intermediate, final)
-            return constant.SEQ_TYPE_ESC 
+            return constant.SEQ_TYPE_ESC
+        self.__actions.append(action)
+        return True # handled
+
+    def handle_ss2(self, context, final):
+        def action():
+            self.put(0x1b) # ESC
+            self.put(0x4e) # N
+            self.put(final)
+            self.__tracer.set_output()
+            self.__tracer.handle_ss2(context, final)
+            return constant.SEQ_TYPE_SS2
+        self.__actions.append(action)
+        return True # handled
+
+    def handle_ss3(self, context, final):
+        def action():
+            self.put(0x1b) # ESC
+            self.put(0x4f) # O
+            self.put(final)
+            self.__tracer.set_output()
+            self.__tracer.handle_ss3(context, final)
+            return constant.SEQ_TYPE_SS3
         self.__actions.append(action)
         return True # handled
 
     def handle_control_string(self, context, prefix, value):
         def action():
-            context.write(0x1b) # ESC
-            context.write(prefix)
+            context.put(0x1b) # ESC
+            context.put(prefix)
             for c in value:
-                context.write(c)
-            context.write(0x1b) # ESC
-            context.write(0x5c) # \
+                context.put(c)
+            context.put(0x1b) # ESC
+            context.put(0x5c) # \
             self.__tracer.set_output()
             self.__tracer.handle_control_string(context, prefix, value)
-            return constant.SEQ_TYPE_STR 
+            return constant.SEQ_TYPE_STR
         self.__actions.append(action)
-        return True 
+        return True
 
     def handle_char(self, context, final):
         def action():
-            context.write(final)
+            context.put(final)
             self.__tracer.set_output()
             self.__tracer.handle_char(context, final)
-            return constant.SEQ_TYPE_CHAR 
+            return constant.SEQ_TYPE_CHAR
         self.__actions.append(action)
         return True # handled
 
     def handle_draw(self, context):
         self.__actions.tick()
+
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
 

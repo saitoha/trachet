@@ -2,8 +2,10 @@
 PACKAGE_NAME=trachet
 PYTHON=python
 
-all:
-	
+all: test
+	$(PYTHON) setup.py sdist
+	python2.6 setup.py bdist_egg
+	python2.7 setup.py bdist_egg
 
 install:
 	$(PYTHON) -c "import setuptools" || curl http://peak.telecommunity.com/dist/ez_setup.py | python

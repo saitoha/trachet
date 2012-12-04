@@ -19,9 +19,14 @@
 # ***** END LICENSE BLOCK *****
 
 
-SEQ_TYPE_CSI  = 0
-SEQ_TYPE_ESC  = 1
-SEQ_TYPE_STR  = 2
-SEQ_TYPE_CHAR = 3
+SEQ_TYPE_ESC  = 0
+SEQ_TYPE_CSI  = 1
+SEQ_TYPE_SS2  = 2
+SEQ_TYPE_SS3  = 3
+SEQ_TYPE_STR  = 4
+SEQ_TYPE_CHAR = 5
 
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
 

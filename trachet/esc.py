@@ -45,4 +45,8 @@ def format(intermediate, final, is_input):
     result = "\x1b[0;1;31;44m ESC %s \x1b[0;1;35m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
     return result
 
+ 
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
 

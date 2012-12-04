@@ -56,6 +56,11 @@ class InputHandler(tff.DefaultHandler):
                     return True
         return False
 
+    def handle_esc(self, context, intermediate, final):
+        self.__tracer.set_input()
+        self.__tracer.handle_esc(context, intermediate, final)
+        return False 
+
     def handle_csi(self, context, parameter, intermediate, final):
         if self._handle_fkeys(parameter, intermediate, final):
             return True
@@ -63,9 +68,14 @@ class InputHandler(tff.DefaultHandler):
         self.__tracer.handle_csi(context, parameter, intermediate, final)
         return False 
 
-    def handle_esc(self, context, intermediate, final):
+    def handle_ss2(self, context, final):
         self.__tracer.set_input()
-        self.__tracer.handle_esc(context, intermediate, final)
+        self.__tracer.handle_ss2(context, final)
+        return False 
+
+    def handle_ss3(self, context, final):
+        self.__tracer.set_input()
+        self.__tracer.handle_ss3(context, final)
         return False 
 
     def handle_control_string(self, context, prefix, value):
@@ -82,3 +92,8 @@ class InputHandler(tff.DefaultHandler):
         self.__actions.tick()
 
 
+if __name__ == "__main__":
+   import doctest
+   doctest.testmod()
+
+ 
