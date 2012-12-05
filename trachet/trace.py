@@ -22,16 +22,21 @@ import codecs
 import tff
 
 # formatter
-import esc
-import csi
-import ss2
-import ss3
-import char
-import cstr
+import esc, csi, ss2, ss3, char, cstr
 from iomode import IOMode
 
 class SwitchOnOffTrait():
-
+    """
+    >>> handler = TraceHandler()
+    >>> handler.is_disabled()
+    True
+    >>> handler.set_disabled()
+    >>> handler.is_disabled()
+    True
+    >>> handler.set_enabled()
+    >>> handler.is_disabled()
+    False
+    """
     _disabled = False
 
     def is_disabled(self):
@@ -66,7 +71,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             return False
         if self._io_mode.is_input():
             if self.__bufferring:
-                self.__log.write('\n')
+                self.__log.write("\n")
                 self.__bufferring = False
             self._io_mode.set_output() 
 
@@ -75,7 +80,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             return False
         if self._io_mode.is_output():
             if self.__bufferring:
-                self.__log.write('\n')
+                self.__log.write("\n")
                 self.__bufferring = False
             self._io_mode.set_input()
 
@@ -85,7 +90,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = esc.format(intermediate, final, self._io_mode.is_input())
@@ -97,7 +102,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = csi.format(parameter, intermediate, final, self._io_mode.is_input())
@@ -109,7 +114,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = ss2.format(final, self._io_mode.is_input())
@@ -121,7 +126,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = ss3.format(final, self._io_mode.is_input())
@@ -133,7 +138,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         formatted = cstr.format(prefix, value, self._io_mode.is_input())
@@ -152,7 +157,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if handled:
             self.__bufferring = False
             self.__log.write(mnemonic)
-            self.__log.write('\n')
+            self.__log.write("\n")
         else:
             self.__log.write(mnemonic)
         self.__log.flush()
@@ -162,10 +167,11 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.is_disabled():
             return False
         if self.__bufferring:
-            self.__log.write('\n')
+            self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
-        self.__log.write("%s  \x1b[33;41m%s\x1b[m\n" % (prompt, str([hex(c) for c in seq])))
+        value = str([hex(c) for c in seq])
+        self.__log.write("%s  \x1b[33;41m%s\x1b[0m\n" % (prompt, value))
 
 def _test():
     pass

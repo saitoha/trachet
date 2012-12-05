@@ -96,9 +96,7 @@ class InputHandler(tff.DefaultHandler):
     def handle_draw(self, context):
         self.__actions.tick()
 
-
 if __name__ == "__main__":
    import doctest
    doctest.testmod()
 
- 
