@@ -18,7 +18,7 @@ Install
 
 via github ::
 
-    $ git clone https://github.com/saitoha/trachet.git
+    $ git clone --recursive https://github.com/saitoha/trachet.git
     $ cd trachet
     $ python setup.py install
 

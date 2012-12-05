@@ -7,6 +7,13 @@ import inspect, os
 filename = inspect.getfile(inspect.currentframe())
 dirpath = os.path.abspath(os.path.dirname(inspect.getfile(inspect.currentframe())))
 
+try:
+    import trachet.tff
+except:
+    print "Please do:\n git submodule update --init"
+    import sys
+    sys.exit(1)
+
 import trachet.seqdb as seqdb
 import trachet.iomode as iomode
 import trachet.char as char

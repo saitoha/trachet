@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-
 import tff
 import constant
 
@@ -98,6 +97,16 @@ class OutputHandler(tff.DefaultHandler):
             context.put(final)
             self.__tracer.set_output()
             self.__tracer.handle_char(context, final)
+            return constant.SEQ_TYPE_CHAR
+        self.__actions.append(action)
+        return True # handled
+
+    def handle_invalid(self, context, seq):
+        def action():
+            for c in seq:
+                context.put(c)
+            self.__tracer.set_output()
+            self.__tracer.handle_invalid(context, seq)
             return constant.SEQ_TYPE_CHAR
         self.__actions.append(action)
         return True # handled

@@ -98,10 +98,7 @@ def main():
     termenc = encoding
 
     import tff
-    import input
-    import output
-    import controller
-    import trace
+    import input, output, controller, trace
 
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     tty.fitsize()
