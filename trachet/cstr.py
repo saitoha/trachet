@@ -47,12 +47,12 @@ def get_mnemonic(p, v, is_input):
             return _DB[key]
 
     if length > 2:
-        key = "%s ESC %s%s;%s;%s<ST>" % (direction, params[0], params[1], params[2])
+        key = "%s ESC %s%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2])
         if key in _DB:
             return _DB[key]
 
     if length > 3:
-        key = "%s ESC %s%s;%s;%s;%s<ST>" % (direction, params[0], params[1], params[2], params[3])
+        key = "%s ESC %s%s;%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2], params[3])
         if key in _DB:
             return _DB[key]
 
