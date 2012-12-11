@@ -18,8 +18,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-import codecs
+import codecs, time
 import tff
+
+try:
+   from cStringIO import StringIO
+except:
+   from StringIO import StringIO
 
 # formatter
 import esc, csi, ss2, ss3, char, cstr
@@ -57,10 +62,8 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         self.__super = super(TraceHandler, self)
         if isinstance(output_file, str):
             output_file = open(output_file, "w")
-        self.__log = codecs.getwriter(termenc)(output_file)
-        self.__log.write("\x1bcHello!")
-        if use_header:
-            self.__log.write("\x1b[1;2r") 
+        self.__log = codecs.getwriter(termenc)(StringIO())
+        self.__output = output_file
         self.__bufferring = False 
         self._io_mode = IOMode()
 
@@ -95,7 +98,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         formatted = esc.format(intermediate, final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        self.__log.flush()
         return False # not handled
 
     def handle_csi(self, context, parameter, intermediate, final):
@@ -107,7 +109,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         formatted = csi.format(parameter, intermediate, final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        self.__log.flush()
         return False # not handled
 
     def handle_ss2(self, context, final):
@@ -119,7 +120,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         formatted = ss2.format(final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        self.__log.flush()
         return False # not handled
 
     def handle_ss3(self, context, final):
@@ -131,7 +131,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         formatted = ss3.format(final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        self.__log.flush()
         return False # not handled
 
     def handle_control_string(self, context, prefix, value):
@@ -143,7 +142,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         formatted = cstr.format(prefix, value, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        self.__log.flush()
         return False # not handled
 
     def handle_char(self, context, c):
@@ -160,7 +158,6 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__log.write("\n")
         else:
             self.__log.write(mnemonic)
-        self.__log.flush()
         return False # not handled
 
     def handle_invalid(self, context, seq):
@@ -172,6 +169,30 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         value = str([hex(c) for c in seq])
         self.__log.write("%s  \x1b[33;41m%s\x1b[0m\n" % (prompt, value))
+
+    def handle_resize(self, context, row, col):
+        if self.is_disabled():
+            return False
+        if self.__bufferring:
+            self.__log.write("\n")
+            self.__bufferring = False
+        prompt = "==="
+        self.__log.write("%s  \x1b[33;41m resized: (row=%d, col=%d)\x1b[0m\n" % (prompt, row, col))
+
+    def handle_draw(self, context):
+        try:
+            self.__output.write(self.__log.getvalue())
+        except IOError:
+            time.sleep(0.1)
+            self.__output.write(self.__log.getvalue())
+
+        try:
+            self.__output.flush()
+        except IOError:
+            time.sleep(0.1)
+            self.__output.flush()
+
+        self.__log.truncate(0)
 
 def _test():
     pass
