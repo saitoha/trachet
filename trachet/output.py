@@ -111,8 +111,12 @@ class OutputHandler(tff.DefaultHandler):
         self.__actions.append(action)
         return True # handled
 
+    def handle_resize(self, context, row, col):
+        self.__tracer.handle_resize(context, row, col)
+
     def handle_draw(self, context):
         self.__actions.tick()
+        self.__tracer.handle_draw(context)
 
 if __name__ == "__main__":
    import doctest
