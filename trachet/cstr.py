@@ -33,28 +33,30 @@ def get_mnemonic(p, v, is_input):
     if key in _DB:
         return _DB[key]
 
-    params = v.split(";") 
-    length = len(params)
-
-    if length > 0:
-        key = "%s ESC %s%s<ST>" % (direction, p, params[0])
+    if v[0].isalpha():
+        key = "%s ESC %s%s<ST>" % (direction, p, v[0])
         if key in _DB:
             return _DB[key]
+    else:
+        params = v.split(";") 
+        length = len(params)
 
-    if length > 1:
-        key = "%s ESC %s%s;%s<ST>" % (direction, p, params[0], params[1])
-        if key in _DB:
-            return _DB[key]
-
-    if length > 2:
-        key = "%s ESC %s%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2])
-        if key in _DB:
-            return _DB[key]
-
-    if length > 3:
-        key = "%s ESC %s%s;%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2], params[3])
-        if key in _DB:
-            return _DB[key]
+        if length > 3:
+            key = "%s ESC %s%s;%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2], params[3])
+            if key in _DB:
+                return _DB[key]
+        if length > 2:
+            key = "%s ESC %s%s;%s;%s<ST>" % (direction, p, params[0], params[1], params[2])
+            if key in _DB:
+                return _DB[key]
+        if length > 1:
+            key = "%s ESC %s%s;%s<ST>" % (direction, p, params[0], params[1])
+            if key in _DB:
+                return _DB[key]
+        if length > 0:
+            key = "%s ESC %s%s<ST>" % (direction, p, params[0])
+            if key in _DB:
+                return _DB[key]
 
     key = "%s ESC %s<ST>" % (direction, p)
     if key in _DB:
