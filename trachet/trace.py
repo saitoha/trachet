@@ -58,20 +58,21 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     _io_mode = None
 
-    def __init__(self, output_file, termenc, use_header):
+    def __init__(self, output_file, termenc, controller):
         self.__super = super(TraceHandler, self)
         if isinstance(output_file, str):
             output_file = open(output_file, "w")
         self.__log = codecs.getwriter(termenc)(StringIO())
         self.__output = output_file
         self.__bufferring = False 
+        self._controller = controller
         self._io_mode = IOMode()
 
     ''' Switch Input/Output prompt state '''
 
     def set_output(self):
         if self.is_disabled():
-            return False
+            return
         if self._io_mode.is_input():
             if self.__bufferring:
                 self.__log.write("\n")
@@ -80,7 +81,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     def set_input(self):
         if self.is_disabled():
-            return False
+            return
         if self._io_mode.is_output():
             if self.__bufferring:
                 self.__log.write("\n")
@@ -90,46 +91,69 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
     ''' Override Interface tff.EventObserver '''
 
     def handle_esc(self, context, intermediate, final):
+        prompt = self._io_mode.get_prompt()
+        formatted = esc.format(intermediate,
+                               final,
+                               self._io_mode.is_input(),
+                               self,
+                               self._controller)
+        if not formatted:
+            return True
         if self.is_disabled():
             return False
         if self.__bufferring:
             self.__log.write("\n")
             self.__bufferring = False
-        prompt = self._io_mode.get_prompt()
-        formatted = esc.format(intermediate, final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         return False # not handled
 
     def handle_csi(self, context, parameter, intermediate, final):
+        prompt = self._io_mode.get_prompt()
+        formatted = csi.format(parameter,
+                               intermediate,
+                               final,
+                               self._io_mode.is_input(),
+                               self,
+                               self._controller)
+        if not formatted:
+            return True
         if self.is_disabled():
             return False
         if self.__bufferring:
             self.__log.write("\n")
             self.__bufferring = False
-        prompt = self._io_mode.get_prompt()
-        formatted = csi.format(parameter, intermediate, final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         return False # not handled
 
     def handle_ss2(self, context, final):
+        prompt = self._io_mode.get_prompt()
+        formatted = ss2.format(final,
+                               self._io_mode.is_input(),
+                               self,
+                               self._controller)
+        if not formatted:
+            return True
         if self.is_disabled():
             return False
         if self.__bufferring:
             self.__log.write("\n")
             self.__bufferring = False
-        prompt = self._io_mode.get_prompt()
-        formatted = ss2.format(final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         return False # not handled
 
     def handle_ss3(self, context, final):
+        prompt = self._io_mode.get_prompt()
+        formatted = ss3.format(final,
+                               self._io_mode.is_input(),
+                               self,
+                               self._controller)
+        if not formatted:
+            return True
         if self.is_disabled():
             return False
         if self.__bufferring:
             self.__log.write("\n")
             self.__bufferring = False
-        prompt = self._io_mode.get_prompt()
-        formatted = ss3.format(final, self._io_mode.is_input())
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         return False # not handled
 
@@ -140,18 +164,29 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__log.write("\n")
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
-        formatted = cstr.format(prefix, value, self._io_mode.is_input())
+        formatted = cstr.format(prefix,
+                                value,
+                                self._io_mode.is_input(),
+                                self,
+                                self._controller)
+        if not formatted:
+            return True
         self.__log.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
         return False # not handled
 
     def handle_char(self, context, c):
+        mnemonic, handled = char.format(c,
+                                        self._io_mode.is_input(),
+                                        self,
+                                        self._controller)
+        if not mnemonic:
+            return True
         if self.is_disabled():
             return False
         if not self.__bufferring:
             self.__bufferring = True
             prompt = self._io_mode.get_prompt()
             self.__log.write(u"%s  " % prompt)
-        mnemonic, handled = char.format(c, self._io_mode.is_input())
         if handled:
             self.__bufferring = False
             self.__log.write(mnemonic)

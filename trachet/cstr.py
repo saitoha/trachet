@@ -64,13 +64,13 @@ def get_mnemonic(p, v, is_input):
 
     return '[ESC ' + p + ']'
 
-def format(prefix, value, is_input):
+def format(prefix, value, is_input, tracer, controller):
     """
       >>> _create_mock_db() 
-      >>> format(ord("]"), map(ord, "abcde"), False).replace("\x1b", "\\x1b")
+      >>> format(ord("]"), map(ord, "abcde"), False, None, None).replace("\x1b", "\\x1b")
       u'\\x1b[0;1;37;44mESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command'
 
-      >>> format(ord("Q"), map(ord, "cdefg"), False)
+      >>> format(ord("Q"), map(ord, "cdefg"), False, None, None)
       u'\\x1b[0;1;37;44mESC Q \\x1b[0;1;35mcdefg \\x1b[37;44mST\\x1b[0;1;36m  [ESC Q]'
     """
 
@@ -81,6 +81,9 @@ def format(prefix, value, is_input):
     p = chr(prefix)
 
     mnemonic = get_mnemonic(p, v, is_input)
+    if mnemonic[0] == "!":
+        return eval(mnemonic[1:])
+
     result = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s" % (p, v, mnemonic)
     return result 
 

@@ -57,14 +57,19 @@ _CHAR_MAP = {0x00: '<NUL>',
              0x20: '<SP>',
              0x7F: '<DEL>'}
 
-def format(c, is_input):
+def get_mnemonic(key):
+    if _DB.has_key(key):
+        return _DB[key]
+    return ""
+
+def format(c, is_input, tracer, controller):
     """
       >>> _create_mock_db() 
-      >>> str(format(ord("a"), False)).replace("\x1b", "\\x1b")
+      >>> str(format(ord("a"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[32ma', False)"
-      >>> str(format(ord("\x1b"), False)).replace("\x1b", "\\x1b")
+      >>> str(format(ord("\x1b"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[32m<ESC>', False)"
-      >>> str(format(ord("\x07"), False)).replace("\x1b", "\\x1b")
+      >>> str(format(ord("\x07"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[31m<BEL>\\\\x1b[1;32m\\\\r\\\\x1b[30CBEL / bell', True)"
     """
 
@@ -80,8 +85,11 @@ def format(c, is_input):
 
     key = "%s %s" % (direction, printable_char)
 
-    if _DB.has_key(key):
-        return u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s" % (printable_char, _DB[key]), True
+    mnemonic = get_mnemonic(key)
+    if mnemonic:
+        if mnemonic[0] == "!":
+            return eval(mnemonic[1:])
+        return u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s" % (printable_char, mnemonic), True
     return u"\x1b[32m%s" % printable_char, False
 
 def _create_mock_db():

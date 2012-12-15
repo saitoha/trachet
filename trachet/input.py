@@ -29,72 +29,40 @@ class InputHandler(tff.DefaultHandler):
         <F9> step to next ESC or CSI seq
     '''
 
-    def __init__(self, actions, tracer):
-        self.__actions = actions
-        self.__tracer = tracer 
-
-    def _handle_fkeys(self, parameter, intermediate, final):
-        if final == 0x7e and len(intermediate) == 0: # final byte is "~"
-            if parameter == [0x31, 0x37]:   # F6 / CSI 17~
-                if self.__tracer.is_disabled():
-                    self.__tracer.set_enabled()
-                else: 
-                    self.__tracer.set_disabled()
-                return True
-            elif parameter == [0x31, 0x38]:   # F8 / CSI 18~
-                if self.__actions.is_suspended():
-                    self.__actions.resume()
-                else:
-                    self.__actions.set_break()
-                return True
-            elif self.__actions.is_suspended():
-                if parameter == [0x31, 0x39]: # F9 / CSI 19~
-                    self.__actions.set_normal_step()
-                    return True
-                elif parameter == [0x32, 0x30]: # F10 / CSI 20~
-                    self.__actions.set_fuzzy_step()
-                    return True
-        return False
+    def __init__(self, controller, tracer):
+        self._controller = controller
+        self._tracer = tracer 
 
     def handle_esc(self, context, intermediate, final):
-        self.__tracer.set_input()
-        self.__tracer.handle_esc(context, intermediate, final)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_esc(context, intermediate, final)
 
     def handle_csi(self, context, parameter, intermediate, final):
-        if self._handle_fkeys(parameter, intermediate, final):
-            return True
-        self.__tracer.set_input()
-        self.__tracer.handle_csi(context, parameter, intermediate, final)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_csi(context, parameter, intermediate, final)
 
     def handle_ss2(self, context, final):
-        self.__tracer.set_input()
-        self.__tracer.handle_ss2(context, final)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_ss2(context, final)
 
     def handle_ss3(self, context, final):
-        self.__tracer.set_input()
-        self.__tracer.handle_ss3(context, final)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_ss3(context, final)
 
     def handle_control_string(self, context, prefix, value):
-        self.__tracer.set_input()
-        self.__tracer.handle_control_string(context, prefix, value)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_control_string(context, prefix, value)
 
     def handle_char(self, context, final):
-        self.__tracer.set_input()
-        self.__tracer.handle_char(context, final)
-        return False 
+        self._tracer.set_input()
+        return self._tracer.handle_char(context, final)
 
     def handle_invalid(self, context, seq):
-        self.__tracer.set_output()
-        self.__tracer.handle_invalid(context, seq)
-        return False 
+        self._tracer.set_output()
+        return self._tracer.handle_invalid(context, seq)
 
     def handle_draw(self, context):
-        self.__actions.tick()
+        self._controller.tick()
 
 if __name__ == "__main__":
    import doctest

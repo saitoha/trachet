@@ -22,7 +22,15 @@ import seqdb
 
 _DB = seqdb.get()
 
-def format(intermediate, final, is_input):
+def get_mnemonic(direction, i, f):
+    key = "%s ESC %s%s" % (direction, i, f)
+    if key in _DB:
+        mnemonic = _DB[key]
+    else: 
+        mnemonic = '<Unknown>'
+    return mnemonic
+
+def format(intermediate, final, is_input, tracer, controller):
     i = ''.join([chr(c) for c in intermediate]).replace(" ", "<SP>")
     f = chr(final)
 
@@ -31,11 +39,9 @@ def format(intermediate, final, is_input):
     else:
         direction = '>'
 
-    key = "%s ESC %s%s" % (direction, i, f)
-    if key in _DB:
-        mnemonic = _DB[key]
-    else: 
-        mnemonic = '<Unknown>'
+    mnemonic = get_mnemonic(direction, i, f)
+    if mnemonic[0] == "!":
+        return eval(mnemonic[1:])
 
     context = []
     if i:

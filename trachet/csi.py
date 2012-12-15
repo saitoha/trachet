@@ -57,7 +57,7 @@ def get_mnemonic(direction, prefix, p, i, f):
         return _DB[key] 
     return '<Unknown>'
  
-def format(parameter, intermediate, final, is_input):
+def format(parameter, intermediate, final, is_input, tracer, controller):
     p = ''.join([chr(c) for c in parameter])
     i = ''.join([chr(c) for c in intermediate]).replace(" ", "<SP>")
     f = chr(final)
@@ -73,6 +73,8 @@ def format(parameter, intermediate, final, is_input):
         prefix = ''
 
     mnemonic = get_mnemonic(direction, prefix, p, i, f)
+    if mnemonic[0] == "!":
+        return eval(mnemonic[1:])
    
     context = []
     if p:

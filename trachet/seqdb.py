@@ -657,6 +657,59 @@ _SEQDB = {
     '> CSI [4]$z'        : 'DECErA / erase rectangular area - top=%d, left=%d, bottom=%d, right=%d',
 }
 
+_DEFAULT_CONF = """
+#
+# expression := <io-prefix>, <seq>,
+# io-prefix := '<' | '>' // <: input, >: outut
+# seq := ss2 | ss3 | esc | csi | cstr | cchar
+# ss2 := 'ESC N ' <any-byte>
+# ss3 := 'ESC O ' <any-byte>
+# esc := 'ESC ', ( <esc-ibytes>, <esc-fbyte>
+#                | <esc-fbyte> )
+# csi := 'CSI ', ( <csi-pbytes>, <csi-ibytes>, <csi-fbyte>
+#                | <csi-ibytes>, <csi-fbyte>
+#                | <csi-fbyte> )
+# cstr := 'ESC ', <cstr-prefix>, ' ', <cstr-body>, '<ST>'
+# cchar := '<' . <mnemonic> . '>'
+#
+_SEQDB_OVERLAY = {
+    '< CSI 17~'          : '!tracer.set_enabled() if tracer.is_disabled() else tracer.set_disabled()',
+    '< CSI 18~'          : '!controller.resume() if controller.is_suspended() else controller.set_break()',
+    '< CSI 19~'          : '!controller.set_normal_step()',
+    '< CSI 20~'          : '!controller.set_fuzzy_step()',
+}
+
+def get():
+    return _SEQDB_OVERLAY
+
+"""
+
+import os
+
+
+rcdir = os.path.join(os.getenv("HOME"), ".trachet")
+if not os.path.exists(rcdir):
+    os.makedirs(rcdir)
+
+confpath = os.path.join(rcdir, "conf.py")
+if not os.path.exists(confpath):
+    f = open(confpath, "w")
+    try:
+        f.write(_DEFAULT_CONF)
+    finally:
+        f.close()
+
+import sys
+sys.path.insert(0, rcdir)
+try:
+    import conf 
+    for key, value in conf.get().items():
+        _SEQDB[key] = value
+except:
+    print str(sys.exc_info())
+finally:
+    sys.path.pop(0)
+
 def get():
     return _SEQDB
 

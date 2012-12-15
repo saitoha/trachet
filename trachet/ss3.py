@@ -18,11 +18,19 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-import seqdb
+import seqdb, controller
 
 _DB = seqdb.get()
 
-def format(final, is_input):
+def get_mnemonic(direction, f):
+    key = "%s ESC O %s" % (direction, f)
+    if key in _DB:
+        mnemonic = _DB[key]
+    else: 
+        mnemonic = '<Unknown>'
+    return mnemonic
+
+def format(final, is_input, tracer, controller):
     f = chr(final)
 
     if is_input:
@@ -30,11 +38,10 @@ def format(final, is_input):
     else:
         direction = '>'
 
-    key = "%s ESC O %s" % (direction, f)
-    if key in _DB:
-        mnemonic = _DB[key]
-    else: 
-        mnemonic = '<Unknown>'
+    mnemonic = get_mnemonic(direction, f) 
+    if mnemonic[0] == "!":
+        eval(mnemonic[1:])
+        return None
 
     context = []
     if f:

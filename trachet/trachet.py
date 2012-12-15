@@ -106,7 +106,7 @@ def main():
     controller = controller.ActionController(tty) 
     tracer = trace.TraceHandler(options.output,
                                 termenc,
-                                use_header=options.header)
+                                controller)
 
     if options.breakstart:
         controller.set_break()
