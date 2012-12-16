@@ -101,22 +101,25 @@ def main():
     import input, output, controller, trace
 
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
-    tty.fitsize()
+    try:
+        tty.fitsize()
 
-    controller = controller.ActionController(tty) 
-    tracer = trace.TraceHandler(options.output,
-                                termenc,
-                                controller)
+        controller = controller.ActionController(tty) 
+        tracer = trace.TraceHandler(options.output,
+                                    termenc,
+                                    controller)
 
-    if options.breakstart:
-        controller.set_break()
+        if options.breakstart:
+            controller.set_break()
 
-    session = tff.Session(tty)
-    session.start(stdin=sys.stdin,
-                  stdout=sys.stdout,
-                  termenc=termenc,
-                  inputhandler=input.InputHandler(controller, tracer),
-                  outputhandler=output.OutputHandler(controller, tracer))
+        session = tff.Session(tty)
+        session.start(stdin=sys.stdin,
+                      stdout=sys.stdout,
+                      termenc=termenc,
+                      inputhandler=input.InputHandler(controller, tracer),
+                      outputhandler=output.OutputHandler(controller, tracer))
+    finally:
+        tty.restore()
 
 ''' main '''
 if __name__ == '__main__':    
