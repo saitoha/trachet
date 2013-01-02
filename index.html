@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Trachet : Terminal I/O step-by-step debugger" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Trachet</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/saitoha/trachet">View on GitHub</a>
+
+          <h1 id="project_title">Trachet</h1>
+          <h2 id="project_tagline">Terminal I/O step-by-step debugger</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/saitoha/trachet/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/saitoha/trachet/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>What is This?</h2>
+
+<p><strong>trachet = tracer + ratchet(step-by-step debugging service)</strong></p>
+
+<p>This program runs as a terminal filter process between terminals and applications.
+It provides step-by-step debugging and formatted sequence tracing service.
+You can watch terminal I/O sequence on realtime, and it enables you to do step-by-step execution.</p>
+
+<p>Most of terminal applications such as vi have single threaded UI and typically has blocking termnal I/O.
+So trachet might be useful for both of terminal emulator developers and terminal application developers.</p>
+
+<p><img src="http://zuse.jp/misc/trachet1.png" alt="trachet"></p>
+
+<h2>Install</h2>
+
+<p>via pip</p>
+
+<pre><code>    $ pip install trachet
+</code></pre>
+
+<p>via github</p>
+
+<pre><code>    $ git clone --recursive https://github.com/saitoha/trachet.git
+    $ cd trachet
+    $ python setup.py install
+</code></pre>
+
+<h2>Usage</h2>
+
+<pre><code>    $ trachet [options] command
+</code></pre>
+
+<h3>Options</h3>
+
+<pre><code>    -h, --help                  show this help message and exit
+    -o OUTPUT, --output=OUTPUT  Specify output device or file
+    -b, --break                 "break" the program at the startup time
+    --version                   show version
+</code></pre>
+
+<h3>Sequense Tracing</h3>
+
+<p>If you specified TTY device by -o option,
+you can look I/O sequence tracing on realtime (See Quick Start).</p>
+
+<h3>Step by Step debugging</h3>
+
+<pre><code>- &lt;F6&gt; 
+   Toggle trace state ON/OFF.
+
+- &lt;F7&gt;
+   Toggle break state ON/OFF.
+
+- &lt;F8&gt;
+   Step to next char or control sequence.
+
+- &lt;F9&gt;
+   Step to next ESC or CSI sequence.
+</code></pre>
+
+<p>This settings can be changed with editing $HOME/.trachet/conf.py</p>
+
+<h2>Quick Start</h2>
+
+<p><strong>STEP1</strong>
+First, You need to prepare two terminal windows, <em>debugged terminal</em> and <em>output terminal</em>.</p>
+
+<p><strong>STEP2</strong>
+At the <em>output terminal</em>, type "tty" command.</p>
+
+<pre><code>$ tty 
+/dev/pts/4
+</code></pre>
+
+<p>Now you get <em>output terminal</em>'s TTY device name(=/dev/pts/4).</p>
+
+<p><strong>STEP3</strong>
+At the <em>debugged terminal</em>, launch trachet.</p>
+
+<p>Run default shell and send formatted I/O sequence to <em>output terminal</em>.</p>
+
+<pre><code>$ trachet -o/dev/pts/4
+</code></pre>
+
+<p>Run vim and send formatted I/O sequence to <em>output terminal</em>.</p>
+
+<pre><code>$ trachet -o/dev/pts/4 vim 
+</code></pre>
+
+<p>Run emacs and send formatted I/O sequence to <em>output terminal</em>, and "break" emacs on startup time</p>
+
+<pre><code>$ trachet -b -o/dev/pts/4 "emacs -nw" 
+</code></pre>
+
+<h2>Dependency</h2>
+
+<ul>
+<li>TFF - Terminal Filter Framework
+<a href="https://github.com/saitoha/tff">https://github.com/saitoha/tff</a>
+</li>
+</ul><h2>Reference</h2>
+
+<ul>
+<li>VT100.net <a href="http://vt100.net/">http://vt100.net/</a>
+</li>
+<li>XTerm Control Sequences <a href="http://invisible-island.net/xterm/ctlseqs/ctlseqs.html">http://invisible-island.net/xterm/ctlseqs/ctlseqs.html</a>
+</li>
+<li>all-escapes.txt <a href="http://bjh21.me.uk/all-escapes/all-escapes.txt">http://bjh21.me.uk/all-escapes/all-escapes.txt</a>
+</li>
+<li>Tera Term/Supported Control Functions <a href="http://ttssh2.sourceforge.jp/manual/en/about/ctrlseq.html">http://ttssh2.sourceforge.jp/manual/en/about/ctrlseq.html</a>
+</li>
+<li>RLogin/Supported Control Codes <a href="http://nanno.dip.jp/softlib/man/rlogin/ctrlcode.html">http://nanno.dip.jp/softlib/man/rlogin/ctrlcode.html</a>
+</li>
+<li>mlterm/PROTOCOL <a href="http://mlterm.hg.sourceforge.net/hgweb/mlterm/mlterm/file/9baaded7e116/doc/en/PROTOCOL">http://mlterm.hg.sourceforge.net/hgweb/mlterm/mlterm/file/9baaded7e116/doc/en/PROTOCOL</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Trachet maintained by <a href="https://github.com/saitoha">saitoha</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
