@@ -24,7 +24,6 @@ import constant
 class OutputHandler(tff.DefaultHandler):
 
     def __init__(self, controller, tracer):
-        self.__super = super(tff.DefaultHandler, self)
         self._tracer = tracer
         self._controller = controller
 
