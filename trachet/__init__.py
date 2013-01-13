@@ -19,8 +19,16 @@
 # ***** END LICENSE BLOCK *****
 
 __author__  = "Hayaki Saito (user@zuse.jp)"
-__version__ = "0.1.8"
+__version__ = "0.1.9"
 __license__ = "GPL v3"
+__doc__ = """
+This program runs as a terminal filter process between terminals and applications.
+It provides step-by-step debugging and formatted sequence tracing service.
+You can watch terminal I/O sequence on realtime, and it enables you to do step-by-step execution.
+
+Most of terminal applications such as vi have single threaded UI and typically has blocking terminal I/O.
+So trachet might be useful for both of terminal emulator developers and terminal application developers.
+"""
 
 from trachet import *
 
