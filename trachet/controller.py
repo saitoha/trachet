@@ -74,14 +74,14 @@ class ActionController():
 
     def tick(self):
         if self.__mode == _DEBUG_MODE_NONE:
-            while len(self.__actions) > 0:
+            while self.__actions:
                 action = self.__actions.pop(0)    
                 result = action()
 
         elif self.__mode == _DEBUG_MODE_NORMAL_STEP:
             self.__mode = _DEBUG_MODE_STOP
             repeat = self._get_repeat_count()
-            while repeat > 0 and len(self.__actions) > 0:
+            while repeat > 0 and self.__actions:
                 repeat -= 1
                 action = self.__actions.pop(0)
                 result = action()
@@ -91,7 +91,7 @@ class ActionController():
             repeat = self._get_repeat_count()
             while repeat > 0:
                 repeat -= 1
-                while len(self.__actions) > 0:
+                while self.__actions:
                     action = self.__actions.pop(0)    
                     result = action()
                     if result != constant.SEQ_TYPE_CHAR:
