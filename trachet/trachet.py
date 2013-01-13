@@ -51,9 +51,9 @@ def main():
                       default='/dev/null',
                       help='OutputFile')
 
-    parser.add_option('-f', '--use-fixed-header', dest='header',
-                      action="store_true", default=False,
-                      help='"break" the program at the startup time')
+#    parser.add_option('-f', '--use-fixed-header', dest='header',
+#                      action="store_true", default=False,
+#                      help='"break" the program at the startup time')
 
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
@@ -119,7 +119,7 @@ def main():
                       inputhandler=input.InputHandler(controller, tracer),
                       outputhandler=output.OutputHandler(controller, tracer))
     finally:
-        tty.restore()
+        tty.restore_term()
 
 ''' main '''
 if __name__ == '__main__':    
