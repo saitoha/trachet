@@ -27,6 +27,15 @@ Reference:
 - TeraTerm / Supported Control Functions
   http://ttssh2.sourceforge.jp/manual/en/about/ctrlseq.html
 
+- MinTTY / Mintty-specific control sequences
+  http://code.google.com/p/mintty/wiki/CtrlSeqs
+
+- RLogin / Supported control codes
+  http://nanno.dip.jp/softlib/man/rlogin/ctrlcode.html
+
+- Private Control Functions used by DEC
+  http://vt100.net/emu/ctrlfunc_dec.html
+
 '''
 
 _SEQDB = {
@@ -284,24 +293,32 @@ _SEQDB = {
     '> ESC ]7770;?<ST>'  : 'OSC 7770 / query font size (MinTTY)',
     '> ESC ]7771<ST>'    : 'OSC 7771 / font coverage (MinTTY)',
     '> ESC ]8900<ST>'    : 'OSC 8890 - GWREPT / glyph width report (yaft)',
+    '> ESC X<ST>'        : 'SOS / start of string',
     '> ESC ^<ST>'        : 'PM / private message',
     '> ESC _<ST>'        : 'APC / application program command',
-    '> ESC V'            : 'SPA / start of guarded area',
-    '> ESC W'            : 'EPA / end of guarded area',
-    '> ESC X<ST>'        : 'SOS / start of string',
-    '> ESC D'            : 'IND / moves the cursor down one line in the same column',
-    '> ESC E'            : 'NEL / moves the cursor to the first position on the next line',
-    '> ESC H'            : 'HTS / sets a horizontal tab stop at the column where the cursor is. ',
-    '> ESC M'            : 'RI / moves the cursor up one line in the same column',
-    '> ESC N'            : 'SS2 / temporarily maps the G2 character set into GL or GR, for the next graphic character',
-    '> ESC O'            : 'SS3 / temporarily maps the G3 character set into GL or GR, for the next graphic character',
-    '> ESC \\'           : 'ST / String terminator. Ends a DCS, SOS, OSC, PM and APC sequence',
+    '> ESC 1'            : 'DECHTS or DECGON / horizontal tab set(LA100/LN07/LN05/RLogin) or graphics on (VT105)',
+    '> ESC 2'            : 'DECCAHT or DECGOFF / clear all horizontal tabs(LA100/LN07/LN05/RLogin) or graphics off (VT105)',
+    '> ESC 3'            : 'DECVTS / vertical tab set (LA100/LN07/LN05/RLogin)',
+    '> ESC 4'            : 'DECCAVT / clear all vertical tabs (LA100/LN07/LN05/RLogin)',
     '> ESC 6'            : 'DECBI / backward index',
     '> ESC 7'            : 'DECSC / save cursor',
     '> ESC 8'            : 'DECRC / restore cursor',
     '> ESC 9'            : 'DECFI / forward index',
     '> ESC ='            : 'DECKPAM / application keypad',
     '> ESC >'            : 'DECKPNM / normal keypad',
+    '> ESC D'            : 'IND / moves the cursor down one line in the same column',
+    '> ESC E'            : 'NEL / moves the cursor to the first position on the next line',
+    '> ESC H'            : 'HTS / sets a horizontal tab stop at the column where the cursor is. ',
+    '> ESC I'            : 'HTJ / horizontal tab with justify',
+    '> ESC J'            : 'VTS / sets a vertical tab stop',
+    '> ESC K'            : 'PLD / partial line down',
+    '> ESC L'            : 'PLU / partial line up',
+    '> ESC M'            : 'RI / moves the cursor up one line in the same column',
+    '> ESC N'            : 'SS2 / temporarily maps the G2 character set into GL or GR, for the next graphic character',
+    '> ESC O'            : 'SS3 / temporarily maps the G3 character set into GL or GR, for the next graphic character',
+    '> ESC V'            : 'SPA / start of guarded area',
+    '> ESC W'            : 'EPA / end of guarded area',
+    '> ESC \\'           : 'ST / String terminator. Ends a DCS, SOS, OSC, PM and APC sequence',
     '> ESC c'            : 'RIS / full reset',
     '> ESC <SP>F'        : 'S7C1T',
     '> ESC <SP>G'        : 'S8C1T',
@@ -496,7 +513,9 @@ _SEQDB = {
     '> CSI ?7783h'       : 'DECSET 7783 / enable shortcut override mode (MinTTY)',
     '> CSI ?7786h'       : 'DECSET 7786 / enable mousewheel reporting (cursor emulation) mode (MinTTY)',
     '> CSI ?7787h'       : 'DECSET 7787 / enable application mousewheel reporting mode (MinTTY)',
-    '> CSI ?7700h'       : 'DECSET 7700 / enable ambiguous reporting (MinTTY)',
+    '> CSI ?7700h'       : 'DECSET 7700 / enable ambiguous reporting(MinTTY)',
+    '> CSI ?8428h'       : 'DECSET 8428 / treat ambiguous characters as narrow(RLogin)',
+    '> CSI ?8441h'       : 'DECSET 8441 / IME open(RLogin)',
     '> CSI i'            : 'MC',
     '> CSI ?i'           : 'MC - DEC Specific',
     '> CSI l'            : 'RM',
@@ -544,10 +563,12 @@ _SEQDB = {
     '> CSI ?7727l'       : 'DECRST 7727 / normal escape keycode mode (MinTTY)',
     '> CSI ?7728l'       : 'DECRST 7728 / treat ^[ as normal escape keycode (MinTTY)',
     '> CSI ?7766l'       : 'DECRST 7766 / hide scroll bar (MinTTY)',
-    '> CSI ?7783l'       : 'DECSET 7783 / disable shortcut override mode (MinTTY)',
-    '> CSI ?7786l'       : 'DECSET 7786 / disable mousewheel reporting (cursor emulation) mode (MinTTY)',
-    '> CSI ?7787l'       : 'DECSET 7786 / disable application mousewheel reporting mode (MinTTY)',
-    '> CSI ?7700l'       : 'DECSET 7700 / disable ambiguous reporting (MinTTY)',
+    '> CSI ?7783l'       : 'DECRST 7783 / disable shortcut override mode (MinTTY)',
+    '> CSI ?7786l'       : 'DECRST 7786 / disable mousewheel reporting (cursor emulation) mode (MinTTY)',
+    '> CSI ?7787l'       : 'DECRST 7786 / disable application mousewheel reporting mode (MinTTY)',
+    '> CSI ?7700l'       : 'DECRST 7700 / disable ambiguous reporting (MinTTY)',
+    '> CSI ?8428l'       : 'DECRST 8428 / treat ambiguous characters as wide(RLogin)',
+    '> CSI ?8441l'       : 'DECRST 8441 / IME close(RLogin)',
     '> CSI m'            : 'SGR / select graphics rendition',
     '> CSI 0m'           : 'SGR 0 / reset',
     '> CSI 00m'          : 'SGR 0 / reset',
