@@ -111,7 +111,9 @@ _SEQDB = {
     '< CSI ?c'           : 'DA1 Response',
     '< CSI ?1;0c'        : 'DA1 Response: VT100 with no options (could be WizConsole VT100 mode)',
     '< CSI ?1;2c'        : 'DA1 Response: VT100 with AVO (could be a VT102/rxvt/rxvt-unicode/konsole/kterm/mlterm/iTerm2/tmux/aterm/wterm/Terminal.app(Mac)/mrxvt/MinTTY/TeraTerm/ck)',
-    '< CSI ?6c'          : 'DA1 Response: VT102 (could be linux xvt/console/PuTTY/Terminal.app(GNUStep)/yaft)',
+    '< CSI ?1;2;4;7c'    : 'DA1 Response: mlterm(3.1.7 or later) with Sixel/DRCS',
+    '< CSI ?1;2;4c'      : 'DA1 Response: mlterm(3.1.7 or later) with DRCS',
+    '< CSI ?6c'          : 'DA1 Response: VT102 (could be linux xvt/console/PuTTY/Terminal.app(GNUStep)/yaft/Cathode)',
     '< CSI ?62c'         : 'DA1 Response: VT200 family (could be mosh/WizConsole VT200 mode)',
     '< CSI ?62;9;c'      : 'DA1 Response: VT200 family (could be gnome-terminal)',
     '< CSI ?64;1;2;6;9;15;21;22c':

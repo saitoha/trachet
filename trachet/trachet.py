@@ -119,7 +119,10 @@ def main():
                       inputhandler=input.InputHandler(controller, tracer),
                       outputhandler=output.OutputHandler(controller, tracer))
     finally:
-        tty.restore_term()
+        try:
+            tty.restore_term()
+        except:
+            pass
 
 ''' main '''
 if __name__ == '__main__':    
