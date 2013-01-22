@@ -117,12 +117,9 @@ _SEQDB = {
     '< CSI ?6c'          : 'DA1 Response: VT102 (could be linux xvt/console/PuTTY/Terminal.app(GNUStep)/yaft/Cathode)',
     '< CSI ?62c'         : 'DA1 Response: VT200 family (could be mosh/WizConsole VT200 mode)',
     '< CSI ?62;9;c'      : 'DA1 Response: VT200 family (could be gnome-terminal)',
-    '< CSI ?64;1;2;6;9;15;21;22c':
-    'DA1 Response: VT400 family (could be xterm pl>=280)',
-    '< CSI >64;1;4;7;9;22;29c':
-    'DA2 Response: VT400 family (could be tanasinn)',
-    '< CSI ?65;1;2;3;4;6;8;9;18;21;22;29;42;44c':
-    'DA1 Response: VT500 family (could be RLogin)',
+    '< CSI ?64;1;2;6;9;15;21;22c': 'DA1 Response: VT400 family (could be xterm pl>=280)',
+    '< CSI ?64;1;4;7;9;22;29c': 'DA1 Response: VT400 family (could be tanasinn)',
+    '< CSI ?65;1;2;3;4;6;8;9;18;21;22;29;42;44c': 'DA1 Response: VT500 family (could be RLogin)',
     '< CSI >c'           : 'DA2 Response',
     '< CSI >0;[2]c'      : 'DA2 Response: VT100, Pv=%s, keyboard type=%s',
     '< CSI >0;95;c'      : 'DA2 Response: xterm patch#95 (could be iTerm/iTerm2)',
