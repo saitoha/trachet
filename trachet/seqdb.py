@@ -149,6 +149,7 @@ _SEQDB = {
     '< CSI >24;[2]c'     : 'DA2 Response: VT320, Pv=%s, keyboard type=%s',
     '< CSI >32;[2]c'     : 'DA2 Response: VT382, Pv=%s, keyboard type=%s',
     '< CSI >32;100;2c'   : 'DA2 Response: VT382 (could be TeraTerm)',
+    '< CSI >32;277;2c'   : 'DA2 Response: VT382 (could be mouseterm-plus)',
     '< CSI >41;[2]c'     : 'DA2 Response: VT420, Pv=%s, keyboard type=%s',
     '< CSI >41;280;0c'   : 'DA2 Response: VT420 (could be xterm patch#280)',
     '< CSI >41;281;0c'   : 'DA2 Response: VT420 (could be xterm patch#281)',
