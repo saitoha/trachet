@@ -19,10 +19,11 @@
 # ***** END LICENSE BLOCK *****
 
 
-_DIRECTION_INPUT  = True
+_DIRECTION_INPUT = True
 _DIRECTION_OUTPUT = False
-_PROMPT_INPUT     = "\x1b[0;7m<<<"
-_PROMPT_OUTPUT    = "\x1b[0m>>>"
+_PROMPT_INPUT = "\x1b[0;7m<<<"
+_PROMPT_OUTPUT = "\x1b[0m>>>"
+
 
 class IOMode():
     """
@@ -37,7 +38,7 @@ class IOMode():
     >>> mode.get_prompt() == _PROMPT_OUTPUT
     True
     """
-    _direction = _DIRECTION_INPUT 
+    _direction = _DIRECTION_INPUT
 
     def is_input(self):
         return self._direction == _DIRECTION_INPUT
@@ -56,11 +57,10 @@ class IOMode():
             return _PROMPT_INPUT
         return _PROMPT_OUTPUT
 
+
 def _test():
     import doctest
     doctest.testmod()
 
 if __name__ == "__main__":
     _test()
-
-
