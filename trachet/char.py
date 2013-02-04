@@ -37,7 +37,7 @@ _CHAR_MAP = {0x00: '<NUL>',
              0x0C: '<NP>',
              0x0D: '<CR>',
              0x0E: '<SO>',
-             0x0F: '<SI>', 
+             0x0F: '<SI>',
              0x10: '<DLE>',
              0x11: '<DC1>',
              0x12: '<DC2>',
@@ -57,14 +57,16 @@ _CHAR_MAP = {0x00: '<NUL>',
              0x20: '<SP>',
              0x7F: '<DEL>'}
 
+
 def get_mnemonic(key):
-    if _DB.has_key(key):
+    if key in _DB:
         return _DB[key]
     return ""
 
+
 def format(c, is_input, tracer, controller):
     """
-      >>> _create_mock_db() 
+      >>> _create_mock_db()
       >>> str(format(ord("a"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[32ma', False)"
       >>> str(format(ord("\x1b"), False, None, None)).replace("\x1b", "\\x1b")
@@ -73,10 +75,10 @@ def format(c, is_input, tracer, controller):
       "(u'\\\\x1b[31m<BEL>\\\\x1b[1;32m\\\\r\\\\x1b[30CBEL / bell', True)"
     """
 
-    if _CHAR_MAP.has_key(c):
+    if c in _CHAR_MAP:
         printable_char = _CHAR_MAP[c]
     else:
-        printable_char = unichr(c) 
+        printable_char = unichr(c)
 
     if is_input:
         direction = '<'
@@ -89,19 +91,20 @@ def format(c, is_input, tracer, controller):
     if mnemonic:
         if mnemonic[0] == "!":
             return eval(mnemonic[1:])
-        return u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s" % (printable_char, mnemonic), True
+        template = u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s"
+        return template % (printable_char, mnemonic), True
     return u"\x1b[32m%s" % printable_char, False
+
 
 def _create_mock_db():
     global _DB
     _DB = {
-        '< <NUL>'            : 'NUL / Ctrl-@,Ctrl-SP,Ctrl-2',
-        '< <BEL>'            : 'BEL / Ctrl-G',
-        '> <NUL>'            : 'NUL / null character',
-        '> <BEL>'            : 'BEL / bell',
+        '< <NUL>': 'NUL / Ctrl-@,Ctrl-SP,Ctrl-2',
+        '< <BEL>': 'BEL / Ctrl-G',
+        '> <NUL>': 'NUL / null character',
+        '> <BEL>': 'BEL / bell',
     }
 
 if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
-
+    import doctest
+    doctest.testmod()

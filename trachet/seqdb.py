@@ -785,7 +785,7 @@ if not os.path.exists(confpath):
 import sys
 sys.path.insert(0, rcdir)
 try:
-    import conf 
+    import conf
     for key, value in conf.get().items():
         _SEQDB[key] = value
 except:
@@ -793,8 +793,10 @@ except:
 finally:
     sys.path.pop(0)
 
+
 def get():
     return _SEQDB
+
 
 def _test():
     """
@@ -806,7 +808,7 @@ def _test():
     for key, value in get().items():
         if "[*]" in key:
             raise Exception("[*] syntax is deprecated.")
-        match = re.search(pattern, key) 
+        match = re.search(pattern, key)
         if not match is None:
             n = match.group(1)
             try:
@@ -816,6 +818,5 @@ def _test():
     return "ok"
 
 if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
-
+    import doctest
+    doctest.testmod()

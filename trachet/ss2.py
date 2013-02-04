@@ -22,13 +22,15 @@ import seqdb
 
 _DB = seqdb.get()
 
+
 def get_mnemonic(direction, f):
     key = "%s ESC N %s" % (direction, f)
     if key in _DB:
         mnemonic = _DB[key]
-    else: 
+    else:
         mnemonic = '<Unknown>'
     return mnemonic
+
 
 def format(final, is_input, tracer, controller):
     f = chr(final)
@@ -38,18 +40,17 @@ def format(final, is_input, tracer, controller):
     else:
         direction = '>'
 
-    mnemonic = get_mnemonic(direction, f) 
+    mnemonic = get_mnemonic(direction, f)
     if mnemonic[0] == "!":
         return eval(mnemonic[1:])
 
     context = []
     if f:
         context.append("\x1b[33m" + f)
-    result = "\x1b[0;1;36;44m ESC N %s \x1b[0;1;31m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
+    template = "\x1b[0;1;36;44m ESC N %s \x1b[0;1;31m\x0d\x1b[30C%s"
+    result = template % (" ".join(context), mnemonic)
     return result
 
- 
 if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
-
+    import doctest
+    doctest.testmod()

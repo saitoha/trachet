@@ -22,13 +22,15 @@ import seqdb
 
 _DB = seqdb.get()
 
+
 def get_mnemonic(direction, i, f):
     key = "%s ESC %s%s" % (direction, i, f)
     if key in _DB:
         mnemonic = _DB[key]
-    else: 
+    else:
         mnemonic = '<Unknown>'
     return mnemonic
+
 
 def format(intermediate, final, is_input, tracer, controller):
     i = ''.join([chr(c) for c in intermediate]).replace(" ", "<SP>")
@@ -48,11 +50,11 @@ def format(intermediate, final, is_input, tracer, controller):
         context.append("\x1b[36m" + i)
     if f:
         context.append("\x1b[33m" + f)
-    result = "\x1b[0;1;31;44m ESC %s \x1b[0;1;35m\x0d\x1b[30C%s" % (" ".join(context), mnemonic)
+    template = "\x1b[0;1;31;44m ESC %s \x1b[0;1;35m\x0d\x1b[30C%s"
+    result = template % (" ".join(context), mnemonic)
     return result
 
- 
-if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

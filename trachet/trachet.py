@@ -22,7 +22,7 @@ def _printver():
         import __init__
         print '''
 trachet %s
-Copyright (C) 2012 Hayaki Saito <user@zuse.jp>. 
+Copyright (C) 2012 Hayaki Saito <user@zuse.jp>.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -98,13 +98,16 @@ def main():
     termenc = encoding
 
     import tff
-    import input, output, controller, trace
+    import input
+    import output
+    import controller
+    import trace
 
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     try:
         tty.fitsize()
 
-        controller = controller.ActionController(tty) 
+        controller = controller.ActionController(tty)
         tracer = trace.TraceHandler(options.output,
                                     termenc,
                                     controller)
@@ -125,6 +128,5 @@ def main():
             pass
 
 ''' main '''
-if __name__ == '__main__':    
+if __name__ == '__main__':
     main()
-
