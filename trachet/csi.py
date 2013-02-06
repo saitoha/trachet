@@ -40,7 +40,7 @@ def get_mnemonic(direction, prefix, p, i, f):
 #        if key in _DB:
 #            return _DB[key]
 
-    key = '%s CSI %s[%d]%s%s' % (direction, prefix, length, i, f)
+    key = '%s CSI %s[%s]%s%s' % (direction, prefix, length, i, f)
     if key in _DB:
         if length > 0:
             return _DB[key] % tuple(params)
@@ -49,7 +49,7 @@ def get_mnemonic(direction, prefix, p, i, f):
 
     if length > 1:
         for x in xrange(0, length):
-            key = '%s CSI %s;[%d]%s%s' % (direction, ";".join(params[:x]), length - x, i, f)
+            key = '%s CSI %s;[%s]%s%s' % (direction, ";".join(params[:x]), length - x, i, f)
             if key in _DB:
                 return _DB[key] % tuple(params[x:])
 
