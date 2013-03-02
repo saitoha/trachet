@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+
 def _printver():
         import __init__
         print '''
@@ -41,7 +42,10 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
 
 def main():
-    import sys, os, optparse, select
+    import sys
+    import os
+    import optparse
+    import logging
 
     # parse options and arguments
     usage = 'usage: %prog [options] command'
@@ -97,6 +101,14 @@ def main():
     language, encoding = locale.getdefaultlocale()
     termenc = encoding
 
+    rcdir = os.path.join(os.getenv("HOME"), ".trachet")
+    logdir = os.path.join(rcdir, "log")
+    if not os.path.exists(logdir):
+        os.makedirs(logdir)
+
+    logfile = os.path.join(logdir, "log.txt")
+    logging.basicConfig(filename=logfile, filemode="w")
+
     import tff
     import input
     import output
@@ -121,6 +133,13 @@ def main():
                       termenc=termenc,
                       inputhandler=input.InputHandler(controller, tracer),
                       outputhandler=output.OutputHandler(controller, tracer))
+    except IOError:
+        logging.exception("Connection closed.")
+        print "connection closed."
+    except:
+        logging.exception("Aborted by exception.")
+        print ("sskk aborted by an uncaught exception."
+               " see $HOME/.sskk/log/log.txt.")
     finally:
         try:
             tty.restore_term()
