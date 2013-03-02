@@ -21,6 +21,7 @@
 
 import tff
 
+
 class InputHandler(tff.DefaultHandler):
 
     ''' <F6> toggle trace state
@@ -64,7 +65,7 @@ class InputHandler(tff.DefaultHandler):
     def handle_draw(self, context):
         self._controller.tick()
 
-if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

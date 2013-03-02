@@ -21,6 +21,7 @@
 import tff
 import constant
 
+
 class OutputHandler(tff.DefaultHandler):
 
     def __init__(self, controller, tracer):
@@ -29,8 +30,8 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_csi(self, context, parameter, intermediate, final):
         def action():
-            context.put(0x1b) # ESC
-            context.put(0x5b) # [
+            context.put(0x1b)  # ESC
+            context.put(0x5b)  # [
             for c in parameter:
                 context.put(c)
             for c in intermediate:
@@ -40,11 +41,11 @@ class OutputHandler(tff.DefaultHandler):
             self._tracer.handle_csi(context, parameter, intermediate, final)
             return constant.SEQ_TYPE_CSI
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_esc(self, context, intermediate, final):
         def action():
-            context.put(0x1b) # ESC
+            context.put(0x1b)  # ESC
             for c in intermediate:
                 context.put(c)
             context.put(final)
@@ -52,38 +53,38 @@ class OutputHandler(tff.DefaultHandler):
             self._tracer.handle_esc(context, intermediate, final)
             return constant.SEQ_TYPE_ESC
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_ss2(self, context, final):
         def action():
-            self.put(0x1b) # ESC
-            self.put(0x4e) # N
+            self.put(0x1b)  # ESC
+            self.put(0x4e)  # N
             self.put(final)
             self._tracer.set_output()
             self._tracer.handle_ss2(context, final)
             return constant.SEQ_TYPE_SS2
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_ss3(self, context, final):
         def action():
-            self.put(0x1b) # ESC
-            self.put(0x4f) # O
+            self.put(0x1b)  # ESC
+            self.put(0x4f)  # O
             self.put(final)
             self._tracer.set_output()
             self._tracer.handle_ss3(context, final)
             return constant.SEQ_TYPE_SS3
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_control_string(self, context, prefix, value):
         def action():
-            context.put(0x1b) # ESC
+            context.put(0x1b)  # ESC
             context.put(prefix)
             for c in value:
                 context.put(c)
-            context.put(0x1b) # ESC
-            context.put(0x5c) # \
+            context.put(0x1b)  # ESC
+            context.put(0x5c)  # \
             self._tracer.set_output()
             self._tracer.handle_control_string(context, prefix, value)
             return constant.SEQ_TYPE_STR
@@ -97,7 +98,7 @@ class OutputHandler(tff.DefaultHandler):
             self._tracer.handle_char(context, final)
             return constant.SEQ_TYPE_CHAR
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_invalid(self, context, seq):
         def action():
@@ -107,7 +108,7 @@ class OutputHandler(tff.DefaultHandler):
             self._tracer.handle_invalid(context, seq)
             return constant.SEQ_TYPE_CHAR
         self._controller.append(action)
-        return True # handled
+        return True  # handled
 
     def handle_resize(self, context, row, col):
         self._tracer.handle_resize(context, row, col)
@@ -116,7 +117,7 @@ class OutputHandler(tff.DefaultHandler):
         self._controller.tick()
         self._tracer.handle_draw(context)
 
-if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
 
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

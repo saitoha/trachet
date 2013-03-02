@@ -19,13 +19,14 @@
 # ***** END LICENSE BLOCK *****
 
 
-_DEBUG_MODE_NONE        = 0
+_DEBUG_MODE_NONE = 0
 _DEBUG_MODE_NORMAL_STEP = 1
-_DEBUG_MODE_FUZZY_STEP  = 2
-_DEBUG_MODE_STOP        = 3
+_DEBUG_MODE_FUZZY_STEP = 2
+_DEBUG_MODE_STOP = 3
 
 import constant
 import time
+
 
 class ActionController():
 
@@ -66,7 +67,7 @@ class ActionController():
             self.__accel *= 1.2
         else:
             self.__accel = 1
-        self.__lastcalltime = now 
+        self.__lastcalltime = now
 
         repeat = max(1, self.__accel)
 
@@ -75,7 +76,7 @@ class ActionController():
     def tick(self):
         if self.__mode == _DEBUG_MODE_NONE:
             while self.__actions:
-                action = self.__actions.pop(0)    
+                action = self.__actions.pop(0)
                 result = action()
 
         elif self.__mode == _DEBUG_MODE_NORMAL_STEP:
@@ -92,7 +93,7 @@ class ActionController():
             while repeat > 0:
                 repeat -= 1
                 while self.__actions:
-                    action = self.__actions.pop(0)    
+                    action = self.__actions.pop(0)
                     result = action()
                     if result != constant.SEQ_TYPE_CHAR:
                         break
@@ -101,6 +102,5 @@ class ActionController():
 
 
 if __name__ == "__main__":
-   import doctest
-   doctest.testmod()
-
+    import doctest
+    doctest.testmod()

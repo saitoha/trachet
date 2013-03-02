@@ -18,17 +18,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-import codecs, time
+import codecs
+import time
 import tff
 
 try:
-   from cStringIO import StringIO
+    from cStringIO import StringIO
 except ImportError:
-   from StringIO import StringIO
+    from StringIO import StringIO
 
 # formatter
-import esc, csi, ss2, ss3, char, cstr
+import esc
+import csi
+import ss2
+import ss3
+import char
+import cstr
 from iomode import IOMode
+
 
 class SwitchOnOffTrait():
     """
@@ -57,14 +64,14 @@ class SwitchOnOffTrait():
 class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     _io_mode = None
-    _xterm_mouse_buffer = None 
+    _xterm_mouse_buffer = None
 
     def __init__(self, output_file, termenc, controller):
         if isinstance(output_file, str):
             output_file = open(output_file, "w")
         self._buffer = codecs.getwriter(termenc)(StringIO())
         self._output = output_file
-        self.__bufferring = False 
+        self.__bufferring = False
         self._controller = controller
         self._io_mode = IOMode()
 
@@ -77,7 +84,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             if self.__bufferring:
                 self._buffer.write("\n")
                 self.__bufferring = False
-            self._io_mode.set_output() 
+            self._io_mode.set_output()
 
     def set_input(self):
         if self.is_disabled():
@@ -92,8 +99,8 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
     def handle_esc(self, context, intermediate, final):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         prompt = self._io_mode.get_prompt()
         formatted = esc.format(intermediate,
@@ -109,12 +116,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        return False # not handled
+        return False  # not handled
 
     def handle_csi(self, context, parameter, intermediate, final):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         prompt = self._io_mode.get_prompt()
         formatted = csi.format(parameter,
@@ -136,12 +143,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        return False # not handled
+        return False  # not handled
 
     def handle_ss2(self, context, final):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         prompt = self._io_mode.get_prompt()
         formatted = ss2.format(final,
@@ -156,12 +163,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        return False # not handled
+        return False  # not handled
 
     def handle_ss3(self, context, final):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         prompt = self._io_mode.get_prompt()
         formatted = ss3.format(final,
@@ -176,12 +183,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        return False # not handled
+        return False  # not handled
 
     def handle_control_string(self, context, prefix, value):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         if self.is_disabled():
             return False
@@ -197,11 +204,11 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if not formatted:
             return True
         self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
-        return False # not handled
+        return False  # not handled
 
     def handle_char(self, context, c):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            self._xterm_mouse_buffer.append(c) 
+            self._xterm_mouse_buffer.append(c)
             if len(self._xterm_mouse_buffer) == 3:
                 seq = self._xterm_mouse_buffer
                 self._xterm_mouse_buffer = None
@@ -225,12 +232,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
         else:
             self._buffer.write(mnemonic)
-        return False # not handled
+        return False  # not handled
 
     def handle_invalid(self, context, seq):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
-            seq = [ 0x1b, 0x5b, 0x4d ] + self._xterm_mouse_buffer
-            self._xterm_mouse_buffer = None 
+            seq = [0x1b, 0x5b, 0x4d] + self._xterm_mouse_buffer
+            self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
         if self.is_disabled():
             return False
@@ -250,7 +257,8 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         info = (seq[0] - 32, seq[1] - 32, seq[2] - 32)
         value = "xterm normal mouse: button=%d, row=%d, col=%d" % info
-        self._buffer.write("%s   \x1b[0;1;31mCSI \x1b[35mM \x1b[m%c %c %c \x1b[32;41m%s\x1b[0m\n" % (prompt, seq[0], seq[1], seq[2], value))
+        template = "%s   \x1b[0;1;31mCSI \x1b[35mM \x1b[m%c %c %c \x1b[32;41m%s\x1b[0m\n"
+        self._buffer.write(template % (prompt, seq[0], seq[1], seq[2], value))
         pass
 
     def handle_resize(self, context, row, col):
@@ -260,7 +268,8 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         prompt = "==="
-        self._buffer.write("%s  \x1b[33;41m resized: (row=%d, col=%d)\x1b[0m\n" % (prompt, row, col))
+        template = "%s  \x1b[33;41m resized: (row=%d, col=%d)\x1b[0m\n"
+        self._buffer.write(template % (prompt, row, col))
 
     def handle_draw(self, context):
         try:
@@ -276,10 +285,11 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
 
         self._buffer.truncate(0)
 
+
 def _test():
     pass
+
 
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
-
