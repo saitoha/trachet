@@ -138,8 +138,8 @@ def main():
         print "connection closed."
     except:
         logging.exception("Aborted by exception.")
-        print ("sskk aborted by an uncaught exception."
-               " see $HOME/.sskk/log/log.txt.")
+        print ("trachet aborted by an uncaught exception."
+               " see $HOME/.trachet/log/log.txt.")
     finally:
         try:
             tty.restore_term()
