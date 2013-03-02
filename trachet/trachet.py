@@ -115,6 +115,15 @@ def main():
     import controller
     import trace
 
+    if not os.path.exists(options.output):
+        print "The output device %s is not found." % options.output
+        return
+
+    if options.output == os.ttyname(0):
+        print ("The output device %s is busy (current TTY). "
+               "Please specify another TTY device.") % options.output
+        return
+
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     try:
         tty.fitsize()
