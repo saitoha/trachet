@@ -10,7 +10,7 @@ What is This?
     It provides step-by-step debugging and formatted sequence tracing service.
     You can look terminal I/O sequence on realtime, and it enables you to do step-by-step execution.
 
-.. image:: http://zuse.jp/misc/trachet1.png 
+.. image:: http://zuse.jp/misc/trachet1.png
    :width: 640
 
 Install
@@ -50,7 +50,7 @@ Usage
 
 * Step by Step debugging
 
- - <F6> 
+ - <F6>
    Toggle trace state ON/OFF.
 
  - <F7>
@@ -73,12 +73,12 @@ Example
 
 - Run vim and send formatted I/O sequence to a terminal device(/dev/pts/4)::
 
-    $ trachet -o/dev/pts/4 vim 
+    $ trachet -o/dev/pts/4 vim
 
 
 - Run emacs and send formatted I/O sequence to a terminal device(/dev/pts/4), and "break" emacs on startup time::
 
-    $ trachet -b -o/dev/pts/4 "emacs -nw" 
+    $ trachet -b -o/dev/pts/4 "emacs -nw"
 
 
 
@@ -93,33 +93,33 @@ How It Works
 
 - PTY and Normal Terminal/Application::
 
-       +---------------------------------------------+                           
-       |                  Terminal                   |                           
-       +---------+-----------------------------------+                           
-                 |                                    
+       +---------------------------------------------+
+       |                  Terminal                   |
+       +---------+-----------------------------------+
+                 |
        +---------|-----------------------------------+
        |  +------+-------+        +---------------+  |
        |  |    Master    |========|     Slave     |  |
        |  +--------------+        +-------+-------+  |
        +----------------------------------|----------+
-                                          |           
-       +----------------------------------+----------+ 
+                                          |
+       +----------------------------------+----------+
        |                Application                  |
        +---------------------------------------------+
 
 
 - TFF (Terminal Filter Framework)::
 
-                                                                                
-                        Scanner                    Event Driven Parser         Event Dispatcher 
-                        +-----+                         +-----+                     +-----+         
+
+                        Scanner                    Event Driven Parser         Event Dispatcher
+                        +-----+                         +-----+                     +-----+
       << I/O Stream >>  |     | << CodePoint Stream >>  |     | << Event Stream >>  |     |      << I/O Stream >>
     ------------------->|     |------------------------>|     |-------------------->|     |---||-------------------->
       (Raw Sequences)   |     |    (Unicode Points)     |     |   (Function Call)   |     |       (Raw Sequences)
                         +-----+                         +-----+                     +--+--+
-                                                   ISO-2022 ISO-6429                   |     
-                                                   Compatible Parsing                  |       
-                                                                                       v     
+                                                   ISO-2022 ISO-6429                   |
+                                                   Compatible Parsing                  |
+                                                                                       v
                                                                                     +-----+
                                                                      Event Observer |     |      << I/O Stream >>
                                                                       (I/O Handler) |     |---||-------------------->
@@ -171,9 +171,9 @@ How It Works
                                 |                        |
                             < input >                < output >
                                 |                        |
-                                |       +----------------+                           
-                                |       |                           
-                                |       | [ PTY 2 ]                 
+                                |       +----------------+
+                                |       |
+                                |       | [ PTY 2 ]
                         +-------|-------|-----------------------------+
                         |       v       |                             |
                         |  +------------+--+       +---------------+  |
@@ -183,8 +183,8 @@ How It Works
                         +-------------------------------|------|------+
                                                         |      |
                                    +--------------------+      |
-                                   |                           |      
-                               < input >                   < output > 
+                                   |                           |
+                               < input >                   < output >
                                    |                           |
                                    v                           |
      +---------------------------------------------------------+-----------------------------+
@@ -192,8 +192,8 @@ How It Works
      |                                  Target Application                                   |
      |                                                                                       |
      +---------------------------------------------------------------------------------------+
- 
-     
+
+
 Dependency
 ----------
 
