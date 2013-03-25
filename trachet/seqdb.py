@@ -534,6 +534,7 @@ _SEQDB = {
     '> CSI ?1l'          : 'DECRST 1 - DECCKM / normal cursor keys',
     '> CSI ?2l'          : 'DECRST 2 - DECANM / VT52 mode',
     '> CSI ?3l'          : 'DECRST 3 - DECCOLM / 80 column mode',
+    '> CSI ?3;4l'        : 'DECRST 3;4 - enable 80 column mode and disable smooth scroll mode and ',
     '> CSI ?4l'          : 'DECRST 4 - DECSCLM / disable smooth scroll mode',
     '> CSI ?5l'          : 'DECRST 5 - DECSCNM / disable reverse video',
     '> CSI ?6l'          : 'DECRST 6 - DECOM / disable origin mode',
