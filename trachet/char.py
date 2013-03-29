@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 import seqdb
+import template
 
 _DB = seqdb.get()
 
@@ -91,9 +92,8 @@ def format(c, is_input, tracer, controller):
     if mnemonic:
         if mnemonic[0] == "!":
             return eval(mnemonic[1:])
-        template = u"\x1b[31m%s\x1b[1;32m\x0d\x1b[30C%s"
-        return template % (printable_char, mnemonic), True
-    return u"\x1b[32m%s" % printable_char, False
+        return template.getprintablechar() % (printable_char, mnemonic), True
+    return template.getchar() % printable_char, False
 
 
 def _create_mock_db():
@@ -104,6 +104,7 @@ def _create_mock_db():
         '> <NUL>': 'NUL / null character',
         '> <BEL>': 'BEL / bell',
     }
+
 
 if __name__ == "__main__":
     import doctest
