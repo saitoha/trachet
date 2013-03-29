@@ -115,7 +115,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.__bufferring:
             self._buffer.write("\n")
             self.__bufferring = False
-        self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self._buffer.write(u"%s  %s\n" % (prompt, formatted))
         return False  # not handled
 
     def handle_csi(self, context, parameter, intermediate, final):
@@ -142,7 +142,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.__bufferring:
             self._buffer.write("\n")
             self.__bufferring = False
-        self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self._buffer.write(u"%s  %s\n" % (prompt, formatted))
         return False  # not handled
 
     def handle_ss2(self, context, final):
@@ -162,7 +162,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.__bufferring:
             self._buffer.write("\n")
             self.__bufferring = False
-        self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self._buffer.write(u"%s  %s\n" % (prompt, formatted))
         return False  # not handled
 
     def handle_ss3(self, context, final):
@@ -182,7 +182,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if self.__bufferring:
             self._buffer.write("\n")
             self.__bufferring = False
-        self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self._buffer.write(u"%s  %s\n" % (prompt, formatted))
         return False  # not handled
 
     def handle_control_string(self, context, prefix, value):
@@ -203,7 +203,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
                                 self._controller)
         if not formatted:
             return True
-        self._buffer.write(u"%s  %s\x1b[m\n" % (prompt, formatted))
+        self._buffer.write(u"%s  %s\n" % (prompt, formatted))
         return False  # not handled
 
     def handle_char(self, context, c):
