@@ -19,9 +19,9 @@
 # ***** END LICENSE BLOCK *****
 
 import seqdb
+import template
 
 _DB = seqdb.get()
-
 
 def get_mnemonic(direction, prefix, p, i, f):
 
@@ -78,17 +78,7 @@ def format(parameter, intermediate, final, is_input, tracer, controller):
     if mnemonic[0] == "!":
         return eval(mnemonic[1:])
 
-    context = []
-    if p:
-        context.append("\x1b[35m" + p)
-    if i:
-        context.append("\x1b[36m" + i)
-    if f:
-        context.append("\x1b[33m" + f)
-
-    template = "\x1b[0;1;31;40m CSI %s \x1b[0;1;36m\x0d\x1b[30C%s"
-    result = template % (" ".join(context), mnemonic)
-    return result
+    return template.getcsi() % (p, i, f, mnemonic)
 
 
 if __name__ == "__main__":
