@@ -21,10 +21,10 @@
           <h1 id="project_title">Trachet</h1>
           <h2 id="project_tagline">Terminal I/O step-by-step debugger</h2>
 
-            <!--section id="downloads">
+            <section id="downloads">
               <a class="zip_download_link" href="https://github.com/saitoha/trachet/zipball/master">Download this project as a .zip file</a>
               <a class="tar_download_link" href="https://github.com/saitoha/trachet/tarball/master">Download this project as a tar.gz file</a>
-            </section-->
+            </section>
         </header>
     </div>
 
@@ -110,17 +110,22 @@ At the <em>output terminal</em>, type "tty" command.</p>
 <p><strong>STEP3</strong>
 At the <em>debugged terminal</em>, launch trachet.</p>
 
-<p>Run default shell and send formatted I/O sequence to <em>output terminal</em>.</p>
+<p>Run default shell and send formatted I/O sequences to <em>output terminal</em>.</p>
 
 <pre><code>$ trachet -o/dev/pts/4
 </code></pre>
 
-<p>Run vim and send formatted I/O sequence to <em>output terminal</em>.</p>
+<p>Run default shell and write non-colored formatted I/O sequences to a <em>text file</em>.</p>
+
+<pre><code>$ trachet -o log.txt
+</code></pre>
+
+<p>Run vim and send formatted I/O sequences to <em>output terminal</em>.</p>
 
 <pre><code>$ trachet -o/dev/pts/4 vim 
 </code></pre>
 
-<p>Run emacs and send formatted I/O sequence to <em>output terminal</em>, and "break" emacs on startup time</p>
+<p>Run emacs and send formatted I/O sequences to <em>output terminal</em>, and "break" emacs on startup time</p>
 
 <pre><code>$ trachet -b -o/dev/pts/4 "emacs -nw" 
 </code></pre>
