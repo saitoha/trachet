@@ -116,7 +116,7 @@ def main():
     import trace
     import template
 
-    output_file = open(options.output)
+    output_file = open(options.output, "w")
     try:
         if os.isatty(output_file.fileno()):
             if not os.path.exists(options.output):
