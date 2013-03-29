@@ -116,18 +116,16 @@ def main():
     import trace
     import template
 
-    if not os.path.exists(options.output):
-        print "The output device %s is not found." % options.output
-        return
-
-    if options.output == os.ttyname(0):
-        print ("The output device %s is busy (current TTY). "
-               "Please specify another TTY device.") % options.output
-        return
-
     output_file = open(options.output)
     try:
         if os.isatty(output_file.fileno()):
+            if not os.path.exists(options.output):
+                print "The output device %s is not found." % options.output
+                return
+            if options.output == os.ttyname(0):
+                print ("The output device %s is busy (current TTY). "
+                       "Please specify another TTY device.") % options.output
+                return
             template.enable_color()
         else:
             template.disable_color()
