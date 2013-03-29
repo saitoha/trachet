@@ -21,6 +21,7 @@
 import codecs
 import time
 import tff
+import template
 
 try:
     from cStringIO import StringIO
@@ -246,7 +247,8 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self.__bufferring = False
         prompt = self._io_mode.get_prompt()
         value = str([hex(c) for c in seq])
-        self._buffer.write("%s  \x1b[33;41m%s\x1b[0m\n" % (prompt, value))
+        template_invalid = template.getinvalid()
+        self._buffer.write(template_invalid % (prompt, value))
 
     def handle_xterm_mouse(self, context, seq):
         if self.is_disabled():
@@ -257,9 +259,9 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         prompt = self._io_mode.get_prompt()
         info = (seq[0] - 32, seq[1] - 32, seq[2] - 32)
         value = "xterm normal mouse: button=%d, row=%d, col=%d" % info
-        template = "%s   \x1b[0;1;31mCSI \x1b[35mM \x1b[m%c %c %c \x1b[32;41m%s\x1b[0m\n"
-        self._buffer.write(template % (prompt, seq[0], seq[1], seq[2], value))
-        pass
+        self._buffer.write(template.getmouse() % (prompt,
+                                                  seq[0], seq[1], seq[2],
+                                                  value))
 
     def handle_resize(self, context, row, col):
         if self.is_disabled():
@@ -268,8 +270,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             self._buffer.write("\n")
             self.__bufferring = False
         prompt = "==="
-        template = "%s  \x1b[33;41m resized: (row=%d, col=%d)\x1b[0m\n"
-        self._buffer.write(template % (prompt, row, col))
+        self._buffer.write(template.getresize() % (prompt, row, col))
 
     def handle_draw(self, context):
         try:

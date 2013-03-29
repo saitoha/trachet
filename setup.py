@@ -15,6 +15,7 @@ except:
     import sys
     sys.exit(1)
 
+import trachet.template as template
 import trachet.seqdb as seqdb
 import trachet.iomode as iomode
 import trachet.char as char
@@ -28,6 +29,7 @@ import trachet.cstr as cstr
 
 import doctest
 dirty = False
+template.enable_color()
 for m in [seqdb, iomode, cstr, char, esc, csi, cstr]:
     failure_count, test_count = doctest.testmod(m)
     if failure_count > 0:

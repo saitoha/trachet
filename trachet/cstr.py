@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 import seqdb
+import template
 
 _DB = seqdb.get()
 
@@ -79,10 +80,10 @@ def format(prefix, value, is_input, tracer, controller):
     """
       >>> _create_mock_db()
       >>> format(ord("]"), map(ord, "abcde"), False, None, None).replace("\x1b", "\\x1b")
-      u'\\x1b[0;1;37;44mESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command'
+      u'\\x1b[0;1;37;44m ESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command\\x1b[m'
 
       >>> format(ord("Q"), map(ord, "cdefg"), False, None, None)
-      u'\\x1b[0;1;37;44mESC Q \\x1b[0;1;35mcdefg \\x1b[37;44mST\\x1b[0;1;36m  [ESC Q]'
+      u'\\x1b[0;1;37;44m ESC Q \\x1b[0;1;35mcdefg \\x1b[37;44mST\\x1b[0;1;36m  [ESC Q]\\x1b[m'
     """
 
     try:
@@ -94,10 +95,7 @@ def format(prefix, value, is_input, tracer, controller):
     mnemonic = get_mnemonic(p, v, is_input)
     if mnemonic[0] == "!":
         return eval(mnemonic[1:])
-
-    template = "\x1b[0;1;37;44mESC %s \x1b[0;1;35m%s \x1b[37;44mST\x1b[0;1;36m  %s"
-    result = template % (p, v, mnemonic)
-    return result
+    return template.getcstr() % (p, v, mnemonic)
 
 
 def _create_mock_db():

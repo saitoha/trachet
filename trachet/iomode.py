@@ -18,11 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+import template
 
 _DIRECTION_INPUT = True
 _DIRECTION_OUTPUT = False
-_PROMPT_INPUT = "\x1b[0;7m<<<"
-_PROMPT_OUTPUT = "\x1b[0m>>>"
 
 
 class IOMode():
@@ -30,12 +29,12 @@ class IOMode():
     >>> mode = IOMode()
     >>> mode.is_input()
     True
-    >>> mode.get_prompt() == _PROMPT_INPUT
+    >>> mode.get_prompt() == template.getinputprompt()
     True
     >>> mode.set_output()
     >>> mode.is_output()
     True
-    >>> mode.get_prompt() == _PROMPT_OUTPUT
+    >>> mode.get_prompt() == template.getoutputprompt()
     True
     """
     _direction = _DIRECTION_INPUT
@@ -54,8 +53,8 @@ class IOMode():
 
     def get_prompt(self):
         if self.is_input():
-            return _PROMPT_INPUT
-        return _PROMPT_OUTPUT
+            return template.getinputprompt()
+        return template.getoutputprompt()
 
 
 def _test():
