@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 import seqdb
+import template
 
 _DB = seqdb.get()
 
@@ -45,14 +46,7 @@ def format(intermediate, final, is_input, tracer, controller):
     if mnemonic[0] == "!":
         return eval(mnemonic[1:])
 
-    context = []
-    if i:
-        context.append("\x1b[36m" + i)
-    if f:
-        context.append("\x1b[33m" + f)
-    template = "\x1b[0;1;31;44m ESC %s \x1b[0;1;35m\x0d\x1b[30C%s"
-    result = template % (" ".join(context), mnemonic)
-    return result
+    return template.getesc() % (i, f, mnemonic)
 
 
 if __name__ == "__main__":
