@@ -6,11 +6,12 @@ import inspect
 import os
 
 filename = inspect.getfile(inspect.currentframe())
-dirpath = os.path.abspath(os.path.dirname(inspect.getfile(inspect.currentframe())))
+dirpath = os.path.abspath(os.path.dirname(filename))
+readmepath = os.path.join(dirpath, "README.rst")
 
 try:
     import trachet.tff
-except:
+except ImportError:
     print "Please do:\n git submodule update --init"
     import sys
     sys.exit(1)
@@ -22,15 +23,16 @@ import trachet.char as char
 import trachet.esc as esc
 import trachet.csi as csi
 import trachet.cstr as cstr
-#import trachet.input as input
-#import trachet.output as output
-#import trachet.trace as trace
-#import trachet.controller as controller
+import trachet.input as input
+import trachet.output as output
+import trachet.trace as trace
+import trachet.controller as controller
 
 import doctest
 dirty = False
 template.enable_color()
-for m in [seqdb, iomode, cstr, char, esc, csi, cstr]:
+for m in [seqdb, iomode, cstr, char, esc, csi, cstr,
+          input, output, controller]:
     failure_count, test_count = doctest.testmod(m)
     if failure_count > 0:
         dirty = True
@@ -39,9 +41,11 @@ if dirty:
 
 setup(name                  = 'trachet',
       version               = __version__,
-      description           = 'Provides step-by-step debugging and formatted sequence tracing service, with terminal applications.',
-      long_description      = open(os.path.join(dirpath, "README.rst")).read(),
-      py_modules            = ['trachet', 'tff'],
+      description           = 'Provides step-by-step debugging and '
+                              'formatted sequence tracing service, '
+                              'with terminal applications.',
+      long_description      = open(readmepath).read(),
+      py_modules            = ['trachet'],
       eager_resources       = [],
       classifiers           = ['Development Status :: 4 - Beta',
                                'Topic :: Terminals',
@@ -53,7 +57,7 @@ setup(name                  = 'trachet',
       keywords              = 'terminal debugger',
       author                = __author__,
       author_email          = 'user@zuse.jp',
-      url                   = 'https://github.com/saitoha/trachet',
+      url                   = 'http://saitoha.github.com/trachet',
       license               = __license__,
       packages              = find_packages(exclude=[]),
       zip_safe              = True,
