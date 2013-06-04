@@ -666,6 +666,8 @@ _SEQDB = {
     '> CSI 21q'          : 'DECLL 21 / load LEDs: extinguish num lock',
     '> CSI 22q'          : 'DECLL 22 / load LEDs: extinguish caps lock',
     '> CSI 23q'          : 'DECLL 23 / load LEDs: extinguish scroll lock',
+    '> CSI <SP>@'        : 'SL / scroll left',
+    '> CSI <SP>A'        : 'SR / scroll right',
     '> CSI <SP>q'        : 'DECSCUSR / set cursor style',
     '> CSI [0]<SP>q'     : 'DECSCUSR 1 / set cursor style: blinking block (default)',
     '> CSI 0<SP>q'       : 'DECSCUSR 0 / set cursor style: blinking block',
