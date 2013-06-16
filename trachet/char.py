@@ -64,6 +64,8 @@ def get_mnemonic(key):
       >>> _create_mock_db()
       >>> get_mnemonic('< <BEL>')
       'BEL / Ctrl-G'
+      >>> get_mnemonic('< <DEL>')
+      ''
     """
     if key in _DB:
         return _DB[key]
