@@ -79,6 +79,7 @@ def get_mnemonic(p, v, is_input):
 def format(prefix, value, is_input, tracer, controller):
     """
       >>> _create_mock_db()
+      >>> template.enable_color()
       >>> format(ord("]"), map(ord, "abcde"), False, None, None).replace("\x1b", "\\x1b")
       u'\\x1b[0;1;37;44m ESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command\\x1b[m'
 
