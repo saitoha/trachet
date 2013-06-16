@@ -2,6 +2,8 @@
 PACKAGE_NAME=trachet
 PYTHON=python
 
+.PHONY: test
+
 all: test
 	$(PYTHON) setup.py sdist
 	python2.6 setup.py bdist_egg
