@@ -60,6 +60,11 @@ _CHAR_MAP = {0x00: '<NUL>',
 
 
 def get_mnemonic(key):
+    """
+      >>> _create_mock_db()
+      >>> get_mnemonic('< <BEL>')
+      'BEL / Ctrl-G'
+    """
     if key in _DB:
         return _DB[key]
     return ""
