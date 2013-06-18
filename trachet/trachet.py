@@ -116,7 +116,12 @@ def main():
     import trace
     import template
 
-    output_file = open(options.output, "w")
+    try:
+        output_file = open(options.output, "w")
+    except IOError:
+        logging.exception("Connection closed.")
+        print "Cannot access output file or device: %s." % options.output
+        return
     try:
         if os.isatty(output_file.fileno()):
             if not os.path.exists(options.output):
