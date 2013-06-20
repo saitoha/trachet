@@ -25,6 +25,13 @@ _DB = seqdb.get()
 
 
 def get_mnemonic(p, v, is_input):
+    '''
+      >>> _create_mock_db()
+      >>> get_mnemonic(']', '0', False)
+      'OSC 0 / set icon name and window title'
+      >>> get_mnemonic(']', '4', False)
+      'OSC 4 / get or set color palette'
+    '''
 
     if is_input:
         direction = '<'
