@@ -31,7 +31,8 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h2>What is This?</h2>
+        <h2>
+<a name="what-is-this" class="anchor" href="#what-is-this"><span class="octicon octicon-link"></span></a>What is This?</h2>
 
 <p><strong>trachet = tracer + ratchet(step-by-step debugging service)</strong></p>
 
@@ -44,7 +45,8 @@ So trachet might be useful for both of terminal emulator developers and terminal
 
 <p><img src="http://zuse.jp/misc/trachet1.png" alt="trachet"></p>
 
-<h2>Install</h2>
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
 
 <p>via pip</p>
 
@@ -58,12 +60,14 @@ So trachet might be useful for both of terminal emulator developers and terminal
     $ python setup.py install
 </code></pre>
 
-<h2>Usage</h2>
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <pre><code>    $ trachet [options] command
 </code></pre>
 
-<h3>Options</h3>
+<h3>
+<a name="options" class="anchor" href="#options"><span class="octicon octicon-link"></span></a>Options</h3>
 
 <pre><code>    -h, --help                  show this help message and exit
     -o OUTPUT, --output=OUTPUT  Specify output device or file
@@ -71,12 +75,14 @@ So trachet might be useful for both of terminal emulator developers and terminal
     --version                   show version
 </code></pre>
 
-<h3>Sequense Tracing</h3>
+<h3>
+<a name="sequense-tracing" class="anchor" href="#sequense-tracing"><span class="octicon octicon-link"></span></a>Sequense Tracing</h3>
 
 <p>If you specified TTY device by -o option,
 you can look I/O sequence tracing on realtime (See Quick Start).</p>
 
-<h3>Step by Step debugging</h3>
+<h3>
+<a name="step-by-step-debugging" class="anchor" href="#step-by-step-debugging"><span class="octicon octicon-link"></span></a>Step by Step debugging</h3>
 
 <pre><code>- &lt;F6&gt; 
    Toggle trace state ON/OFF.
@@ -93,7 +99,8 @@ you can look I/O sequence tracing on realtime (See Quick Start).</p>
 
 <p>This settings can be changed with editing $HOME/.trachet/conf.py</p>
 
-<h2>Quick Start</h2>
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <p><strong>STEP1</strong>
 First, You need to prepare two terminal windows, <em>debugged terminal</em> and <em>output terminal</em>.</p>
@@ -127,16 +134,23 @@ At the <em>debugged terminal</em>, launch trachet.</p>
 
 <p>Run emacs and send formatted I/O sequences to <em>output terminal</em>, and "break" emacs on startup time</p>
 
-<pre><code>$ trachet -b -o/dev/pts/4 "emacs -nw" 
+<pre><code>$ trachet -b -o/dev/pts/4 emacs -nw
 </code></pre>
 
-<h2>Dependency</h2>
+<p>Replay output log created by <em>script(1)</em> step by step.</p>
+
+<pre><code>$ trachet -b -o/dev/pts/4 cat ~/typescript -
+</code></pre>
+
+<h2>
+<a name="dependency" class="anchor" href="#dependency"><span class="octicon octicon-link"></span></a>Dependency</h2>
 
 <ul>
 <li>TFF - Terminal Filter Framework
 <a href="https://github.com/saitoha/tff">https://github.com/saitoha/tff</a>
 </li>
-</ul><h2>Reference</h2>
+</ul><h2>
+<a name="reference" class="anchor" href="#reference"><span class="octicon octicon-link"></span></a>Reference</h2>
 
 <ul>
 <li>VT100.net <a href="http://vt100.net/">http://vt100.net/</a>
