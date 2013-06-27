@@ -1,3 +1,7 @@
+2013-06-27 Hayaki Saito <user@zuse.jp>
+
+    * Supports highlight mouse tracking (private mode 1001)
+
 2013-03-29 Hayaki Saito <user@zuse.jp>
 
     * Use TFF 0.1.5
