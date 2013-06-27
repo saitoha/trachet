@@ -39,6 +39,12 @@ def getinvalid():
 def getmouse():
     return _template_mouse
 
+def gethighlightmouseinitial():
+    return _template_highlight_mouse_initial
+
+def gethighlightmouse():
+    return _template_highlight_mouse
+
 def getresize():
     return _template_resize
 
@@ -58,6 +64,8 @@ def enable_color():
     global _template_cstr
     global _template_invalid
     global _template_mouse
+    global _template_highlight_mouse_initial
+    global _template_highlight_mouse
     global _template_resize
 
     _template_inputprompt = "\x1b[0;7m<<<"
@@ -95,6 +103,18 @@ def enable_color():
                        "\x1b[m" "%c %c %c "
                        "\x1b[32;41m" "%s"
                        "\x1b[m\n")
+    _template_highlight_mouse_initial = ("%s   "
+                                         "\x1b[0;1;31m" "CSI "
+                                         "\x1b[35m" "t "
+                                         "\x1b[m" "%c %c "
+                                         "\x1b[32;41m" "%s"
+                                         "\x1b[m\n")
+    _template_highlight_mouse = ("%s   "
+                                 "\x1b[0;1;31m" "CSI "
+                                 "\x1b[35m" "T "
+                                 "\x1b[m" "%c %c %c %c %c %c "
+                                 "\x1b[32;41m" "%s"
+                                 "\x1b[m\n")
     _template_resize = ("%s  "
                         "\x1b[33;41m" " resized: (row=%d, col=%d)"
                         "\x1b[m\n")
@@ -109,6 +129,8 @@ def disable_color():
     global _template_cstr
     global _template_invalid
     global _template_mouse
+    global _template_highlight_mouse_initial
+    global _template_highlight_mouse
     global _template_resize
 
     _template_inputprompt = "<<<"
@@ -120,6 +142,8 @@ def disable_color():
     _template_cstr = " ESC %s %s ST  %s"
     _template_invalid = "%s  %s\n"
     _template_mouse = "%s   CSI M %c %c %c %s\n"
+    _template_highlight_mouse_initial = "%s   CSI T %c %c %s\n"
+    _template_highlight_mouse = "%s   CSI T %c %c %c %c %c %c %s\n"
     _template_resize = "%s   resized: (row=%d, col=%d)\n"
 
 
