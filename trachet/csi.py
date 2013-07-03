@@ -23,6 +23,7 @@ import template
 
 _DB = seqdb.get()
 
+
 def get_mnemonic(direction, prefix, p, i, f):
     '''
       >>> _create_mock_db()
@@ -56,7 +57,8 @@ def get_mnemonic(direction, prefix, p, i, f):
 
     if length > 1:
         for x in xrange(0, length):
-            key = '%s CSI %s;[%s]%s%s' % (direction, ";".join(params[:x]), length - x, i, f)
+            pbytes = ";".join(params[:x])
+            key = '%s CSI %s;[%s]%s%s' % (direction, pbytes, length - x, i, f)
             if key in _DB:
                 return _DB[key] % tuple(params[x:])
 
@@ -94,18 +96,23 @@ def format(parameter, intermediate, final, is_input, tracer, controller):
 
     return template.getcsi() % (p, i, f, mnemonic)
 
+
 def _create_mock_db():
     global _DB
     _DB = {
-      '< CSI A'            : 'Cursor key(normal keypad): up arrow',
-      '< CSI 1;5A'         : 'Cursor key (xterm): Ctrl + up arrow',
-      '< CSI [0]M'         : 'xterm normal mouse reporting, following 3 bytes mean (code, row, col)',
-      '< CSI [3]M'         : 'urxvt (1015) mouse reporting (code=(%s-32),row=%s,col=%s)',
-      '< CSI ?c'           : 'DA1 Response',
-      '< CSI >0;95;c'      : 'DA2 Response: xterm patch#95 (could be iTerm/iTerm2)',
-      '> CSI @'            : 'ICH / insert blank characters',
-      '> CSI [2]H'         : 'CUP / move cursor to (row=%s, col=%s)',
-      '> CSI >2T'          : 'Title Mode - Reset (xterm) 2: Do not set window/icon labels using UTF-8',
+        '< CSI A': 'Cursor key(normal keypad): up arrow',
+        '< CSI 1;5A': 'Cursor key (xterm): Ctrl + up arrow',
+        '< CSI [0]M': 'xterm normal mouse reporting, '
+                      'following 3 bytes mean (code, row, col)',
+        '< CSI [3]M': 'urxvt (1015) mouse reporting '
+                      '(code=(%s-32),row=%s,col=%s)',
+        '< CSI ?c': 'DA1 Response',
+        '< CSI >0;95;c': 'DA2 Response: xterm patch#95 '
+                         '(could be iTerm/iTerm2)',
+        '> CSI @': 'ICH / insert blank characters',
+        '> CSI [2]H': 'CUP / move cursor to (row=%s, col=%s)',
+        '> CSI >2T': 'Title Mode - Reset (xterm) 2:'
+                     ' Do not set window/icon labels using UTF-8',
     }
 
 if __name__ == "__main__":
