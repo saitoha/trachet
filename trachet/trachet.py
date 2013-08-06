@@ -55,10 +55,6 @@ def main():
                       default='/dev/null',
                       help='OutputFile')
 
-#    parser.add_option('-f', '--use-fixed-header', dest='header',
-#                      action="store_true", default=False,
-#                      help='"break" the program at the startup time')
-
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
                       help='"break" the program at the startup time')
@@ -117,13 +113,13 @@ def main():
     import template
 
     try:
-        output_file = open(options.output, "w")
-    except IOError:
+        fd = os.open(options.output, os.O_WRONLY)
+    except:
         logging.exception("Connection closed.")
         print "Cannot access output file or device: %s." % options.output
         return
     try:
-        if os.isatty(output_file.fileno()):
+        if os.isatty(fd):
             if not os.path.exists(options.output):
                 print "The output device %s is not found." % options.output
                 return
@@ -135,7 +131,7 @@ def main():
         else:
             template.disable_color()
     finally:
-        output_file.close()
+        os.close(fd)
 
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     try:
