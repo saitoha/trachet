@@ -113,7 +113,7 @@ def main():
     import template
 
     try:
-        fd = os.open(options.output, os.O_WRONLY)
+        fd = os.open(options.output, os.O_WRONLY|os.O_CREAT|os.O_NONBLOCK)
     except:
         logging.exception("Connection closed.")
         print "Cannot access output file or device: %s." % options.output
