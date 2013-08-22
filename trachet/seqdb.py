@@ -500,6 +500,10 @@ _SEQDB = {
     '> CSI 0K'           : 'EL 0 / erase line: from the cursor through the end of the line',
     '> CSI 1K'           : 'EL 1 / erase line: from the beginning of the line through the cursor',
     '> CSI 2K'           : 'EL 2 / erase line: the complete of line',
+    '> CSI ?K'           : 'DECSEL / selective erase: from the cursor through the end of line',
+    '> CSI ?0K'          : 'DECSEL 0 / selective erase: from the cursor through the end of line',
+    '> CSI ?1K'          : 'DECSEL 1 / selective erase: from the beginning of the line through the cursor',
+    '> CSI ?2K'          : 'DECSEL 2 / selective erase: the complete of line',
     '> CSI L'            : 'IL / insert lines',
     '> CSI [0]L'         : 'IL 1 / insert a line',
     '> CSI M'            : 'DL / delete lines',
@@ -837,6 +841,16 @@ _SEQDB = {
     '> CSI `~'           : 'DECDC / insert Ps Column(s)',
     '> CSI [0]`~'        : 'DECDC / insert a Column(s)',
     '> CSI [1]`~'        : 'DECDC / insert %s Column(s)',
+    '> CSI [0]]'         : 'ignore next character (linux console)',
+    '> CSI 1;[1]]'       : 'set color %d as the underline color (linux console)',
+    '> CSI 2;[1]]'       : 'set color %d as the dim color (linux console)',
+    '> CSI 8]'           : 'make the current color pair the default attributes (linux console)',
+    '> CSI 9;[1]]'       : 'set screen blank timeout to %d minutes (linux console)',
+    '> CSI 10;[1]]'      : 'set bell frequency with %d Hz (linux console)',
+    '> CSI 11;[1]]'      : 'set bell duration with %d msec (linux console)',
+    '> CSI 12;[1]]'      : 'bring %dth console to the front (linux console)',
+    '> CSI 13]'          : 'unblank the screen (linux console)',
+    '> CSI 14;[1]]'      : 'set the VESA powerdown interval with %d minutes (linux console)',
 }
 
 _DEFAULT_CONF = """
