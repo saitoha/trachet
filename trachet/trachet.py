@@ -97,6 +97,9 @@ def main():
     language, encoding = locale.getdefaultlocale()
     termenc = encoding
 
+    if termenc is None:
+	termenc = "UTF-8"
+
     rcdir = os.path.join(os.getenv("HOME"), ".trachet")
     logdir = os.path.join(rcdir, "log")
     if not os.path.exists(logdir):
