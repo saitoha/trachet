@@ -57,9 +57,9 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_ss2(self, context, final):
         def action():
-            self.put(0x1b)  # ESC
-            self.put(0x4e)  # N
-            self.put(final)
+            context.put(0x1b)  # ESC
+            context.put(0x4e)  # N
+            context.put(final)
             self._tracer.set_output()
             self._tracer.handle_ss2(context, final)
             return constant.SEQ_TYPE_SS2
@@ -68,9 +68,9 @@ class OutputHandler(tff.DefaultHandler):
 
     def handle_ss3(self, context, final):
         def action():
-            self.put(0x1b)  # ESC
-            self.put(0x4f)  # O
-            self.put(final)
+            context.put(0x1b)  # ESC
+            context.put(0x4f)  # O
+            context.put(final)
             self._tracer.set_output()
             self._tracer.handle_ss3(context, final)
             return constant.SEQ_TYPE_SS3
