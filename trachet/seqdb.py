@@ -934,7 +934,6 @@ if not os.path.exists(confpath):
         f.close()
 
 # add resource directory to default import directory
-# TODO: use sys.meta_path
 sys.path.insert(0, rcdir)
 try:
     import conf
@@ -943,7 +942,7 @@ try:
 except:
     print str(sys.exc_info())
 finally:
-    sys.path.pop(0)
+    sys.path.remove(rcdir)
 
 
 # return reserved sequence map
