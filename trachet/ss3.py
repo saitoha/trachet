@@ -29,7 +29,7 @@ def get_mnemonic(direction, f):
     if key in _DB:
         mnemonic = _DB[key]
     else:
-        mnemonic = '<Unknown>'
+        mnemonic = '<unknown>'
     return mnemonic
 
 
@@ -52,6 +52,20 @@ def format(final, is_input, tracer, controller):
     template = "\x1b[0;1;36;44m ESC O %s \x1b[0;1;31m\x0d\x1b[30C%s"
     result = template % (" ".join(context), mnemonic)
     return result
+
+
+def _test():
+    """
+    >>> _test()
+    test
+    <unknown>
+    """
+    global _DB
+    _DB = {'> ESC O O': 'test'}
+
+    print get_mnemonic('>', 'O')
+
+    print get_mnemonic('>', 'A')
 
 
 if __name__ == "__main__":

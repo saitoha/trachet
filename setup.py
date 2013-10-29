@@ -27,12 +27,14 @@ import trachet.input as input
 import trachet.output as output
 import trachet.trace as trace
 import trachet.controller as controller
+import trachet.ss2 as ss2
+import trachet.ss3 as ss3
 
 import doctest
 dirty = False
 template.enable_color()
 for m in [seqdb, iomode, cstr, char, esc, csi, cstr,
-          input, output, controller]:
+          input, output, controller, ss2, ss3]:
     failure_count, test_count = doctest.testmod(m)
     if failure_count > 0:
         dirty = True
