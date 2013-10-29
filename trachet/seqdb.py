@@ -912,21 +912,28 @@ def get():
 """
 
 import os
+import sys
 
 
+# get resource directory path ($HOME/.trachet)
 rcdir = os.path.join(os.getenv("HOME"), ".trachet")
+
 if not os.path.exists(rcdir):
+    # create resouce directory
     os.makedirs(rcdir)
 
+# get configure file path ($HOME/.trachet/conf.py)
 confpath = os.path.join(rcdir, "conf.py")
+
 if not os.path.exists(confpath):
+    # create default configured setting file
     f = open(confpath, "w")
     try:
         f.write(_DEFAULT_CONF)
     finally:
         f.close()
 
-import sys
+# add resource directory to default import directory
 sys.path.insert(0, rcdir)
 try:
     import conf
@@ -935,9 +942,10 @@ try:
 except:
     print str(sys.exc_info())
 finally:
-    sys.path.pop(0)
+    sys.path.remove(rcdir)
 
 
+# return reserved sequence map
 def get():
     return _SEQDB
 
