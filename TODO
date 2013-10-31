@@ -1,3 +1,4 @@
 
 - Add test code for every methods
-
+- Supports conversion to typescript format
+- Supports conversion to ttyrec format
