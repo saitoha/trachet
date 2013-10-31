@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 
+# print version and license information
 def _printver():
         import __init__
         print '''
@@ -42,6 +43,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
 
 def main():
+    ''' entry point function for command line program '''
     import sys
     import os
     import optparse
