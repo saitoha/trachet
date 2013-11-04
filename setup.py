@@ -1,4 +1,23 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
+# ***** BEGIN LICENSE BLOCK *****
+# Copyright (C) 2012  Hayaki Saito <user@zuse.jp>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ***** END LICENSE BLOCK *****
+
 
 from setuptools import setup, find_packages
 from trachet import __version__, __license__, __author__
@@ -29,12 +48,14 @@ import trachet.trace as trace
 import trachet.controller as controller
 import trachet.ss2 as ss2
 import trachet.ss3 as ss3
+import trachet.constant as constant
 
 import doctest
 dirty = False
 template.enable_color()
 for m in [seqdb, iomode, cstr, char, esc, csi, cstr,
-          input, output, controller, ss2, ss3]:
+          input, output, controller, ss2, ss3, template,
+          trace, constant]:
     failure_count, test_count = doctest.testmod(m)
     if failure_count > 0:
         dirty = True
