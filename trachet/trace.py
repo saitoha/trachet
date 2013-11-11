@@ -38,11 +38,16 @@ import cstr
 from iomode import IOMode
 
 
+class MockController():
+    pass
+
 class SwitchOnOffTrait():
     """
-    >>> handler = TraceHandler()
+    >>> controller = MockController
+    >>> output_file = StringIO()
+    >>> handler = TraceHandler(output_file, "utf-8", controller)
     >>> handler.is_disabled()
-    True
+    False
     >>> handler.set_disabled()
     >>> handler.is_disabled()
     True
