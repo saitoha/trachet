@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
-
 from setuptools import setup, find_packages
 from trachet import __version__, __license__, __author__
 import inspect
