@@ -86,7 +86,12 @@ def format(c, is_input, tracer, controller):
     if c in _CHAR_MAP:
         printable_char = _CHAR_MAP[c]
     else:
-        printable_char = unichr(c)
+        try:
+            printable_char = unichr(c)
+        except:
+            c1 = (c >> 10) + 0xd800
+            c2 = (c & 0x3ff) + 0xdc00
+            printable_char = unichr(c1) + unichr(c2)
 
     if is_input:
         direction = '<'
