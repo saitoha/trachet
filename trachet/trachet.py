@@ -110,7 +110,7 @@ def main():
     logfile = os.path.join(logdir, "log.txt")
     logging.basicConfig(filename=logfile, filemode="w")
 
-    import tff
+    from tff import tff
     import input
     import output
     import controller
