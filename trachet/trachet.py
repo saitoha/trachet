@@ -76,19 +76,19 @@ def main():
         command = args[0]
     elif len(args) > 1:
         command = " ".join(args)
-    elif not os.getenv('SHELL') is None:
+    elif os.getenv('SHELL'):
         command = os.getenv('SHELL')
     else:
         command = '/bin/sh'
 
     # retrive TERM setting
-    if not os.getenv('TERM') is None:
+    if os.getenv('TERM'):
         term = os.getenv('TERM')
     else:
         term = 'xterm'
 
     # retrive LANG setting
-    if not os.getenv('LANG') is None:
+    if os.getenv('LANG'):
         lang = os.getenv('LANG')
     else:
         import locale
@@ -99,8 +99,12 @@ def main():
     language, encoding = locale.getdefaultlocale()
     termenc = encoding
 
-    if termenc is None:
-	termenc = "UTF-8"
+    if not termenc:
+        termenc = "UTF-8"
+
+    # fix for cygwin environment, such as utf_8_cjknarrow
+    if termenc.lower().startswith("utf_8_"):
+        termenc = "UTF-8"
 
     rcdir = os.path.join(os.getenv("HOME"), ".trachet")
     logdir = os.path.join(rcdir, "log")

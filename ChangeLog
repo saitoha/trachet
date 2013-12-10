@@ -1,19 +1,23 @@
+2013-12-10 Hayaki Saito <user@zuse.jp>
+
+	* Fix for cygwin environment($LANG ends with "utf-8@cjknarrow")
+
 2013-06-27 Hayaki Saito <user@zuse.jp>
 
-    * Supports highlight mouse tracking (private mode 1001)
+	* Supports highlight mouse tracking (private mode 1001)
 
 2013-03-29 Hayaki Saito <user@zuse.jp>
 
-    * Use TFF 0.1.5
-    * Disable color formatted output when it is redirected to text file
+	* Use TFF 0.1.5
+	* Disable color formatted output when it is redirected to text file
 
 2012-12-07 Hayaki Saito <user@zuse.jp>
 
-    * Use TFF 0.1.1
-    * Fix some TypeErrors
+	* Use TFF 0.1.1
+	* Fix some TypeErrors
 
 2012-11-25 Hayaki Saito <user@zuse.jp>
 
-    * Use TFF 0.0.10
-    * Display more detailed information
+	* Use TFF 0.0.10
+	* Display more detailed information
 
