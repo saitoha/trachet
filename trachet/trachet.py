@@ -100,7 +100,7 @@ def main():
     termenc = encoding
 
     if termenc is None:
-	termenc = "UTF-8"
+        termenc = "UTF-8"
 
     rcdir = os.path.join(os.getenv("HOME"), ".trachet")
     logdir = os.path.join(rcdir, "log")
