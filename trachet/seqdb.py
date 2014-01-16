@@ -292,7 +292,7 @@ _SEQDB = {
     '< <ETX>'            : 'ETX / end of text',
     '< <EOT>'            : 'EOT / end of transmission',
     '< <ENQ>'            : 'ENQ / enquiry',
-    '< <ACK>'            : 'ACK / jcknowledge',
+    '< <ACK>'            : 'ACK / acknowledge',
     '< <BEL>'            : 'BEL / bell',
     '< <BS>'             : 'BS / back space',
     '< <HT>'             : 'HT / character tabulation',
