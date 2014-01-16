@@ -88,7 +88,7 @@ def format(c, is_input, tracer, controller):
     else:
         try:
             printable_char = unichr(c)
-        except:
+        except ValueError:
             c1 = (c >> 10) + 0xd800
             c2 = (c & 0x3ff) + 0xdc00
             printable_char = unichr(c1) + unichr(c2)

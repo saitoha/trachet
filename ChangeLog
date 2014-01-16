@@ -1,3 +1,8 @@
+2013-12-28 Hayaki Saito <user@zuse.jp>
+
+	* Pass through ESC + \x20-\x2f key input sequence with time out mechanism
+	* FIx a bug around displaying prompt for invalid input sequence
+
 2013-12-10 Hayaki Saito <user@zuse.jp>
 
 	* Fix for cygwin environment($LANG ends with "utf-8@cjknarrow")

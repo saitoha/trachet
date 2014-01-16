@@ -59,7 +59,7 @@ class InputHandler(tff.DefaultHandler):
         return self._tracer.handle_char(context, final)
 
     def handle_invalid(self, context, seq):
-        self._tracer.set_output()
+        self._tracer.set_input()
         return self._tracer.handle_invalid(context, seq)
 
     def handle_draw(self, context):

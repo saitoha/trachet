@@ -19,6 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 import seqdb
+import template
 
 _DB = seqdb.get()
 
@@ -51,9 +52,8 @@ def format(final, is_input, tracer, controller):
 
     context = []
     if f:
-        context.append("\x1b[33m" + f)
-    template = "\x1b[0;1;36;44m ESC N %s \x1b[0;1;31m\x0d\x1b[30C%s"
-    result = template % (" ".join(context), mnemonic)
+        context.append(f)
+    result = template.getss2() % (" ".join(context), mnemonic)
     return result
 
 

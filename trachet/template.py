@@ -33,6 +33,12 @@ def getcsi():
 def getcstr():
     return _template_cstr
 
+def getss2():
+    return _template_ss2
+
+def getss3():
+    return _template_ss3
+
 def getinvalid():
     return _template_invalid
 
@@ -62,6 +68,8 @@ def enable_color():
     global _template_esc
     global _template_csi
     global _template_cstr
+    global _template_ss2
+    global _template_ss3
     global _template_invalid
     global _template_mouse
     global _template_highlight_mouse_initial
@@ -94,6 +102,12 @@ def enable_color():
                       "\x1b[37;44m" "ST"
                       "\x1b[0;1;36m" "  %s"
                       "\x1b[m")
+    _template_ss2 = ("\x1b[0;1;36;44m" " ESC N " "%s "
+		     "\x1b[0;1;31m" "\x0d"
+		     "\x1b[30C" "%s")
+    _template_ss3 = ("\x1b[0;1;36;44m" " ESC O " "%s "
+		     "\x1b[0;1;31m" "\x0d"
+		     "\x1b[30C" "%s")
     _template_invalid = ("%s  "
                          "\x1b[33;41m" "%s"
                          "\x1b[m\n")
@@ -127,6 +141,8 @@ def disable_color():
     global _template_esc
     global _template_csi
     global _template_cstr
+    global _template_ss2
+    global _template_ss3
     global _template_invalid
     global _template_mouse
     global _template_highlight_mouse_initial
@@ -140,6 +156,8 @@ def disable_color():
     _template_esc = " ESC %s%s    %s"
     _template_csi = " CSI %s%s%s    %s"
     _template_cstr = " ESC %s %s ST  %s"
+    _template_ss2 = " ESC N %s   %s"
+    _template_ss3 = " ESC N %s   %s"
     _template_invalid = "%s  %s\n"
     _template_mouse = "%s   CSI M %c %c %c %s\n"
     _template_highlight_mouse_initial = "%s   CSI T %c %c %s\n"
