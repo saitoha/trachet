@@ -233,6 +233,7 @@ _SEQDB = {
     '< ESC O Q'          : 'F2 key (xterm)',
     '< ESC O R'          : 'F3 key (xterm)',
     '< ESC O S'          : 'F4 key (xterm)',
+    '< ESC O ['          : 'alternate escape key (in application escape keycode mode, proposed by mintty)',
     '< CSI 15~'          : 'F5 key (xterm)',
     '< CSI 17~'          : 'F6 key (xterm)',
     '< CSI 18~'          : 'F7 key (xterm)',
