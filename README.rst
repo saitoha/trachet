@@ -85,7 +85,7 @@ Example
 Tutorial
 --------
 
-    Comming soon...
+    See http://saitoha.github.io/trachet/ .
 
 
 How It Works
