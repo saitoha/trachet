@@ -63,9 +63,8 @@ if dirty:
 
 setup(name                  = 'trachet',
       version               = __version__,
-      description           = 'Provides step-by-step debugging and '
-                              'formatted sequence tracing service, '
-                              'with terminal applications.',
+      description           = 'Step-by-step/realtime terminal debugger.'
+                              'It tell you what is happening on your terminal.'
       long_description      = open(readmepath).read(),
       py_modules            = ['trachet'],
       eager_resources       = [],
@@ -84,7 +83,6 @@ setup(name                  = 'trachet',
       packages              = find_packages(exclude=[]),
       zip_safe              = True,
       include_package_data  = False,
-#      install_requires      = ['tff >=0.0.15, <0.1.0'],
       install_requires      = [],
       entry_points          = """
                               [console_scripts]
