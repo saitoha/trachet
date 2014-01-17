@@ -75,6 +75,7 @@ def get_mnemonic(key):
 def format(c, is_input, tracer, controller):
     """
       >>> _create_mock_db()
+      >>> template.enable_color()
       >>> str(format(ord("a"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[32ma\\\\x1b[m', False)"
       >>> str(format(ord("\x1b"), False, None, None)).replace("\x1b", "\\x1b")
