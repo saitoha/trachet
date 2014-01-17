@@ -49,7 +49,7 @@ def format(final, is_input, tracer, controller):
     context = []
     if f:
         context.append(f)
-    result = template.getss2() % (" ".join(context), mnemonic)
+    result = template.getss3() % (" ".join(context), mnemonic)
     return result
 
 

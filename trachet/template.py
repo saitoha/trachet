@@ -157,7 +157,7 @@ def disable_color():
     _template_csi = " CSI %s%s%s    %s"
     _template_cstr = " ESC %s %s ST  %s"
     _template_ss2 = " ESC N %s   %s"
-    _template_ss3 = " ESC N %s   %s"
+    _template_ss3 = " ESC O %s   %s"
     _template_invalid = "%s  %s\n"
     _template_mouse = "%s   CSI M %c %c %c %s\n"
     _template_highlight_mouse_initial = "%s   CSI T %c %c %s\n"
