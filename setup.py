@@ -64,7 +64,7 @@ if dirty:
 setup(name                  = 'trachet',
       version               = __version__,
       description           = 'Step-by-step/realtime terminal debugger.'
-                              'It tell you what is happening on your terminal.'
+                              'It tell you what is happening on your terminal.',
       long_description      = open(readmepath).read(),
       py_modules            = ['trachet'],
       eager_resources       = [],
