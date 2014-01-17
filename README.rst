@@ -203,5 +203,21 @@ Dependency
 Reference
 ---------
 
- - vt100.net http://vt100.net/
+ - vt100.net
+    http://vt100.net/
+ 
+ - Private Control Functions used by DEC
+   http://vt100.net/emu/ctrlfunc_dec.html
 
+ - Xterm Control Sequences
+   http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+ 
+ - TeraTerm / Supported Control Functions
+   http://ttssh2.sourceforge.jp/manual/en/about/ctrlseq.html
+ 
+ - MinTTY / Mintty-specific control sequences
+   http://code.google.com/p/mintty/wiki/CtrlSeqs
+ 
+ - RLogin / Supported control codes
+   http://nanno.dip.jp/softlib/man/rlogin/ctrlcode.html
+ 
