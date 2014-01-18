@@ -26,7 +26,7 @@ build: update_license_block smoketest
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
 update_license_block:
-	find . -type f | grep '\(.py\|.c\)$$' | xargs python tools/update_license.py
+	find . -type f | grep '\(.py\|.c\)$$' | grep -v 'trachet/tff/' | xargs python tools/update_license.py
 
 setuptools:
 	$(PYTHON) -c "import setuptools" || \
