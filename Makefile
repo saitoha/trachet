@@ -26,8 +26,7 @@ build: update_license_block smoketest
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
 update_license_block:
-	#chmod +x update_license
-	#find . -type f | grep '\(.py\|.c\)$$' | xargs ./update_license
+	find . -type f | grep '\(.py\|.c\)$$' | xargs python tools/update_license.py
 
 setuptools:
 	$(PYTHON) -c "import setuptools" || \
