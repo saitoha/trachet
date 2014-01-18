@@ -42,8 +42,11 @@ uninstall:
 	done
 
 clean:
-	for name in dist build *.egg-info htmlcov *.pyc *.o; \
+	for name in dist build *.egg-info htmlcov; \
 		do find . -type d -name $$name || true; \
+	done | xargs $(RM)
+	for name in *.pyc *.o; \
+		do find . -type f -name $$name || true; \
 	done | xargs $(RM)
 
 test: smoketest nosetest
