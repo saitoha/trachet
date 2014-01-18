@@ -1,3 +1,7 @@
+2014-01-18 Hayaki Saito <user@zuse.jp>
+
+	* Add --monochrome option
+
 2014-01-17 Hayaki Saito <user@zuse.jp>
 
 	* Fix a bug around retrieving SS2 template(reported by @ttdoda)

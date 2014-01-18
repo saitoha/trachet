@@ -55,11 +55,15 @@ def main():
 
     parser.add_option('-o', '--output', dest='output',
                       default='/dev/null',
-                      help='OutputFile')
+                      help='specify output device or file')
 
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
                       help='"break" the program at the startup time')
+
+    parser.add_option('-m', '--monochrome', dest='monochrome',
+                      action="store_true", default=False,
+                      help='don\'t use color in output terminal')
 
     parser.add_option('--version', dest='version',
                       action="store_true", default=False,
@@ -136,7 +140,10 @@ def main():
                 print ("The output device %s is busy (current TTY). "
                        "Please specify another TTY device.") % options.output
                 return
-            template.enable_color()
+            if options.monochrome:
+                template.disable_color()
+            else:
+                template.enable_color()
         else:
             template.disable_color()
     finally:

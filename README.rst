@@ -39,8 +39,9 @@ Usage
 * Options::
 
     -h, --help                  show this help message and exit
-    -o OUTPUT, --output=OUTPUT  Specify output device or file
+    -o OUTPUT, --output=OUTPUT  specify output device or file
     -b, --break                 "break" the program at the startup time
+    -m, --monochrome            don't use color in output terminal"
     --version                   show version
 
 
