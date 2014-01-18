@@ -1,0 +1,10 @@
+.gitignore
+.DS_Store
+.coverage
+.vimprojects
+build/
+cover/
+dist/
+*.egg-info/
+*.orig
+*.rej
