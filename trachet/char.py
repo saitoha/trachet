@@ -86,13 +86,13 @@ def format(c, is_input, tracer, controller):
 
     if c in _CHAR_MAP:
         printable_char = _CHAR_MAP[c]
+    elif c < 0x10000:
+        printable_char = unichr(c)
     else:
-        try:
-            printable_char = unichr(c)
-        except ValueError:
-            c1 = (c >> 10) + 0xd800
-            c2 = (c & 0x3ff) + 0xdc00
-            printable_char = unichr(c1) + unichr(c2)
+        c -= 0x10000
+        c1 = (c >> 10) + 0xd800
+        c2 = (c & 0x3ff) + 0xdc00
+        printable_char = unichr(c1) + unichr(c2)
 
     if is_input:
         direction = '<'
