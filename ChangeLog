@@ -1,6 +1,7 @@
 2014-01-19 Hayaki Saito <user@zuse.jp>
 
 	* Enable UCS-4 character handing
+	* Support annotation for termcap query/response
 
 2014-01-18 Hayaki Saito <user@zuse.jp>
 
