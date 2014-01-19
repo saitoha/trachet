@@ -47,6 +47,7 @@ def get_mnemonic(p, v, is_input):
         if key in _DB:
             return _DB[key]
     else:
+
         params = v.split(";")
         length = len(params)
 
@@ -73,6 +74,23 @@ def get_mnemonic(p, v, is_input):
                 return _DB[key]
         if length > 0:
             key = "%s ESC %s%s<ST>" % (direction, p, params[0])
+            if key in _DB:
+                return _DB[key]
+
+        import re
+        pbytes, ifbytes, vbytes = re.search("^([\x30-\x3f]*)([\x20-\x30]*[\x40-\x7e])([0-9A-Fa-f]*)", v).groups()
+        if ifbytes:
+            if vbytes:
+                key = "%s ESC %s%s%s%s<ST>" % (direction, p, pbytes, ifbytes, vbytes)
+                if key in _DB:
+                    return _DB[key]
+
+            if pbytes:
+                key = "%s ESC %s%s%s<ST>" % (direction, p, pbytes, ifbytes)
+                if key in _DB:
+                    return _DB[key]
+
+            key = "%s ESC %s%s<ST>" % (direction, p, ifbytes)
             if key in _DB:
                 return _DB[key]
 
