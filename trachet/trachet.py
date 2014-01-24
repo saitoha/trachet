@@ -133,14 +133,16 @@ def main():
 
     try:
         fd = os.open(options.output, os.O_WRONLY|os.O_CREAT|os.O_NONBLOCK)
-    except:
+    except OSError, e:
+        logging.exception(e)
         logging.exception("Connection closed.")
-        print "Cannot access output file or device: %s." % options.output
+        print("Cannot access output file or device.\n(%s)" % options.output)
         return
+
     try:
         if os.isatty(fd):
             if not os.path.exists(options.output):
-                print "The output device %s is not found." % options.output
+                print("The output device %s is not found." % options.output)
                 return
             if options.output == os.ttyname(0):
                 print ("The output device %s is busy (current TTY). "
@@ -173,18 +175,20 @@ def main():
                       termenc=termenc,
                       inputhandler=input.InputHandler(controller, tracer),
                       outputhandler=output.OutputHandler(controller, tracer))
-    except IOError:
+    except IOError, e:
+        logging.exception(e)
         logging.exception("Connection closed.")
-        print "connection closed."
-    except:
+        print("Connection closed.")
+    except Exception, e:
+        logging.exception(e)
         logging.exception("Aborted by exception.")
-        print ("trachet aborted by an uncaught exception."
-               " see $HOME/.trachet/log/log.txt.")
+        print('trachet aborted by an uncaught exception.'
+              ' see $HOME/.trachet/log/log.txt.')
     finally:
         try:
             tty.restore_term()
-        except:
-            pass
+        except Exception, e:
+            logging.exception(e)
 
 ''' main '''
 if __name__ == '__main__':
