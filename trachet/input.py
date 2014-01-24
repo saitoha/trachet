@@ -19,7 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 
-import tff
+from tff import tff
 
 
 class InputHandler(tff.DefaultHandler):

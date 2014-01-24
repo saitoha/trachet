@@ -20,7 +20,8 @@
 
 import codecs
 import time
-import tff
+
+from tff import tff
 import template
 
 try:
