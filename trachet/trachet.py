@@ -41,13 +41,9 @@ along with this program. If not, see http://www.gnu.org/licenses/.
         ''' % __init__.__version__
         return
 
+def _parse_options():
 
-def main():
-    ''' entry point function for command line program '''
-    import sys
-    import os
     import optparse
-    import logging
 
     # parse options and arguments
     usage = 'usage: %prog [options] command'
@@ -59,17 +55,27 @@ def main():
 
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
-                      help='"break" the program at the startup time')
+                      help='"break" the program at the startup time'
+                           '  default: false')
 
     parser.add_option('-m', '--monochrome', dest='monochrome',
                       action="store_true", default=False,
                       help='don\'t use color in output terminal')
 
-    parser.add_option('--version', dest='version',
+    parser.add_option('-v', '--version', dest='version',
                       action="store_true", default=False,
                       help='show version')
 
-    (options, args) = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    ''' entry point function for command line program '''
+    import sys
+    import os
+    import logging
+
+    options, args = _parse_options()
 
     if options.version:
         _printver()
