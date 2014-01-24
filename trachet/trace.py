@@ -139,13 +139,16 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
                                self._io_mode.is_input(),
                                self,
                                self._controller)
-        if final == 0x4d or final == 0x54 or final == 0x74:  # 'M' or 'T' or 't'
-            if self._io_mode.is_input():
-                if not parameter:
-                    if not intermediate:
-                        self._xterm_mouse_buffer = [0x1b, 0x5b, final]
-                        self._xterm_mouse_counter = { 0x4d: 3, 0x74: 2, 0x54: 6 }[final]
-                        return False
+        if self._io_mode.is_input():
+            if not parameter and not intermediate:
+                self._xterm_mouse_buffer = [0x1b, 0x5b, final]
+                if final == 0x4d:  # 'M'
+                    self._xterm_mouse_counter = 3
+                elif final == 0x74:  # 't'
+                    self._xterm_mouse_counter = 2
+                elif final == 0x54:  # 'T'
+                    self._xterm_mouse_counter = 6
+                return False
         if not formatted:
             return True
         if self.is_disabled():
@@ -272,21 +275,21 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if seq[2] == 0x4d:  # M
             info = (seq[3] - 32, seq[4] - 32, seq[5] - 32)
             value = "xterm normal mouse: button=%d, x=%d, y=%d" % info
-            self._buffer.write(template.getmouse() % (prompt,
-                                                      seq[3], seq[4], seq[5],
-                                                      value))
+            params = (prompt, seq[3], seq[4], seq[5], value)
+            self._buffer.write(template.getmouse() % params)
         elif seq[2] == 0x74:  # t
             info = (seq[3] - 32, seq[4] - 32)
             value = "xterm highlight mouse: x=%d, y=%d" % info
-            self._buffer.write(template.gethighlightmouseinitial() % (prompt,
-                                                                      seq[3], seq[4],
-                                                                      value))
+            params = (prompt, seq[3], seq[4], value)
+            self._buffer.write(template.gethighlightmouseinitial() % params)
         elif seq[2] == 0x54:  # T
-            info = (seq[3] - 32, seq[4] - 32, seq[5] - 32, seq[6] - 32, seq[7] - 32, seq[8] - 32)
-            value = "xterm highlight mouse: startx=%d starty=%d, endx=%d, endy=%d, mousex=%d, mousey=%d" % info
-            self._buffer.write(template.gethighlightmouse() % (prompt,
-                                                               seq[3], seq[4], seq[5], seq[6], seq[7], seq[8],
-                                                               value))
+            info = (seq[3] - 32, seq[4] - 32, seq[5] - 32,
+                    seq[6] - 32, seq[7] - 32, seq[8] - 32)
+            value = ('xterm highlight mouse: startx=%d starty=%d, '
+                     'endx=%d, endy=%d, mousex=%d, mousey=%d') % info
+            params = (prompt, seq[3], seq[4], seq[5],
+                      seq[6], seq[7], seq[8], value)
+            self._buffer.write(template.gethighlightmouse() % params)
 
     def handle_resize(self, context, row, col):
         if self.is_disabled():
