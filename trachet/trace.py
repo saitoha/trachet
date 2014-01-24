@@ -20,6 +20,7 @@
 
 import codecs
 import time
+import logging
 
 from tff import tff
 import template
@@ -299,12 +300,14 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
     def handle_draw(self, context):
         try:
             self._output.write(self._buffer.getvalue())
-        except IOError:
+        except IOError, e:
+            logging.exception(e)
             time.sleep(0.1)
             self._output.write(self._buffer.getvalue())
         try:
             self._output.flush()
-        except IOError:
+        except IOError, e:
+            logging.exception(e)
             time.sleep(0.1)
             self._output.flush()
 
