@@ -48,6 +48,13 @@ import trachet.controller as controller
 import trachet.ss2 as ss2
 import trachet.ss3 as ss3
 import trachet.constant as constant
+import trachet.tffstub as tffstub
+
+from trachet.tffstub import tff
+print tffstub.expected_hash
+print tff.signature
+print tff.__version__
+assert tffstub.expected_hash == tff.signature
 
 import doctest
 dirty = False

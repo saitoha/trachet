@@ -26,8 +26,9 @@ build: update_license_block smoketest
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
 update_license_block:
-	find . -type f | grep '\(.py\|.c\)$$' | \
-		grep -v 'trachet/tff/' | \
+	find . -type f -name '*.py' | \
+		grep -v '^trachet/tff/' | \
+		grep -v '^.git' | \
 		xargs python tools/update_license.py
 
 setuptools:
