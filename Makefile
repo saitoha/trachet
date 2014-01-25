@@ -26,11 +26,14 @@ build: update_license_block smoketest
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
 update_license_block:
-	find . -type f | grep '\(.py\|.c\)$$' | grep -v 'trachet/tff/' | xargs python tools/update_license.py
+	find . -type f | grep '\(.py\|.c\)$$' | \
+		grep -v 'trachet/tff/' | \
+		xargs python tools/update_license.py
 
 setuptools:
 	$(PYTHON) -c "import setuptools" || \
-		curl http://peak.telecommunity.com/dist/ez_$(SETUP_SCRIPT) | $(PYTHON)
+		curl http://peak.telecommunity.com/dist/ez_$(SETUP_SCRIPT) | \
+		$(PYTHON)
 
 install: smoketest setuptools
 	$(PYTHON) $(SETUP_SCRIPT) install
