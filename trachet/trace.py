@@ -22,7 +22,7 @@ import codecs
 import time
 import logging
 
-from tff import tff
+from tffstub import tff
 import template
 
 try:
