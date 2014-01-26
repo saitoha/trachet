@@ -66,30 +66,56 @@ Usage
    Step to next ESC or CSI sequence.
 
 
-Example
--------
 
-- Run default shell and send formatted I/O sequence to a terminal device(/dev/pts/4)::
+QuickStart
+----------
 
-    $ trachet -o/dev/pts/4
+- STEP1
 
+    First, You need to prepare two terminal windows,
+    debugged terminal and output terminal.
 
-- Run vim and send formatted I/O sequence to a terminal device(/dev/pts/4)::
+    .. image:: http://zuse.jp/misc/trachet_qs1.png
+       :width: 640
 
-    $ trachet -o/dev/pts/4 vim
+- STEP2
 
+    At the output terminal, type "tty" command. ::
 
-- Run emacs and send formatted I/O sequence to a terminal device(/dev/pts/4), and "break" emacs on startup time::
+        $ tty 
+        /dev/ttys002
 
-    $ trachet -b -o/dev/pts/4 "emacs -nw"
+    Now you get output terminal's TTY device name(=/dev/ttys002).
 
+    .. image:: http://zuse.jp/misc/trachet_qs2.png
 
+- STEP3
 
-Tutorial
---------
+    At the debugged terminal, launch trachet.
 
-    See http://saitoha.github.io/trachet/ .
+    .. image:: http://zuse.jp/misc/trachet_qs3.png
+       :width: 640
 
+    Run default shell and send formatted I/O sequences to output terminal ::
+
+        $ trachet -o/dev/ttys002
+
+    Run default shell and write non-colored formatted I/O sequences to a text file. ::
+
+        $ trachet -o log.txt
+
+    Run vim and send formatted I/O sequences to output terminal. ::
+
+        $ trachet -o/dev/ttys002 vim 
+
+    Run emacs and send formatted I/O sequences to output terminal,
+    and "break" emacs on startup time ::
+
+        $ trachet -b -o/dev/ttys002 emacs -nw
+
+    Replay output log created by script(1) step by step. ::
+
+        $ trachet -b -o/dev/ttys002 cat ~/typescript -
 
 How It Works
 ------------
@@ -207,7 +233,7 @@ Reference
 ---------
 
  - vt100.net
-    http://vt100.net/
+   http://vt100.net/
  
  - Private Control Functions used by DEC
    http://vt100.net/emu/ctrlfunc_dec.html
