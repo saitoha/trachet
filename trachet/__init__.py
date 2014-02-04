@@ -19,7 +19,7 @@
 # ***** END LICENSE BLOCK *****
 
 __author__ = "Hayaki Saito (user@zuse.jp)"
-__version__ = "0.3.17"
+__version__ = "0.3.18"
 __license__ = "GPL v3"
 __doc__ = """
 This program runs as a terminal filter process between terminals and applications.
