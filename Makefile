@@ -65,7 +65,8 @@ nosetest:
 	then \
 	    nosetests --with-doctest \
 	              --with-coverage \
-	              --cover-html; \
+	              --cover-html \
+	              --cover-package=trachet; \
 	fi
 
 update: clean test

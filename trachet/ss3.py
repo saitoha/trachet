@@ -25,6 +25,15 @@ _DB = seqdb.get()
 
 
 def get_mnemonic(direction, f):
+    """
+    >>> _create_mock_db()
+    >>> get_mnemonic('<', 'A')
+    'Cursor key(application keypad): up arrow'
+    >>> get_mnemonic('>', 'B')
+    '<unknown>'
+    >>> get_mnemonic('<', '[')
+    'alternate escape key'
+    """
     key = "%s ESC O %s" % (direction, f)
     if key in _DB:
         mnemonic = _DB[key]
@@ -32,8 +41,21 @@ def get_mnemonic(direction, f):
         mnemonic = '<unknown>'
     return mnemonic
 
-
 def format(final, is_input, tracer, controller):
+    """
+    >>> _create_mock_db()
+    >>> template.enable_color()
+    >>> format(0x42, True, None, None)
+    '\\x1b[0;1;36;44m ESC O B \\x1b[0;1;31m\\r\\x1b[30CCursor key(application keypad): down arrow'
+    >>> template.disable_color()
+    >>> format(0x42, True, None, None)
+    ' ESC O B   Cursor key(application keypad): down arrow'
+    >>> format(0x42, False, None, None)
+    ' ESC O B   <unknown>'
+    >>> import sys
+    >>> format(0x74, True, sys, None)
+    test
+    """
     f = chr(final)
 
     if is_input:
@@ -65,6 +87,23 @@ def _test():
     print get_mnemonic('>', 'O')
 
     print get_mnemonic('>', 'A')
+
+def _create_mock_db():
+    global _DB
+    _DB = {
+        '> ESC O'   : 'SS3',
+        '< ESC O'   : 'SS3',
+        '< ESC O A' : 'Cursor key(application keypad): up arrow',
+        '< ESC O B' : 'Cursor key(application keypad): down arrow',
+        '< ESC O C' : 'Cursor key(application keypad): right arrow',
+        '< ESC O D' : 'Cursor key(application keypad): left arrow',
+        '< ESC O P' : 'F1 key (xterm)',
+        '< ESC O Q' : 'F2 key (xterm)',
+        '< ESC O R' : 'F3 key (xterm)',
+        '< ESC O S' : 'F4 key (xterm)',
+        '< ESC O t' : '!tracer.stdout.write("test")',
+        '< ESC O [' : 'alternate escape key',
+    }
 
 
 if __name__ == "__main__":
