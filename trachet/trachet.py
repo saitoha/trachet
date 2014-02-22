@@ -132,7 +132,7 @@ def main():
     import template
 
     try:
-        fd = os.open(options.output, os.O_WRONLY|os.O_CREAT|os.O_NONBLOCK)
+        fd = os.open(options.output, os.O_WRONLY | os.O_CREAT | os.O_NONBLOCK)
     except OSError, e:
         logging.exception(e)
         logging.exception("Connection closed.")
