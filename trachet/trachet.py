@@ -50,7 +50,7 @@ def _parse_options():
     parser = optparse.OptionParser(usage=usage)
 
     parser.add_option('-o', '--output', dest='output',
-                      default='/dev/null',
+                      default='trachetscript',
                       help='specify output device or file')
 
     parser.add_option('-b', '--break', dest='breakstart',
