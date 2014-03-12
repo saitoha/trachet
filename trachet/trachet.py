@@ -3,20 +3,24 @@
 #
 # ***** BEGIN LICENSE BLOCK *****
 # Copyright (C) 2012-2014  Hayaki Saito <user@zuse.jp>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
+
+import sys
+import os
+import logging
 
 
 # print version and license information
@@ -40,6 +44,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see http://www.gnu.org/licenses/.
         ''' % __init__.__version__
         return
+
 
 def _parse_options():
 
@@ -71,10 +76,6 @@ def _parse_options():
 
 def main():
     ''' entry point function for command line program '''
-    import sys
-    import os
-    import logging
-
     options, args = _parse_options()
 
     if options.version:
@@ -86,19 +87,19 @@ def main():
         command = args[0]
     elif len(args) > 1:
         command = " ".join(args)
-    elif os.getenv('SHELL'):
+    elif 'SHELL' in os.environ:
         command = os.getenv('SHELL')
     else:
         command = '/bin/sh'
 
     # retrive TERM setting
-    if os.getenv('TERM'):
+    if 'TERM' in os.environ:
         term = os.getenv('TERM')
     else:
         term = 'xterm'
 
     # retrive LANG setting
-    if os.getenv('LANG'):
+    if 'LANG' in os.environ:
         lang = os.getenv('LANG')
     else:
         import locale
@@ -116,8 +117,7 @@ def main():
     if termenc.lower().startswith("utf_8_"):
         termenc = "UTF-8"
 
-    rcdir = os.path.join(os.getenv("HOME"), ".trachet")
-    logdir = os.path.join(rcdir, "log")
+    logdir = os.path.expanduser('~/.trachet/log')
     if not os.path.exists(logdir):
         os.makedirs(logdir)
 
