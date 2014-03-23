@@ -3,17 +3,17 @@
 #
 # ***** BEGIN LICENSE BLOCK *****
 # Copyright (C) 2012-2014  Hayaki Saito <user@zuse.jp>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
@@ -43,7 +43,9 @@ from iomode import IOMode
 class MockController():
     pass
 
+
 class SwitchOnOffTrait():
+
     """
     >>> controller = MockController
     >>> output_file = StringIO()
@@ -224,8 +226,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
             buf = self._xterm_mouse_buffer
             buf.append(c)
-            self._xterm_mouse_counter -= 1;
-            buflen = len(buf)
+            self._xterm_mouse_counter -= 1
             if self._xterm_mouse_counter == 0:
                 self._xterm_mouse_buffer = None
                 self.handle_xterm_mouse(context, buf)
