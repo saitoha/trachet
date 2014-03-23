@@ -277,12 +277,12 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
             info = (seq[3] - 32, seq[4] - 32, seq[5] - 32)
             value = "xterm normal mouse: button=%d, x=%d, y=%d" % info
             params = (prompt, seq[3], seq[4], seq[5], value)
-            self._buffer.write(template.getmouse() % params)
+            self._buffer.write(unicode(template.getmouse()) % params)
         elif seq[2] == 0x74:  # t
             info = (seq[3] - 32, seq[4] - 32)
             value = "xterm highlight mouse: x=%d, y=%d" % info
             params = (prompt, seq[3], seq[4], value)
-            self._buffer.write(template.gethighlightmouseinitial() % params)
+            self._buffer.write(unicode(template.gethighlightmouseinitial()) % params)
         elif seq[2] == 0x54:  # T
             info = (seq[3] - 32, seq[4] - 32, seq[5] - 32,
                     seq[6] - 32, seq[7] - 32, seq[8] - 32)
@@ -290,7 +290,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
                      'endx=%d, endy=%d, mousex=%d, mousey=%d') % info
             params = (prompt, seq[3], seq[4], seq[5],
                       seq[6], seq[7], seq[8], value)
-            self._buffer.write(template.gethighlightmouse() % params)
+            self._buffer.write(unicode(template.gethighlightmouse()) % params)
 
     def handle_resize(self, context, row, col):
         if self.is_disabled():
