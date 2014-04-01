@@ -1132,6 +1132,7 @@ _SEQDB = {
     '< CSI ?73;4;6;8;9;10;11;12;16;18c': 'DA1 Response: DEClaser 2100 printer',
     '< CSI >c'           : 'DA2 Response',
     '< CSI >0;[2]c'      : 'DA2 Response: VT100, Pv=%s, keyboard type=%s',
+    '< CSI >0;0;1c'      : 'DA2 Response: fvterm',
     '< CSI >0;95;c'      : 'DA2 Response: xterm patch#95 (could be iTerm/iTerm2)',
     '< CSI >0;95;0c'     : 'DA2 Response: xterm patch#95 (could be tmux)',
     '< CSI >0;95;1c'     : 'DA2 Response: xterm patch#95 (could be avaliable mouse)',
