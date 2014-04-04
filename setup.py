@@ -34,40 +34,6 @@ except ImportError:
     import sys
     sys.exit(1)
 
-import trachet.template as template
-import trachet.seqdb as seqdb
-import trachet.iomode as iomode
-import trachet.char as char
-import trachet.esc as esc
-import trachet.csi as csi
-import trachet.cstr as cstr
-import trachet.input as input
-import trachet.output as output
-import trachet.trace as trace
-import trachet.controller as controller
-import trachet.ss2 as ss2
-import trachet.ss3 as ss3
-import trachet.constant as constant
-import trachet.tffstub as tffstub
-
-from trachet.tffstub import tff
-print tffstub.expected_hash
-print tff.signature
-print tff.__version__
-assert tffstub.expected_hash == tff.signature
-
-import doctest
-dirty = False
-template.enable_color()
-for m in [seqdb, iomode, cstr, char, esc, csi, cstr,
-          input, output, controller, ss2, ss3, template,
-          trace, constant]:
-    failure_count, test_count = doctest.testmod(m)
-    if failure_count > 0:
-        dirty = True
-if dirty:
-    raise Exception("test failed.")
-
 setup(name                  = 'trachet',
       version               = __version__,
       description           = 'Step-by-step/realtime terminal debugger.  '
