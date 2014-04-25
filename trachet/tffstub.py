@@ -21,11 +21,11 @@
 
 import logging
 
-expected_hash = "272bd51a6856e85ac4032a83b35779a6"
+expected_hash = 'b87c36758a4c3d666c74490b383f483b'
 
 try:
     import ctff as tff
-    if not tff.signature != expected_hash:
+    if not tff.signature == expected_hash:
         raise ImportError('Fail to validate signature hash of TFF library.')
 except ImportError, e:
     logging.exception(e)
