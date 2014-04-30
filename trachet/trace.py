@@ -143,14 +143,18 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
                                self._controller)
         if self._io_mode.is_input():
             if not parameter and not intermediate:
-                self._xterm_mouse_buffer = [0x1b, 0x5b, final]
                 if final == 0x4d:  # 'M'
                     self._xterm_mouse_counter = 3
+                    self._xterm_mouse_buffer = [0x1b, 0x5b, final]
+                    return False
                 elif final == 0x74:  # 't'
                     self._xterm_mouse_counter = 2
+                    self._xterm_mouse_buffer = [0x1b, 0x5b, final]
+                    return False
                 elif final == 0x54:  # 'T'
                     self._xterm_mouse_counter = 6
-                return False
+                    self._xterm_mouse_buffer = [0x1b, 0x5b, final]
+                    return False
         if not formatted:
             return True
         if self.is_disabled():
