@@ -18,47 +18,77 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+_template_char = None
+_template_printablechar = None
+_template_esc = None
+_template_csi = None
+_template_cstr = None
+_template_ss2 = None
+_template_ss3 = None
+_template_invalid = None
+_template_mouse = None
+_template_highlight_mouse = None
+_template_highlight_mouse_initial = None
+_template_resize = None
+_template_outputprompt = None
+_template_inputprompt = None
+
+
 def getchar():
     return _template_char
+
 
 def getprintablechar():
     return _template_printablechar
 
+
 def getesc():
     return _template_esc
+
 
 def getcsi():
     return _template_csi
 
+
 def getcstr():
     return _template_cstr
+
 
 def getss2():
     return _template_ss2
 
+
 def getss3():
     return _template_ss3
+
 
 def getinvalid():
     return _template_invalid
 
+
 def getmouse():
     return _template_mouse
+
 
 def gethighlightmouseinitial():
     return _template_highlight_mouse_initial
 
+
 def gethighlightmouse():
     return _template_highlight_mouse
+
 
 def getresize():
     return _template_resize
 
+
 def getoutputprompt():
     return _template_outputprompt
 
+
 def getinputprompt():
     return _template_inputprompt
+
 
 def enable_color():
     global _template_inputprompt
@@ -103,11 +133,11 @@ def enable_color():
                       "\x1b[0;1;36m" "  %s"
                       "\x1b[m")
     _template_ss2 = ("\x1b[0;1;36;44m" " ESC N " "%s "
-		     "\x1b[0;1;31m" "\x0d"
-		     "\x1b[30C" "%s")
+                     "\x1b[0;1;31m" "\x0d"
+                     "\x1b[30C" "%s")
     _template_ss3 = ("\x1b[0;1;36;44m" " ESC O " "%s "
-		     "\x1b[0;1;31m" "\x0d"
-		     "\x1b[30C" "%s")
+                     "\x1b[0;1;31m" "\x0d"
+                     "\x1b[30C" "%s")
     _template_invalid = ("%s  "
                          "\x1b[33;41m" "%s"
                          "\x1b[m\n")
@@ -132,6 +162,7 @@ def enable_color():
     _template_resize = ("%s  "
                         "\x1b[33;41m" " resized: (row=%d, col=%d)"
                         "\x1b[m\n")
+
 
 def disable_color():
     global _template_inputprompt
