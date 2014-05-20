@@ -25,8 +25,9 @@ import logging
 
 # print version and license information
 def _printver():
-        import __init__
-        print '''
+    import __init__
+
+    print '''
 trachet %s
 Copyright (C) 2012-2014 Hayaki Saito <user@zuse.jp>.
 
@@ -42,8 +43,8 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see http://www.gnu.org/licenses/.
-        ''' % __init__.__version__
-        return
+    ''' % __init__.__version__
+    return
 
 
 def _parse_options():
@@ -61,7 +62,7 @@ def _parse_options():
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
                       help='"break" the program at the startup time'
-                           '  default: false')
+                            '  default: false')
 
     parser.add_option('-m', '--monochrome', dest='monochrome',
                       action="store_true", default=False,
@@ -74,14 +75,7 @@ def _parse_options():
     return parser.parse_args()
 
 
-def main():
-    ''' entry point function for command line program '''
-    options, args = _parse_options()
-
-    if options.version:
-        _printver()
-        return
-
+def _prepare_starting_command(args):
     # retrive starting command
     if len(args) == 1:
         command = args[0]
@@ -91,39 +85,29 @@ def main():
         command = os.getenv('SHELL')
     else:
         command = '/bin/sh'
+    return command
 
+
+def _prepare_term():
     # retrive TERM setting
     if 'TERM' in os.environ:
         term = os.getenv('TERM')
     else:
         term = 'xterm'
+    return term
 
+
+def _prepare_lang():
     # retrive LANG setting
     if 'LANG' in os.environ:
         lang = os.getenv('LANG')
     else:
         import locale
         lang = '%s.%s' % locale.getdefaultlocale()
+    return lang
 
-    # retrive terminal encoding setting
-    import locale
-    language, encoding = locale.getdefaultlocale()
-    termenc = encoding
 
-    if not termenc:
-        termenc = "UTF-8"
-
-    # fix for cygwin environment, such as utf_8_cjknarrow
-    if termenc.lower().startswith("utf_8_"):
-        termenc = "UTF-8"
-
-    logdir = os.path.expanduser('~/.trachet/log')
-    if not os.path.exists(logdir):
-        os.makedirs(logdir)
-
-    logfile = os.path.join(logdir, "log.txt")
-    logging.basicConfig(filename=logfile, filemode="w")
-
+def mainimpl(options, command, term, lang, termenc):
     from tffstub import tff
     import input
     import output
@@ -189,6 +173,40 @@ def main():
             tty.restore_term()
         except Exception, e:
             logging.exception(e)
+
+
+def main():
+    ''' entry point function for command line program '''
+    options, args = _parse_options()
+
+    if options.version:
+        _printver()
+        return
+    command = _prepare_starting_command(args)
+    term = _prepare_term()
+    lang = _prepare_lang()
+
+    # retrive terminal encoding setting
+    import locale
+    language, encoding = locale.getdefaultlocale()
+    termenc = encoding
+
+    if not termenc:
+        termenc = "UTF-8"
+
+    # fix for cygwin environment, such as utf_8_cjknarrow
+    if termenc.lower().startswith("utf_8_"):
+        termenc = "UTF-8"
+
+    logdir = os.path.expanduser('~/.trachet/log')
+    if not os.path.exists(logdir):
+        os.makedirs(logdir)
+
+    logfile = os.path.join(logdir, "log.txt")
+    logging.basicConfig(filename=logfile, filemode="w")
+
+    mainimpl(options, command, term, lang, termenc)
+
 
 ''' main '''
 if __name__ == '__main__':
