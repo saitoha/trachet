@@ -2498,7 +2498,7 @@ def _test():
         if "[*]" in key:
             raise Exception("[*] syntax is deprecated.")
         match = re.search(pattern, key)
-        if not match is None:
+        if match is not None:
             n = match.group(1)
             try:
                 value % tuple([0] * int(n))

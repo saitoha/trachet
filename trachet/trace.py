@@ -109,7 +109,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
     ''' Override Interface tff.EventObserver '''
 
     def handle_esc(self, context, intermediate, final):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
@@ -130,7 +130,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_csi(self, context, parameter, intermediate, final):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
@@ -166,7 +166,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_ss2(self, context, final):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
@@ -186,7 +186,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_ss3(self, context, final):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
@@ -227,7 +227,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_char(self, context, c):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             buf = self._xterm_mouse_buffer
             buf.append(c)
             self._xterm_mouse_counter -= 1
@@ -256,7 +256,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_invalid(self, context, seq):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
