@@ -78,7 +78,8 @@ def get_mnemonic(p, v, is_input):
                 return _DB[key]
 
         import re
-        pbytes, ifbytes, vbytes = re.search("^([\x30-\x3f]*)([\x20-\x30]*[\x40-\x7e])([0-9A-Fa-f]*)", v).groups()
+        pattern = "^([\x30-\x3f]*)([\x20-\x30]*[\x40-\x7e])([0-9A-Fa-f]*)"
+        pbytes, ifbytes, vbytes = re.search(pattern, v).groups()
         if ifbytes:
             if vbytes:
                 key = "%s ESC %s%s%s%s<ST>" % (direction, p, pbytes, ifbytes, vbytes)

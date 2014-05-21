@@ -86,7 +86,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         self._controller = controller
         self._io_mode = IOMode()
 
-    ''' Switch Input/Output prompt state '''
+    # Switch Input/Output prompt state
 
     def set_output(self):
         if self.is_disabled():

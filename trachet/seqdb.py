@@ -1149,7 +1149,9 @@ _SEQDB = {
     '< CSI 2W'           : 'Ambiguous reporting(MinTTY): treat ambiguous width characters as double width',
     '< CSI ?c'           : 'DA1 Response',
     '< CSI ?1;0c'        : 'DA1 Response: VT100 with no options (could be WizConsole VT100 mode)',
-    '< CSI ?1;2c'        : 'DA1 Response: VT100 with AVO (could be a VT102/rxvt/rxvt-unicode/konsole/kterm/mlterm/iTerm2/tmux/aterm/wterm/Terminal.app(Mac)/mrxvt/MinTTY/TeraTerm/ck/Poderosa/tty.js)',
+    '< CSI ?1;2c'        : 'DA1 Response: VT100 with AVO (could be a VT102/rxvt/rxvt-unicode/konsole/'
+                           'kterm/mlterm/iTerm2/tmux/aterm/wterm/Terminal.app(Mac)/mrxvt/MinTTY/'
+                           'TeraTerm/ck/Poderosa/tty.js)',
     '< CSI ?1;6c'        : 'DA1 Response: VT100 with AVO and GPO (could be MacTerm)',
     '< CSI ?1;2;4;7c'    : 'DA1 Response: mlterm(3.1.7 or later) with SIXEL/DRCS',
     '< CSI ?1;2;4c'      : 'DA1 Response: mlterm(3.1.7 or later) with DRCS',
