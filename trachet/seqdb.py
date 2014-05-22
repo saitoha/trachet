@@ -1872,7 +1872,7 @@ _SEQDB = {
     '> ESC ]52;h<ST>'    : 'OSC 52 / term+-shell-history (term+.el)',
     '> ESC ]52<ST>'      : 'OSC 52 - PASTE64 / base64 clipboard read/write operation (xterm)',
     '> ESC ]104<ST>'     : 'OSC 104 / reset specified color number',
-    '> ESC ]104<ST>'     : 'OSC 104 / reset specified special color number',
+    '> ESC ]105<ST>'     : 'OSC 105 / reset specified special color number',
     '> ESC ]110<ST>'     : 'OSC 110 / reset VT100 text foreground color',
     '> ESC ]111<ST>'     : 'OSC 111 / reset VT100 text background color',
     '> ESC ]112<ST>'     : 'OSC 112 / reset cursor color',
@@ -1916,8 +1916,6 @@ _SEQDB = {
     '> ESC M'            : 'RI / moves the cursor up one line in the same column',
     '> ESC N'            : 'SS2 / temporarily maps the G2 character set into GL or GR, for the next graphic character',
     '> ESC O'            : 'SS3 / temporarily maps the G3 character set into GL or GR, for the next graphic character',
-    '> ESC V'            : 'SPA / start of guarded area',
-    '> ESC W'            : 'EPA / end of guarded area',
     '> ESC \\'           : 'ST / String terminator. Ends a DCS, SOS, OSC, PM and APC sequence',
     '> ESC c'            : 'RIS / full reset',
     '> ESC <SP>F'        : 'S7C1T',
@@ -2003,11 +2001,7 @@ _SEQDB = {
     '> ESC U'            : 'MW / message waiting',
     '> ESC V'            : 'SPA / start of guarded area',
     '> ESC W'            : 'EPA / end of guarded area',
-    '> ESC X<ST>'        : 'SOS / start of string',
     '> ESC Z'            : 'SCI / single character introducer',
-    '> ESC ]<ST>'        : 'OSC',
-    '> ESC ^<ST>'        : 'PM',
-    '> ESC _<ST>'        : 'APC',
     '> CSI @'            : 'ICH / insert blank characters',
     '> CSI [0]@'         : 'ICH 1 / insert a blank character',
     '> CSI A'            : 'CUU / cursor up',
@@ -2073,7 +2067,7 @@ _SEQDB = {
     '> CSI S'            : 'SU / scroll up',
     '> CSI [0]S'         : 'SU 1 / scroll up',
     '> CSI T'            : 'SD / scroll down',
-    '> CSI T'            : 'SD 1 / scroll down',
+    '> CSI [0]T'         : 'SD 1 / scroll down',
     '> CSI [1]T'         : 'SD / scroll down %s times',
     '> CSI [6]T'         : 'Initiate highlight mouse tracking (startx=%s,starty=%s,endx=%s,endy=%s,mousex=%s,mousey=%s)',
     '> CSI >T'           : 'Title Mode - Reset (xterm)',
@@ -2155,7 +2149,6 @@ _SEQDB = {
     '> CSI ?7783h'       : 'DECSET 7783 / enable shortcut override mode (MinTTY)',
     '> CSI ?7786h'       : 'DECSET 7786 / enable mousewheel reporting (cursor emulation) mode (MinTTY)',
     '> CSI ?7787h'       : 'DECSET 7787 / enable application mousewheel reporting mode (MinTTY)',
-    '> CSI ?7700h'       : 'DECSET 7700 / enable ambiguous reporting(MinTTY)',
     '> CSI ?8428h'       : 'DECSET 8428 - RLAMBCHM / treat ambiguous characters as narrow(RLogin)',
     '> CSI ?8441h'       : 'DECSET 8441 / IME open(RLogin)',
     '> CSI ?8442h'       : 'DECSET 8442 / application escape keycode mode (RLogin)',
@@ -2226,7 +2219,6 @@ _SEQDB = {
     '> CSI ?7783l'       : 'DECRST 7783 / disable shortcut override mode (MinTTY)',
     '> CSI ?7786l'       : 'DECRST 7786 / disable mousewheel reporting (cursor emulation) mode (MinTTY)',
     '> CSI ?7787l'       : 'DECRST 7787 / disable application mousewheel reporting mode (MinTTY)',
-    '> CSI ?7700l'       : 'DECRST 7700 / disable ambiguous reporting (MinTTY)',
     '> CSI ?8428l'       : 'DECRST 8428 - RLAMBCHM / treat ambiguous characters as wide(RLogin)',
     '> CSI ?8441l'       : 'DECRST 8441 / IME close(RLogin)',
     '> CSI ?8442l'       : 'DECRST 8442 / normal escape keycode mode (RLogin)',
@@ -2339,11 +2331,10 @@ _SEQDB = {
     '> CSI 2"q'          : 'DECSCA 2 / select character protection attribute: DECSED and DECSEL can erase',
     '> CSI r'            : 'DECSTBM / set top and bottom margins: full size of window',
     '> CSI [2]r'         : 'DECSTBM / set top and bottom margins: top=%s bottom=%s',
-    '> CSI [0]s'         : 'DECSLRM / set right and left margins, or Save cursor (ANSI.SYS)',
+    '> CSI [0]s'         : 'DECSLRM or Save cursor/ set right and left margins, or Save cursor (ANSI.SYS)',
     '> CSI [2]s'         : 'DECSLRM / set right and left margins: left=%s right=%s',
     '> CSI ?s'           : 'save DEC private mode values',
     '> CSI ?r'           : 'restore DEC private mode values',
-    '> CSI [0]s'         : 'Save cursor (ANSI.SYS)',
     '> CSI [0]u'         : 'Restore cursor (ANSI.SYS)',
     '> CSI t'            : 'DECSLPP or Window Manipulation (dtterm)',
     '> CSI [1]t'         : 'DECSLPP / Resize to %s lines',
@@ -2478,7 +2469,7 @@ try:
     import conf
     for key, value in conf.get().items():
         _SEQDB[key] = value
-except:
+except Exception:
     print str(sys.exc_info())
 finally:
     sys.path.remove(rcdir)
@@ -2504,7 +2495,7 @@ def _test():
             n = match.group(1)
             try:
                 value % tuple([0] * int(n))
-            except TypeError, e:
+            except TypeError:
                 raise Exception("invalid entry: (%s, %s)" % (key, value))
     return "ok"
 
