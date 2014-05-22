@@ -62,7 +62,7 @@ def _parse_options():
     parser.add_option('-b', '--break', dest='breakstart',
                       action="store_true", default=False,
                       help='"break" the program at the startup time'
-                            '  default: false')
+                      '  default: false')
 
     parser.add_option('-m', '--monochrome', dest='monochrome',
                       action="store_true", default=False,

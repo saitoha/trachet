@@ -49,7 +49,7 @@ class ActionController():
 
     def resume(self):
         self.__mode = _DEBUG_MODE_NONE
-        #self.__tty.xon()
+        # self.__tty.xon()
 
     def set_normal_step(self):
         self.__mode = _DEBUG_MODE_NORMAL_STEP
@@ -59,7 +59,7 @@ class ActionController():
 
     def set_break(self):
         self.__mode = _DEBUG_MODE_STOP
-        #self.__tty.xoff()
+        # self.__tty.xoff()
 
     def _get_repeat_count(self):
         now = time.time()

@@ -106,7 +106,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
                 self.__bufferring = False
             self._io_mode.set_input()
 
-    ''' Override Interface tff.EventObserver '''
+    # Override Interface tff.EventObserver
 
     def handle_esc(self, context, intermediate, final):
         if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
@@ -206,7 +206,7 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
         return False  # not handled
 
     def handle_control_string(self, context, prefix, value):
-        if not self._xterm_mouse_buffer is None and self._io_mode.is_input():
+        if self._xterm_mouse_buffer is not None and self._io_mode.is_input():
             seq = self._xterm_mouse_buffer
             self._xterm_mouse_buffer = None
             self.handle_invalid(context, seq)
