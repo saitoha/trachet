@@ -208,6 +208,6 @@ def main():
     mainimpl(options, command, term, lang, termenc)
 
 
-''' main '''
+# main
 if __name__ == '__main__':
     main()
