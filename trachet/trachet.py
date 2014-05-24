@@ -107,32 +107,26 @@ def _prepare_lang():
     return lang
 
 
-def mainimpl(options, command, term, lang, termenc):
-    from tffstub import tff
-    import input
-    import output
-    import controller
-    import trace
+def _check_output_device(filename, monochrome):
     import template
-
     try:
-        fd = os.open(options.output, os.O_WRONLY | os.O_CREAT | os.O_NONBLOCK)
+        fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_NONBLOCK)
     except OSError, e:
         logging.exception(e)
         logging.exception("Connection closed.")
-        print "Cannot access output file or device.\n(%s)" % options.output
-        return
+        print "Cannot access output file or device.\n(%s)" % filename
+        return False
 
     try:
         if os.isatty(fd):
-            if not os.path.exists(options.output):
-                print "The output device %s is not found." % options.output
-                return
-            if options.output == os.ttyname(0):
+            if not os.path.exists(filename):
+                print "The output device %s is not found." % filename
+                return False
+            if filename == os.ttyname(0):
                 print ("The output device %s is busy (current TTY). "
-                       "Please specify another TTY device.") % options.output
-                return
-            if options.monochrome:
+                       "Please specify another TTY device.") % filename
+                return False
+            if monochrome:
                 template.disable_color()
             else:
                 template.enable_color()
@@ -140,6 +134,18 @@ def mainimpl(options, command, term, lang, termenc):
             template.disable_color()
     finally:
         os.close(fd)
+    return True
+
+
+def mainimpl(options, command, term, lang, termenc):
+    from tffstub import tff
+    import input
+    import output
+    import controller
+    import trace
+
+    if not _check_output_device(options.output, options.monochrome):
+        return
 
     tty = tff.DefaultPTY(term, lang, command, sys.stdin)
     try:
@@ -188,8 +194,7 @@ def main():
 
     # retrive terminal encoding setting
     import locale
-    language, encoding = locale.getdefaultlocale()
-    termenc = encoding
+    termenc = locale.getdefaultlocale()[1]
 
     if not termenc:
         termenc = "UTF-8"
@@ -208,6 +213,6 @@ def main():
     mainimpl(options, command, term, lang, termenc)
 
 
-''' main '''
+# main
 if __name__ == '__main__':
     main()
