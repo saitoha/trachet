@@ -68,11 +68,11 @@ def get_mnemonic(direction, prefix, p, i, f):
     return '<Unknown>'
 
 
-def format(parameter, intermediate, final, is_input, tracer, controller):
+def format_seq(parameter, intermediate, final, is_input, tracer, controller):
     '''
       >>> _create_mock_db()
       >>> template.disable_color()
-      >>> format([0x3f, 0x31, 0x3b, 0x32], [], 0x63, True, None, None)
+      >>> format_seq([0x3f, 0x31, 0x3b, 0x32], [], 0x63, True, None, None)
       ' CSI ?1;2c    DA1 Response'
     '''
 

@@ -38,7 +38,7 @@ def get_mnemonic(direction, f):
     return mnemonic
 
 
-def format(final, is_input, tracer, controller):
+def format_seq(final, is_input, tracer, controller):
     f = chr(final)
 
     if is_input:
