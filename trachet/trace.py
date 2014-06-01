@@ -40,11 +40,11 @@ import cstr
 from iomode import IOMode
 
 
-class MockController():
+class MockController(object):
     pass
 
 
-class SwitchOnOffTrait():
+class SwitchOnOffTrait(object):
 
     """
     >>> controller = MockController
