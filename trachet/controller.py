@@ -28,7 +28,7 @@ import constant
 import time
 
 
-class ActionController():
+class ActionController(object):
 
     __mode = _DEBUG_MODE_NONE
     __actions = None
