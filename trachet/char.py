@@ -72,15 +72,15 @@ def get_mnemonic(key):
     return ""
 
 
-def format(c, is_input, tracer, controller):
+def format_seq(c, is_input, tracer, controller):
     """
       >>> _create_mock_db()
       >>> template.enable_color()
-      >>> str(format(ord("a"), False, None, None)).replace("\x1b", "\\x1b")
+      >>> str(format_seq(ord("a"), False, None, None)).replace("\x1b", "\\x1b")
       "(u'\\\\x1b[32ma\\\\x1b[m', False)"
-      >>> str(format(ord("\x1b"), False, None, None)).replace("\x1b", "\\x1b")
+      >>> str(format_seq(ord("\x1b"), False, None, None)).replace("\x1b", "\\x1b")
       "('\\\\x1b[32m<ESC>\\\\x1b[m', False)"
-      >>> str(format(ord("\x07"), False, None, None)).replace("\x1b", "\\x1b")
+      >>> str(format_seq(ord("\x07"), False, None, None)).replace("\x1b", "\\x1b")
       "('\\\\x1b[31m<BEL>\\\\x1b[1;32m\\\\r\\\\x1b[30CBEL / bell\\\\x1b[m', True)"
     """
 

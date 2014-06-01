@@ -33,7 +33,7 @@ def get_mnemonic(direction, i, f):
     return mnemonic
 
 
-def format(intermediate, final, is_input, tracer, controller):
+def format_seq(intermediate, final, is_input, tracer, controller):
     i = ''.join([chr(c) for c in intermediate]).replace(" ", "<SP>")
     f = chr(final)
 

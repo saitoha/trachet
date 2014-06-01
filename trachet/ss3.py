@@ -41,19 +41,20 @@ def get_mnemonic(direction, f):
         mnemonic = '<unknown>'
     return mnemonic
 
-def format(final, is_input, tracer, controller):
+
+def format_seq(final, is_input, tracer, controller):
     """
     >>> _create_mock_db()
     >>> template.enable_color()
-    >>> format(0x42, True, None, None)
+    >>> format_seq(0x42, True, None, None)
     '\\x1b[0;1;36;44m ESC O B \\x1b[0;1;31m\\r\\x1b[30CCursor key(application keypad): down arrow'
     >>> template.disable_color()
-    >>> format(0x42, True, None, None)
+    >>> format_seq(0x42, True, None, None)
     ' ESC O B   Cursor key(application keypad): down arrow'
-    >>> format(0x42, False, None, None)
+    >>> format_seq(0x42, False, None, None)
     ' ESC O B   <unknown>'
     >>> import sys
-    >>> format(0x74, True, sys, None)
+    >>> format_seq(0x74, True, sys, None)
     test
     """
     f = chr(final)

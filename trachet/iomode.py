@@ -24,7 +24,8 @@ _DIRECTION_INPUT = True
 _DIRECTION_OUTPUT = False
 
 
-class IOMode():
+class IOMode(object):
+
     """
     >>> mode = IOMode()
     >>> mode.is_input()

@@ -102,14 +102,14 @@ def get_mnemonic(p, v, is_input):
     return '[ESC ' + p + ']'
 
 
-def format(prefix, value, is_input, tracer, controller):
+def format_seq(prefix, value, is_input, tracer, controller):
     """
       >>> _create_mock_db()
       >>> template.enable_color()
-      >>> format(ord("]"), map(ord, "abcde"), False, None, None).replace("\x1b", "\\x1b")
+      >>> format_seq(ord("]"), map(ord, "abcde"), False, None, None).replace("\x1b", "\\x1b")
       u'\\x1b[0;1;37;44m ESC ] \\x1b[0;1;35mabcde \\x1b[37;44mST\\x1b[0;1;36m  OSC / operating system command\\x1b[m'
 
-      >>> format(ord("Q"), map(ord, "cdefg"), False, None, None)
+      >>> format_seq(ord("Q"), map(ord, "cdefg"), False, None, None)
       u'\\x1b[0;1;37;44m ESC Q \\x1b[0;1;35mcdefg \\x1b[37;44mST\\x1b[0;1;36m  [ESC Q]\\x1b[m'
     """
 
