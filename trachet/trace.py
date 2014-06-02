@@ -21,6 +21,7 @@
 import codecs
 import time
 import logging
+import sys
 
 from tffstub import tff
 import template
@@ -28,7 +29,10 @@ import template
 try:
     from cStringIO import StringIO
 except ImportError:
-    from StringIO import StringIO
+    try:
+        from StringIO import StringIO
+    except ImportError:
+        from io import StringIO
 
 # formatter
 import esc
@@ -308,13 +312,15 @@ class TraceHandler(tff.DefaultHandler, SwitchOnOffTrait):
     def handle_draw(self, context):
         try:
             self._output.write(self._buffer.getvalue())
-        except IOError, e:
+        except IOError:
+            e = sys.exc_info()[1]
             logging.exception(e)
             time.sleep(0.1)
             self._output.write(self._buffer.getvalue())
         try:
             self._output.flush()
-        except IOError, e:
+        except IOError:
+            e = sys.exc_info()[1]
             logging.exception(e)
             time.sleep(0.1)
             self._output.flush()

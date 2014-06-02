@@ -38,6 +38,8 @@ Reference:
 
 '''
 
+from __future__ import print_function
+
 _SEQDB = {
     """ input """
     '< <NUL>'            : 'NUL / Ctrl-@, Ctrl-SP, Ctrl-2',
@@ -2524,7 +2526,7 @@ try:
     for key, value in conf.get().items():
         _SEQDB[key] = value
 except Exception:
-    print str(sys.exc_info())
+    print(str(sys.exc_info()))
 finally:
     sys.path.remove(rcdir)
 
