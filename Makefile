@@ -2,7 +2,6 @@
 PACKAGE_NAME=trachet
 DEPENDENCIES=tff
 PYTHON=python
-PYTHON25=python2.5
 PYTHON26=python2.6
 PYTHON27=python2.7
 SETUP_SCRIPT=setup.py
@@ -21,7 +20,6 @@ setup_environment:
 
 build: update_license_block smoketest
 	$(PYTHON) $(SETUP_SCRIPT) sdist
-	$(PYTHON25) $(SETUP_SCRIPT) bdist_egg
 	$(PYTHON26) $(SETUP_SCRIPT) bdist_egg
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
@@ -56,7 +54,6 @@ clean:
 test: smoketest nosetest
 
 smoketest:
-	$(PYTHON25) $(SETUP_SCRIPT) test
 	$(PYTHON26) $(SETUP_SCRIPT) test
 	$(PYTHON27) $(SETUP_SCRIPT) test
 
@@ -72,7 +69,6 @@ nosetest:
 update: clean test
 	$(PYTHON) $(SETUP_SCRIPT) register
 	$(PYTHON) $(SETUP_SCRIPT) sdist upload
-	$(PYTHON25) $(SETUP_SCRIPT) bdist_egg upload
 	$(PYTHON26) $(SETUP_SCRIPT) bdist_egg upload
 	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg upload
 
