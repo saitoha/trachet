@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+from __future__ import print_function
 import sys
 import os
 import logging
@@ -27,7 +28,7 @@ import logging
 def _printver():
     import __init__
 
-    print '''
+    message = '''
 trachet %s
 Copyright (C) 2012-2014 Hayaki Saito <user@zuse.jp>.
 
@@ -44,6 +45,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see http://www.gnu.org/licenses/.
     ''' % __init__.__version__
+
+    print(message)
     return
 
 
@@ -111,16 +114,17 @@ def _check_output_device(filename, monochrome):
     import template
     try:
         fd = os.open(filename, os.O_WRONLY | os.O_CREAT | os.O_NONBLOCK)
-    except OSError, e:
+    except OSError:
+        e = sys.exc_info()[1]
         logging.exception(e)
         logging.exception("Connection closed.")
-        print "Cannot access output file or device.\n(%s)" % filename
+        print("Cannot access output file or device.\n(%s)" % filename)
         return False
 
     try:
         if os.isatty(fd):
             if not os.path.exists(filename):
-                print "The output device %s is not found." % filename
+                print("The output device %s is not found." % filename)
                 return False
             if filename == os.ttyname(0):
                 print ("The output device %s is busy (current TTY). "
@@ -165,19 +169,22 @@ def mainimpl(options, command, term, lang, termenc):
                       termenc=termenc,
                       inputhandler=input.InputHandler(controller, tracer),
                       outputhandler=output.OutputHandler(controller, tracer))
-    except IOError, e:
+    except IOError:
+        e = sys.exc_info()[1]
         logging.exception(e)
         logging.exception("Connection closed.")
-        print "Connection closed."
-    except Exception, e:
+        print("Connection closed.")
+    except Exception:
+        e = sys.exc_info()[1]
         logging.exception(e)
         logging.exception("Aborted by exception.")
-        print 'trachet aborted by an uncaught exception.'
-        print ' see $HOME/.trachet/log/log.txt.'
+        print('trachet aborted by an uncaught exception.')
+        print(' see $HOME/.trachet/log/log.txt.')
     finally:
         try:
             tty.restore_term()
-        except Exception, e:
+        except Exception:
+            e = sys.exc_info()[1]
             logging.exception(e)
 
 

@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ***** END LICENSE BLOCK *****
 
+from __future__ import print_function
 import seqdb
 import template
 
@@ -85,9 +86,10 @@ def _test():
     global _DB
     _DB = {'> ESC O O': 'test'}
 
-    print get_mnemonic('>', 'O')
+    print(get_mnemonic('>', 'O'))
 
-    print get_mnemonic('>', 'A')
+    print(get_mnemonic('>', 'A'))
+
 
 def _create_mock_db():
     global _DB
