@@ -8,7 +8,7 @@ SETUP_SCRIPT=setup.py
 RM=rm -rf
 PIP=pip
 
-.PHONY: smoketest nosetest build setuptools install uninstall clean update
+.PHONY: smoketest nosetest build setuptools install uninstall clean update test
 
 all: build
 
@@ -20,8 +20,6 @@ setup_environment:
 
 build: update_license_block smoketest
 	$(PYTHON) $(SETUP_SCRIPT) sdist
-	$(PYTHON26) $(SETUP_SCRIPT) bdist_egg
-	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg
 
 update_license_block:
 	find . -type f -name '*.py' | \
@@ -51,11 +49,16 @@ clean:
 		do find . -type f -name $$name || true; \
 	done | xargs $(RM)
 
-test: smoketest nosetest
+test:
+	pyenv global 2.6.9
+	$(MAKE) smoketest
+	$(MAKE) nosetest
+	pyenv global 2.7.7
+	$(MAKE) smoketest
+	$(MAKE) nosetest
 
 smoketest:
-	$(PYTHON26) $(SETUP_SCRIPT) test
-	$(PYTHON27) $(SETUP_SCRIPT) test
+	$(PYTHON) $(SETUP_SCRIPT) test
 
 nosetest:
 	if $$(which nosetests); \
@@ -69,6 +72,8 @@ nosetest:
 update: clean test
 	$(PYTHON) $(SETUP_SCRIPT) register
 	$(PYTHON) $(SETUP_SCRIPT) sdist upload
-	$(PYTHON26) $(SETUP_SCRIPT) bdist_egg upload
-	$(PYTHON27) $(SETUP_SCRIPT) bdist_egg upload
+	pyenv global 2.6.9
+	$(PYTHON) $(SETUP_SCRIPT) bdist_egg upload
+	pyenv global 2.7.7
+	$(PYTHON) $(SETUP_SCRIPT) bdist_egg upload
 
