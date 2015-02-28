@@ -12,7 +12,7 @@ What is This?
 
     http://saitoha.github.io/trachet/
 
-.. image:: http://zuse.jp/misc/trachet1.png
+.. image:: https://github.com/saitoha/trachet/blob/data/data/trachet1.png
    :width: 640
 
 Install
@@ -75,7 +75,7 @@ QuickStart
     First, You need to prepare two terminal windows,
     debugged terminal and output terminal.
 
-    .. image:: http://zuse.jp/misc/trachet_qs1.png
+    .. image:: https://github.com/saitoha/trachet/blob/data/data/trachet_qs1.png
        :width: 640
 
 - STEP2
@@ -87,13 +87,13 @@ QuickStart
 
     Now you get output terminal's TTY device name(=/dev/ttys002).
 
-    .. image:: http://zuse.jp/misc/trachet_qs2.png
+    .. image:: https://github.com/saitoha/trachet/blob/data/data/trachet_qs2.png
 
 - STEP3
 
     At the debugged terminal, launch trachet.
 
-    .. image:: http://zuse.jp/misc/trachet_qs3.png
+    .. image:: https://github.com/saitoha/trachet/blob/data/data/trachet_qs3.png
        :width: 640
 
     Run default shell and send formatted I/O sequences to output terminal ::
