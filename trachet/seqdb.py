@@ -1179,7 +1179,7 @@ _SEQDB = {
     '< CSI ?c'           : 'DA1 Response',
     '< CSI ?1;0c'        : 'DA1 Response: VT100 with no options (could be WizConsole VT100 mode)',
     '< CSI ?1;2c'        : 'DA1 Response: VT100 with AVO (could be a VT102/rxvt/rxvt-unicode/konsole/'
-                           'kterm/mlterm/iTerm2/tmux/aterm/wterm/Terminal.app(Mac)/mrxvt/MinTTY/'
+                           'kterm/mlterm/iTerm2/tmux/aterm/wterm/Terminal.app(OSX 10.10)/mrxvt/MinTTY/'
                            'TeraTerm/ck/Poderosa/tty.js)',
     '< CSI ?1;6c'        : 'DA1 Response: VT100 with AVO and GPO (could be MacTerm)',
     '< CSI ?1;2;4;7c'    : 'DA1 Response: mlterm(3.1.7 or later) with SIXEL/DRCS',
@@ -1197,7 +1197,7 @@ _SEQDB = {
     '< CSI >0;[2]c'      : 'DA2 Response: VT100, Pv=%s, keyboard type=%s',
     '< CSI >0;0;1c'      : 'DA2 Response: fvterm',
     '< CSI >0;95;c'      : 'DA2 Response: xterm patch#95 (could be iTerm/iTerm2)',
-    '< CSI >0;95;0c'     : 'DA2 Response: xterm patch#95 (could be tmux)',
+    '< CSI >0;95;0c'     : 'DA2 Response: xterm patch#95 (could be tmux/Terminal.app(OSX 10.11 or later))',
     '< CSI >0;95;1c'     : 'DA2 Response: xterm patch#95 (could be avaliable mouse)',
     '< CSI >0;115;0c'    : 'DA2 Response: xterm patch#115 (could be Konsole)',
     '< CSI >0;136;0c'    : 'DA2 Response: xterm patch#136 (could be PuTTY/MinTTY v0.3/vSSH)',
